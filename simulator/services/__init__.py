@@ -1,3 +1,4 @@
-"""Service simulation module container."""
+"""Microservice simulations and service definitions."""
 
 __all__ = ["ecommerce"]
+

@@ -1,3 +1,4 @@
-"""API gateway components and routing for the project."""
+"""API gateway components and request routing helpers."""
 
-__all__ = []
+__all__ = ["server", "middlewares"]
+

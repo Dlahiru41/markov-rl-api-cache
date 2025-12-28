@@ -1,3 +1,4 @@
-"""System integration helpers for wiring the simulator, gateway and cache."""
+"""Integration layer for connecting RL agents, simulators and the gateway."""
 
-__all__ = []
+__all__ = ["connectors", "adapters"]
+

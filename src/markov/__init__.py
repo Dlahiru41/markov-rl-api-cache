@@ -1,8 +1,10 @@
-"""Markov chain models for markov-rl-api-cache.
+"""Markov chain models for adaptive API caching.
+
+Place models, transition matrices, and utilities related to Markov chain
+representations here.
 """
-__version__ = "0.0.0"
 
+# Subpackages (to be implemented): models, utils
+# Use an empty __all__ until those modules exist to avoid unresolved-reference
+# diagnostics in editors/linters.
 __all__ = []
-This package will contain Markov model implementations and utilities used by the RL components.
-
-

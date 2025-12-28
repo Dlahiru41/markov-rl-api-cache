@@ -1,3 +1,4 @@
-"""Simulator package for microservice simulations, traffic, failures and latency."""
+"""Simulator package for microservice environments."""
 
-__all__ = []
+__all__ = ["services", "traffic", "failures", "latency"]
+

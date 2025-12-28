@@ -1,3 +1,4 @@
-"""E-commerce service simulations (catalog, orders, users)."""
+"""E-commerce service simulators (catalog, cart, checkout)."""
 
-__all__ = []
+__all__ = ["catalog", "orders", "users"]
+

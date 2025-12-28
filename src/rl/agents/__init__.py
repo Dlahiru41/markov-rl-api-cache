@@ -1,3 +1,4 @@
-"""DQN and other RL agents for adaptive caching."""
+"""Agents (DQN, policy wrappers) for cache control."""
 
-__all__ = []
+__all__ = ["dqn", "policy"]
+

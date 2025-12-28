@@ -1,3 +1,4 @@
-"""Utility helpers used across the project (logging, config parsing, metrics)."""
+"""Shared utilities: metrics, serialization, config."""
 
-__all__ = []
+__all__ = ["metrics", "io", "config"]
+

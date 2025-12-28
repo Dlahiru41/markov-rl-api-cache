@@ -1,3 +1,4 @@
-"""Neural network architectures used by RL agents."""
+"""Neural network modules used by agents."""
 
-__all__ = []
+__all__ = ["mlp", "conv"]
+
