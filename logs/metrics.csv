@@ -1,0 +1,5 @@
+timestamp,name,value,step,tags
+1767521221.3190277,test,1.0,0,{}
+1767521221.3190277,episode_reward,10.0,1,{}
+1767521221.3190277,episode_loss,0.5,1,{}
+1767521221.3190277,epsilon,0.9,1,{}
