@@ -1,0 +1,70 @@
+# Default configuration for markov-rl-api-cache
+  failure_rate: 0.01
+  # Probability of service failure per request
+  base_latency_ms: 50
+  # Base latency per request in milliseconds
+  num_services: 5
+  # Number of simulated microservices
+simulator:
+
+  checkpoint_frequency: 500
+  # Save checkpoints every N episodes
+  eval_frequency: 100
+  # Evaluate agent every N episodes
+  max_steps_per_episode: 1000
+  max_episodes: 5000
+training:
+
+    maxmemory_policy: "allkeys-lru"
+    # Redis eviction policy
+    maxmemory: 536870912
+    # Max memory in bytes (default 512 MB)
+    password: null
+    # If no password, set to null
+    db: 0
+    port: 6379
+    host: "localhost"
+  redis:
+cache:
+
+  target_update_freq: 1000
+  # Frequency (in steps) to update target network
+  batch_size: 64
+  replay_buffer_size: 100000
+
+    decay_steps: 100000
+    # Linear decay over this many steps
+    final_epsilon: 0.01
+    initial_epsilon: 1.0
+  exploration:
+
+  discount: 0.99
+  # Discount factor (gamma)
+  learning_rate: 0.0001
+  # Learning rate for optimizer
+
+    hidden_sizes: [256, 256]
+    # Hidden layer sizes for the Q-network
+  network:
+  algorithm: "dqn"
+  # Reinforcement learning algorithm (dqn is default)
+rl:
+
+  min_count: 5
+  # Minimum count for transitions to be considered
+  smoothing: 1e-6
+  # Additive smoothing to avoid zero probabilities
+  context_aware: true
+  # Whether to use context-aware (conditional) transitions
+  order: 1
+  # Order of the Markov chain (1 = first-order)
+markov:
+
+  logs_dir: "logs"
+  models_dir: "models"
+  data_dir: "data"
+  # Base directories (relative to project root)
+paths:
+
+# Edit or override via environment variables prefixed with MARKOV_RL_
+
