@@ -1,0 +1,24 @@
+{
+  "start_time": "2026-01-11T21:47:29.871822",
+  "end_time": "2026-01-11T21:47:29.984831",
+  "duration_seconds": 0.113009,
+  "input_source": "synthetic",
+  "raw_sessions": 250,
+  "raw_calls": 2703,
+  "train_sessions": 200,
+  "train_calls": 2143,
+  "test_sessions": 50,
+  "test_calls": 560,
+  "validation_errors": 0,
+  "validation_warnings": 0,
+  "quality_metrics": {
+    "missing_values_fraction": 0.0,
+    "duplicate_calls_fraction": 0.0,
+    "response_time_outliers_fraction": 0.01553829078801332,
+    "error_rate": 0.05253422123566408,
+    "empty_endpoint_fraction": 0.0
+  },
+  "anomalies_detected": 1,
+  "sequences_extracted": 200,
+  "feature_dimension": 31
+}
