@@ -349,9 +349,140 @@ See `SEQUENCE_BUILDER_GUIDE.md` for detailed documentation with examples, best p
 `preprocessing/models.py` - Core data models
 `preprocessing/sequence_builder.py` - Sequence processing for Markov training
 
+## Feature Engineer Module
+
+### Overview
+
+The `feature_engineer.py` module extracts numerical features from API calls for reinforcement learning state representation. It converts complex API call objects into fixed-size feature vectors that RL agents can process.
+
+**Key Benefit**: RL agents need numerical inputs. This module bridges the gap between API calls (strings, timestamps, objects) and neural networks (numerical vectors).
+
+### FeatureEngineer Class
+
+**Pattern**: Follows sklearn fit/transform pattern for consistent encoding
+
+```python
+from preprocessing.feature_engineer import FeatureEngineer
+
+# Initialize
+fe = FeatureEngineer(
+    temporal_features=True,
+    user_features=True,
+    request_features=True,
+    history_features=True
+)
+
+# Fit on training data
+fe.fit(training_sessions)
+
+# Transform API calls to feature vectors
+features = fe.transform(call, session, history)
+```
+
+### Feature Groups
+
+#### 1. Temporal Features (6 features)
+- Hour of day (cyclic sin/cos encoding)
+- Day of week (cyclic sin/cos encoding)
+- Weekend flag
+- Peak hour flag (10-12, 14-16)
+
+**Why Cyclic?** Hour 23 and hour 0 are adjacent but numerically far. Cyclic encoding makes them close in feature space.
+
+#### 2. User Features (5 features)
+- User type (one-hot: premium/free/guest)
+- Session progress (normalized position)
+- Session duration (normalized time elapsed)
+
+#### 3. Request Features (N features)
+- HTTP method (one-hot encoding)
+- Endpoint category (one-hot, learned vocabulary)
+- Number of parameters (normalized)
+
+#### 4. History Features (3 features)
+- Number of previous calls (normalized)
+- Time since session start (normalized)
+- Average response time so far (normalized)
+
+### Example: RL Integration
+
+```python
+# Feature engineer as state representation
+class CachingEnvironment:
+    def __init__(self, feature_engineer):
+        self.fe = feature_engineer
+    
+    def get_state(self, call, session, history):
+        # Convert API call to feature vector
+        return self.fe.transform(call, session, history)
+    
+    def step(self, action):
+        next_call = ...
+        next_state = self.get_state(next_call, session, history)
+        reward = ...
+        return next_state, reward, done
+
+# RL training loop
+fe = FeatureEngineer()
+fe.fit(training_sessions)
+
+env = CachingEnvironment(fe)
+agent = RLAgent(state_dim=fe.get_feature_dim())
+
+for episode in range(num_episodes):
+    state = env.reset()
+    for step in range(max_steps):
+        action = agent.select_action(state)
+        next_state, reward, done = env.step(action)
+        agent.update(state, action, reward, next_state)
+        if done:
+            break
+```
+
+### Key Features
+
+**Cyclic Encoding**: Preserves circular nature of time
+```python
+hour_sin, hour_cos = FeatureEngineer.cyclic_encode(14, 24)  # 2 PM
+```
+
+**Feature Names**: For interpretability
+```python
+feature_names = fe.get_feature_names()
+for name, value in zip(feature_names, features):
+    print(f"{name}: {value}")
+```
+
+**Edge Case Handling**:
+- Unknown endpoints → default category
+- Missing session context → reasonable defaults
+- No history → zero values
+
+### Demonstrations
+
+```bash
+# Full test suite
+python test_feature_engineer.py
+
+# RL integration demo
+python demo_feature_engineer_rl.py
+```
+
+### Documentation
+
+- **preprocessing/FEATURE_ENGINEER_GUIDE.md** - Comprehensive guide
+- **FEATURE_ENGINEER_QUICK_REF.md** - Quick reference
+
+## File Location
+
+`preprocessing/models.py` - Core data models
+`preprocessing/sequence_builder.py` - Sequence processing for Markov training
+`preprocessing/feature_engineer.py` - Feature extraction for RL
+
 ## Dependencies
 
 - Python 3.10+
+- numpy>=1.24 (for numerical operations)
 - dataclasses (built-in)
 - datetime (built-in)
 - typing (built-in)
