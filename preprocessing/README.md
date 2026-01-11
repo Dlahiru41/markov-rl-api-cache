@@ -204,9 +204,150 @@ python test_comprehensive_models.py
 python test_parquet_functionality.py  # Requires pyarrow
 ```
 
+## Sequence Builder Module
+
+### Overview
+
+The `sequence_builder.py` module converts sessions into API call sequences suitable for Markov chain training. It transforms raw session data into the structured formats needed for learning transition probabilities between API endpoints.
+
+**Key Question:** Given that a user just called endpoint A, what's the probability they'll call endpoint B next?
+
+### SequenceBuilder Class
+
+**Constructor:**
+```python
+SequenceBuilder(normalize_endpoints=True, min_sequence_length=1)
+```
+
+**Parameters:**
+- `normalize_endpoints`: Enable endpoint normalization (recommended: True)
+- `min_sequence_length`: Minimum sequence length to include
+
+### Key Features
+
+#### 1. Endpoint Normalization ⭐ (Most Important!)
+
+Converts endpoint variations into consistent patterns. Without this, `/users/1/profile` and `/users/999/profile` would be treated as different endpoints!
+
+**Normalization steps:**
+- Convert to lowercase
+- Remove trailing slashes
+- Strip query parameters
+- Replace numeric IDs with `{id}` placeholder
+- Replace UUIDs with `{id}` placeholder
+
+**Example:**
+```python
+builder = SequenceBuilder(normalize_endpoints=True)
+builder.normalize_endpoint("/API/Users/123/Profile/")
+# Output: "/api/users/{id}/profile"
+```
+
+#### 2. Basic Sequence Extraction
+
+Extracts endpoint sequences from sessions:
+
+```python
+sequences = builder.build_sequences(sessions)
+# Output: [["/login", "/profile", "/browse"], ["/login", "/search"]]
+```
+
+#### 3. Labeled Sequences
+
+Creates (history, next_endpoint) pairs for prediction evaluation:
+
+```python
+labeled = builder.build_labeled_sequences(sessions)
+# For [A, B, C, D]: ([A], B), ([A,B], C), ([A,B,C], D)
+```
+
+#### 4. N-gram Extraction
+
+Extracts overlapping tuples of N consecutive endpoints:
+
+```python
+bigrams = builder.build_ngrams(sessions, n=2)
+# For [A, B, C, D]: [(A,B), (B,C), (C,D)]
+
+trigrams = builder.build_ngrams(sessions, n=3)
+# For [A, B, C, D]: [(A,B,C), (B,C,D)]
+```
+
+#### 5. Contextual Sequences
+
+Includes metadata for context-aware modeling:
+
+```python
+contextual = builder.build_contextual_sequences(sessions)
+# Returns ContextualSequence objects with:
+#   - sequence: List[str]
+#   - user_type: premium/free/guest
+#   - time_of_day: morning/afternoon/evening/night
+#   - day_type: weekday/weekend
+#   - session_length_category: short/medium/long
+```
+
+#### 6. Transition Analysis
+
+Calculate transition probabilities:
+
+```python
+# Get transition counts
+counts = builder.get_transition_counts(sessions)
+# {('/login', '/profile'): 100, ...}
+
+# Get probabilities
+probs = builder.get_transition_probabilities(sessions)
+# {'/login': {'/profile': 0.95, '/logout': 0.05}, ...}
+```
+
+### Complete Example
+
+```python
+from preprocessing.sequence_builder import SequenceBuilder
+from preprocessing.models import Dataset
+
+# Load data
+dataset = Dataset.load_from_parquet('sessions.parquet')
+
+# Initialize builder
+builder = SequenceBuilder(normalize_endpoints=True, min_sequence_length=2)
+
+# Split data
+train, test = builder.split_sequences(dataset.sessions, train_ratio=0.8)
+
+# Train: Calculate transition probabilities
+train_probs = builder.get_transition_probabilities(train)
+
+# Test: Create labeled sequences for evaluation
+test_labeled = builder.build_labeled_sequences(test)
+
+# Get statistics
+stats = builder.get_sequence_statistics(train)
+print(f"Training: {stats['total_sequences']} sequences")
+print(f"Average length: {stats['avg_sequence_length']:.2f}")
+```
+
+### Demonstrations
+
+Run comprehensive demonstrations:
+
+```bash
+# Full feature demonstration
+python demo_sequence_builder.py
+
+# Validation tests
+python test_sequence_builder.py
+```
+
+### Documentation
+
+See `SEQUENCE_BUILDER_GUIDE.md` for detailed documentation with examples, best practices, and integration guides.
+
 ## File Location
 
-`preprocessing/models.py`
+`preprocessing/models.py` - Core data models
+`preprocessing/sequence_builder.py` - Sequence processing for Markov training
 
 ## Dependencies
 
@@ -216,5 +357,6 @@ python test_parquet_functionality.py  # Requires pyarrow
 - typing (built-in)
 - json (built-in)
 - pathlib (built-in)
+- re (built-in)
 - pyarrow (optional, for Parquet support)
 
