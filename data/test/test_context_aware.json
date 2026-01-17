@@ -1,0 +1,75 @@
+{
+  "context_features": [
+    "user_type",
+    "time_of_day"
+  ],
+  "order": 1,
+  "fallback_strategy": "global",
+  "smoothing": 0.001,
+  "is_fitted": true,
+  "context_sample_counts": {
+    "premium|morning": 1,
+    "free|afternoon": 1
+  },
+  "chains": {
+    "premium|morning": {
+      "transition_matrix": {
+        "smoothing": 0.001,
+        "transitions": {
+          "A": {
+            "B": 1
+          },
+          "B": {
+            "C": 1
+          }
+        },
+        "total_from": {
+          "A": 1,
+          "B": 1
+        }
+      }
+    },
+    "free|afternoon": {
+      "transition_matrix": {
+        "smoothing": 0.001,
+        "transitions": {
+          "D": {
+            "E": 1
+          },
+          "E": {
+            "F": 1
+          }
+        },
+        "total_from": {
+          "D": 1,
+          "E": 1
+        }
+      }
+    }
+  },
+  "global_chain": {
+    "transition_matrix": {
+      "smoothing": 0.001,
+      "transitions": {
+        "A": {
+          "B": 1
+        },
+        "B": {
+          "C": 1
+        },
+        "D": {
+          "E": 1
+        },
+        "E": {
+          "F": 1
+        }
+      },
+      "total_from": {
+        "A": 1,
+        "B": 1,
+        "D": 1,
+        "E": 1
+      }
+    }
+  }
+}
