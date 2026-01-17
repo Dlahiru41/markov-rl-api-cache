@@ -1,0 +1,23 @@
+{
+  "order": 1,
+  "context_aware": false,
+  "context_features": [],
+  "smoothing": 0.001,
+  "history_size": 10,
+  "fallback_strategy": "global",
+  "is_fitted": true,
+  "api_vocab": {
+    "A": 0,
+    "B": 1,
+    "C": 2,
+    "D": 3
+  },
+  "vocab_size": 4,
+  "history": [
+    "A"
+  ],
+  "context_history": [],
+  "prediction_count": 0,
+  "correct_predictions": {},
+  "total_confidence": 0.0
+}

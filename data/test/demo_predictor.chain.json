@@ -1,0 +1,163 @@
+{
+  "context_features": [
+    "user_type",
+    "time_of_day"
+  ],
+  "order": 1,
+  "fallback_strategy": "global",
+  "smoothing": 0.001,
+  "is_fitted": true,
+  "context_sample_counts": {
+    "premium|morning": 1,
+    "free|afternoon": 1,
+    "premium|evening": 1,
+    "free|morning": 1
+  },
+  "chains": {
+    "premium|morning": {
+      "transition_matrix": {
+        "smoothing": 0.001,
+        "transitions": {
+          "login": {
+            "profile": 1
+          },
+          "profile": {
+            "premium_features": 1
+          },
+          "premium_features": {
+            "browse": 1
+          },
+          "browse": {
+            "product": 1
+          }
+        },
+        "total_from": {
+          "login": 1,
+          "profile": 1,
+          "premium_features": 1,
+          "browse": 1
+        }
+      }
+    },
+    "free|afternoon": {
+      "transition_matrix": {
+        "smoothing": 0.001,
+        "transitions": {
+          "login": {
+            "profile": 1
+          },
+          "profile": {
+            "browse": 1
+          },
+          "browse": {
+            "product": 1
+          },
+          "product": {
+            "cart": 1
+          }
+        },
+        "total_from": {
+          "login": 1,
+          "profile": 1,
+          "browse": 1,
+          "product": 1
+        }
+      }
+    },
+    "premium|evening": {
+      "transition_matrix": {
+        "smoothing": 0.001,
+        "transitions": {
+          "login": {
+            "browse": 1
+          },
+          "browse": {
+            "product": 1
+          },
+          "product": {
+            "cart": 1
+          },
+          "cart": {
+            "checkout": 1
+          }
+        },
+        "total_from": {
+          "login": 1,
+          "browse": 1,
+          "product": 1,
+          "cart": 1
+        }
+      }
+    },
+    "free|morning": {
+      "transition_matrix": {
+        "smoothing": 0.001,
+        "transitions": {
+          "browse": {
+            "search": 1
+          },
+          "search": {
+            "product": 1
+          },
+          "product": {
+            "reviews": 1
+          },
+          "reviews": {
+            "cart": 1
+          }
+        },
+        "total_from": {
+          "browse": 1,
+          "search": 1,
+          "product": 1,
+          "reviews": 1
+        }
+      }
+    }
+  },
+  "global_chain": {
+    "transition_matrix": {
+      "smoothing": 0.001,
+      "transitions": {
+        "login": {
+          "profile": 2,
+          "browse": 1
+        },
+        "profile": {
+          "premium_features": 1,
+          "browse": 1
+        },
+        "premium_features": {
+          "browse": 1
+        },
+        "browse": {
+          "product": 3,
+          "search": 1
+        },
+        "product": {
+          "cart": 2,
+          "reviews": 1
+        },
+        "cart": {
+          "checkout": 1
+        },
+        "search": {
+          "product": 1
+        },
+        "reviews": {
+          "cart": 1
+        }
+      },
+      "total_from": {
+        "login": 3,
+        "profile": 2,
+        "premium_features": 1,
+        "browse": 4,
+        "product": 3,
+        "cart": 1,
+        "search": 1,
+        "reviews": 1
+      }
+    }
+  }
+}

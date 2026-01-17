@@ -1,0 +1,20 @@
+{
+  "smoothing": 0.001,
+  "is_fitted": true,
+  "transition_matrix": {
+    "smoothing": 0.001,
+    "transitions": {
+      "A": {
+        "B": 2
+      },
+      "B": {
+        "C": 1,
+        "D": 1
+      }
+    },
+    "total_from": {
+      "A": 2,
+      "B": 2
+    }
+  }
+}

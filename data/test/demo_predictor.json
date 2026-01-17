@@ -1,0 +1,33 @@
+{
+  "order": 1,
+  "context_aware": true,
+  "context_features": [
+    "user_type",
+    "time_of_day"
+  ],
+  "smoothing": 0.001,
+  "history_size": 10,
+  "fallback_strategy": "global",
+  "is_fitted": true,
+  "api_vocab": {
+    "browse": 0,
+    "cart": 1,
+    "checkout": 2,
+    "login": 3,
+    "premium_features": 4,
+    "product": 5,
+    "profile": 6,
+    "reviews": 7,
+    "search": 8
+  },
+  "vocab_size": 9,
+  "history": [
+    "login"
+  ],
+  "context_history": [],
+  "prediction_count": 2,
+  "correct_predictions": {
+    "1": 2
+  },
+  "total_confidence": 1.9920398009950249
+}
