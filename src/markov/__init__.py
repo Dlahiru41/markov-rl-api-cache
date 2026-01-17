@@ -6,5 +6,6 @@ representations here.
 
 from .transition_matrix import TransitionMatrix
 from .first_order import FirstOrderMarkovChain
+from .second_order import SecondOrderMarkovChain
 
-__all__ = ['TransitionMatrix', 'FirstOrderMarkovChain']
+__all__ = ['TransitionMatrix', 'FirstOrderMarkovChain', 'SecondOrderMarkovChain']

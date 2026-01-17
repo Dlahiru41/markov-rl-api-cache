@@ -1,0 +1,49 @@
+{
+  "smoothing": 0.001,
+  "fallback_to_first_order": true,
+  "is_fitted": true,
+  "transition_matrix": {
+    "smoothing": 0.001,
+    "transitions": {
+      "<START>|login": {
+        "profile": 1,
+        "browse": 1
+      },
+      "login|profile": {
+        "orders": 1
+      },
+      "login|browse": {
+        "product": 1
+      }
+    },
+    "total_from": {
+      "<START>|login": 2,
+      "login|profile": 1,
+      "login|browse": 1
+    }
+  },
+  "first_order_model": {
+    "smoothing": 0.001,
+    "is_fitted": true,
+    "transition_matrix": {
+      "smoothing": 0.001,
+      "transitions": {
+        "login": {
+          "profile": 1,
+          "browse": 1
+        },
+        "profile": {
+          "orders": 1
+        },
+        "browse": {
+          "product": 1
+        }
+      },
+      "total_from": {
+        "login": 2,
+        "profile": 1,
+        "browse": 1
+      }
+    }
+  }
+}
