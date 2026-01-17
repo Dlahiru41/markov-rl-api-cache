@@ -9,6 +9,7 @@ from .first_order import FirstOrderMarkovChain
 from .second_order import SecondOrderMarkovChain
 from .context_aware import ContextAwareMarkovChain
 from .predictor import MarkovPredictor, create_predictor
+from .evaluation import MarkovEvaluator, MarkovVisualizer
 
 __all__ = [
     'TransitionMatrix',
@@ -16,5 +17,7 @@ __all__ = [
     'SecondOrderMarkovChain',
     'ContextAwareMarkovChain',
     'MarkovPredictor',
-    'create_predictor'
+    'create_predictor',
+    'MarkovEvaluator',
+    'MarkovVisualizer'
 ]

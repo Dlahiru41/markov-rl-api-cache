@@ -1,0 +1,47 @@
+{
+  "smoothing": 0.001,
+  "is_fitted": true,
+  "transition_matrix": {
+    "smoothing": 0.001,
+    "transitions": {
+      "login": {
+        "profile": 4,
+        "browse": 4
+      },
+      "profile": {
+        "orders": 4
+      },
+      "orders": {
+        "product": 4
+      },
+      "product": {
+        "cart": 6,
+        "reviews": 6
+      },
+      "browse": {
+        "product": 4,
+        "search": 4
+      },
+      "cart": {
+        "checkout": 4
+      },
+      "reviews": {
+        "cart": 2,
+        "back": 2
+      },
+      "search": {
+        "product": 4
+      }
+    },
+    "total_from": {
+      "login": 8,
+      "profile": 4,
+      "orders": 4,
+      "product": 12,
+      "browse": 8,
+      "cart": 4,
+      "reviews": 4,
+      "search": 4
+    }
+  }
+}

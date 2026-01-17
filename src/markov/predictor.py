@@ -267,17 +267,27 @@ class MarkovPredictor:
             if context is None:
                 return []
 
-            if self.order == 1 or len(self.history) < 2:
+            if self.order == 1:
                 predictions = self.chain.predict(current, context, k=k)
             else:
-                prev = self.history[-2]
-                predictions = self.chain.predict(current, context, k=k, prev=prev)
+                # Second-order: need previous state
+                if len(self.history) >= 2:
+                    prev = self.history[-2]
+                    predictions = self.chain.predict(current, context, k=k, prev=prev)
+                else:
+                    # Fall back to first-order if not enough history
+                    predictions = self.chain.predict(current, context, k=k, prev=None)
         else:
-            if self.order == 1 or len(self.history) < 2:
+            if self.order == 1:
                 predictions = self.chain.predict(current, k=k)
             else:
-                prev = self.history[-2]
-                predictions = self.chain.predict(prev, current, k=k)
+                # Second-order: need previous state
+                if len(self.history) >= 2:
+                    prev = self.history[-2]
+                    predictions = self.chain.predict(prev, current, k=k)
+                else:
+                    # Not enough history for second-order, return empty
+                    predictions = []
 
         return predictions
 
