@@ -1,0 +1,142 @@
+{
+  "/api/products/browse": [
+    {
+      "endpoint": "/api/products/{id}/details",
+      "probability": 0.603990765157183
+    },
+    {
+      "endpoint": "/api/products/search",
+      "probability": 0.25010714206625484
+    }
+  ],
+  "/api/products/{id}/details": [
+    {
+      "endpoint": "/api/cart/add",
+      "probability": 0.4123534434825004
+    },
+    {
+      "endpoint": "/api/products/browse",
+      "probability": 0.344346334344979
+    }
+  ],
+  "/api/products/search": [
+    {
+      "endpoint": "/api/products/{id}/details",
+      "probability": 0.7102394622689763
+    },
+    {
+      "endpoint": "/api/products/browse",
+      "probability": 0.19037422974696055
+    }
+  ],
+  "/api/cart/add": [
+    {
+      "endpoint": "/api/cart",
+      "probability": 0.7148773464467902
+    },
+    {
+      "endpoint": "/api/products/browse",
+      "probability": 0.18901561429203487
+    }
+  ],
+  "/api/cart": [
+    {
+      "endpoint": "/api/checkout",
+      "probability": 0.4945952815311226
+    },
+    {
+      "endpoint": "/api/products/browse",
+      "probability": 0.31697312213633333
+    }
+  ],
+  "/api/checkout": [
+    {
+      "endpoint": "/api/payment",
+      "probability": 0.9004900371687273
+    }
+  ],
+  "/api/payment": [
+    {
+      "endpoint": "/api/confirmation",
+      "probability": 0.9591935800177468
+    }
+  ],
+  "/api/login": [
+    {
+      "endpoint": "/api/users/{id}/profile",
+      "probability": 0.8533108228600188
+    }
+  ],
+  "/api/products/{id}/reviews": [
+    {
+      "endpoint": "/api/cart/add",
+      "probability": 0.4836873363501491
+    },
+    {
+      "endpoint": "/api/products/browse",
+      "probability": 0.3069571243204026
+    },
+    {
+      "endpoint": "/api/products/{id}/details",
+      "probability": 0.20929042819870056
+    }
+  ],
+  "/api/users/{id}/profile": [
+    {
+      "endpoint": "/api/products/browse",
+      "probability": 0.5110979680932348
+    },
+    {
+      "endpoint": "/api/users/{id}/orders",
+      "probability": 0.26836997899206344
+    },
+    {
+      "endpoint": "/api/users/{id}/settings",
+      "probability": 0.16580885683663893
+    }
+  ],
+  "/api/users/{id}/orders": [
+    {
+      "endpoint": "/api/orders/{id}/details",
+      "probability": 0.6334567080416926
+    },
+    {
+      "endpoint": "/api/products/browse",
+      "probability": 0.26176204212190535
+    }
+  ],
+  "/api/orders/{id}/details": [
+    {
+      "endpoint": "/api/products/browse",
+      "probability": 0.42969995950982093
+    },
+    {
+      "endpoint": "/api/users/{id}/orders",
+      "probability": 0.2809605262070618
+    }
+  ],
+  "/api/cart/remove": [
+    {
+      "endpoint": "/api/cart",
+      "probability": 0.4680357687371027
+    },
+    {
+      "endpoint": "/api/products/browse",
+      "probability": 0.4113050199621322
+    }
+  ],
+  "/api/users/{id}/settings": [
+    {
+      "endpoint": "/api/users/{id}/profile",
+      "probability": 0.5772287331086304
+    },
+    {
+      "endpoint": "/api/products/browse",
+      "probability": 0.2680045765175176
+    },
+    {
+      "endpoint": "/api/logout",
+      "probability": 0.15462238576744283
+    }
+  ]
+}

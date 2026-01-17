@@ -1,0 +1,94 @@
+{
+  "smoothing": 0.001,
+  "transitions": {
+    "/api/products/browse": {
+      "/api/products/{id}/details": 1391,
+      "/api/products/search": 576,
+      "/api/cart": 215,
+      "/api/logout": 121
+    },
+    "/api/products/{id}/details": {
+      "/api/products/search": 292,
+      "/api/cart/add": 861,
+      "/api/products/{id}/reviews": 216,
+      "/api/products/browse": 719
+    },
+    "/api/products/search": {
+      "/api/products/{id}/details": 679,
+      "/api/products/browse": 182,
+      "/api/logout": 95
+    },
+    "/api/cart/add": {
+      "/api/cart": 677,
+      "/api/products/browse": 179,
+      "/api/checkout": 91
+    },
+    "/api/cart": {
+      "/api/checkout": 504,
+      "/api/products/browse": 323,
+      "/api/logout": 49,
+      "/api/cart/remove": 143
+    },
+    "/api/checkout": {
+      "/api/cart": 58,
+      "/api/payment": 525
+    },
+    "/api/payment": {
+      "/api/confirmation": 494,
+      "/api/cart": 21
+    },
+    "/api/login": {
+      "/api/products/browse": 88,
+      "/api/users/{id}/profile": 512
+    },
+    "/api/products/{id}/reviews": {
+      "/api/products/browse": 66,
+      "/api/cart/add": 104,
+      "/api/products/{id}/details": 45
+    },
+    "/api/users/{id}/profile": {
+      "/api/users/{id}/orders": 157,
+      "/api/products/browse": 299,
+      "/api/users/{id}/settings": 97,
+      "/api/logout": 32
+    },
+    "/api/users/{id}/orders": {
+      "/api/orders/{id}/details": 121,
+      "/api/products/browse": 50,
+      "/api/users/{id}/profile": 17,
+      "/api/logout": 3
+    },
+    "/api/orders/{id}/details": {
+      "/api/orders/{id}/track": 17,
+      "/api/users/{id}/orders": 34,
+      "/api/products/browse": 52,
+      "/api/logout": 18
+    },
+    "/api/cart/remove": {
+      "/api/products/browse": 58,
+      "/api/cart": 66,
+      "/api/logout": 17
+    },
+    "/api/users/{id}/settings": {
+      "/api/users/{id}/profile": 56,
+      "/api/products/browse": 26,
+      "/api/logout": 15
+    }
+  },
+  "total_from": {
+    "/api/products/browse": 2303,
+    "/api/products/{id}/details": 2088,
+    "/api/products/search": 956,
+    "/api/cart/add": 947,
+    "/api/cart": 1019,
+    "/api/checkout": 583,
+    "/api/payment": 515,
+    "/api/login": 600,
+    "/api/products/{id}/reviews": 215,
+    "/api/users/{id}/profile": 585,
+    "/api/users/{id}/orders": 191,
+    "/api/orders/{id}/details": 121,
+    "/api/cart/remove": 141,
+    "/api/users/{id}/settings": 97
+  }
+}
