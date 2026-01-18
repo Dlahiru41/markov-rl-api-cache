@@ -1,87 +1,39 @@
-"""User's validation code for the SequenceBuilder module."""
+"""
+User-provided validation code for replay buffers.
+"""
 
-from preprocessing.sequence_builder import SequenceBuilder
-from preprocessing.models import APICall, Session
-from datetime import datetime
+from src.rl.replay_buffer import ReplayBuffer, PrioritizedReplayBuffer
+import numpy as np
 
-# Create some test sessions
-def create_sample_sessions():
-    """Create sample sessions for testing."""
-    base_time = datetime.now()
+# Test basic buffer
+buffer = ReplayBuffer(capacity=1000, seed=42)
+for i in range(100):
+    state = np.random.randn(60).astype(np.float32)
+    next_state = np.random.randn(60).astype(np.float32)
+    buffer.push(state, action=i % 7, reward=np.random.randn(),
+                next_state=next_state, done=False)
 
-    # Create calls for session 1
-    call1 = APICall(
-        call_id="1",
-        endpoint="/api/users/123",
-        method="GET",
-        params={},
-        user_id="user1",
-        session_id="sess1",
-        timestamp=base_time,
-        response_time_ms=100,
-        status_code=200,
-        response_size_bytes=1024,
-        user_type="free"
-    )
+print(f"Buffer size: {len(buffer)}")
+print(f"Ready for batch of 32: {buffer.is_ready(32)}")
 
-    call2 = APICall(
-        call_id="2",
-        endpoint="/api/products/456",
-        method="GET",
-        params={},
-        user_id="user1",
-        session_id="sess1",
-        timestamp=base_time,
-        response_time_ms=150,
-        status_code=200,
-        response_size_bytes=2048,
-        user_type="free"
-    )
+states, actions, rewards, next_states, dones = buffer.sample(32)
+print(f"Batch shapes: states={states.shape}, actions={actions.shape}")
 
-    session1 = Session(
-        session_id="sess1",
-        user_id="user1",
-        user_type="free",
-        start_timestamp=base_time,
-        calls=[call1, call2]
-    )
+# Test prioritized buffer
+pbuffer = PrioritizedReplayBuffer(capacity=1000)
+for i in range(100):
+    state = np.random.randn(60).astype(np.float32)
+    next_state = np.random.randn(60).astype(np.float32)
+    pbuffer.push(state, action=i % 7, reward=np.random.randn(),
+                 next_state=next_state, done=False)
 
-    return [session1]
+states, actions, rewards, next_states, dones, weights, indices = pbuffer.sample(32)
+print(f"Weights shape: {weights.shape}")
+print(f"Indices: {indices[:5]}")
 
+# Update priorities
+new_priorities = np.abs(np.random.randn(32)) + 0.01
+pbuffer.update_priorities(indices, new_priorities)
 
-print("\n" + "="*60)
-print("USER VALIDATION CODE")
-print("="*60 + "\n")
-
-# Test basic functionality
-builder = SequenceBuilder(normalize_endpoints=True, min_sequence_length=2)
-
-# Test normalization
-test_endpoint = "/API/Users/123/Profile/"
-normalized = builder.normalize_endpoint(test_endpoint)
-print(f"Normalization test:")
-print(f"  Input: {test_endpoint}")
-print(f"  Output: {normalized}")
-print(f"  Expected: /api/users/{{id}}/profile")
-print(f"  ✓ PASS" if normalized == "/api/users/{id}/profile" else "  ✗ FAIL")
-
-# Create test sessions
-sessions = create_sample_sessions()
-
-# Test sequence building
-sequences = builder.build_sequences(sessions)
-print(f"\nSequence building test:")
-print(f"  Built {len(sequences)} sequences")
-if sequences:
-    print(f"  Sample: {sequences[0]}")
-
-# Test n-grams
-bigrams = builder.build_ngrams(sessions, n=2)
-print(f"\nN-gram test:")
-print(f"  Extracted {len(bigrams)} bigrams")
-print(f"  First few bigrams: {bigrams[:5]}")
-
-print("\n" + "="*60)
-print("VALIDATION COMPLETE!")
-print("="*60 + "\n")
+print("\n✓ User validation code executed successfully!")
 
