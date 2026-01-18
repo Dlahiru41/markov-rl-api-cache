@@ -1,5 +1,6 @@
-"""Training utilities: replay buffers, schedulers, training loops."""
+"""Training utilities: orchestration, replay buffers, schedulers, training loops."""
 
-# Submodules planned: replay, loops, schedulers
-# Keep __all__ empty for now to avoid unresolved reference warnings.
-__all__ = []
+from src.rl.training.trainer import Trainer, TrainingConfig
+
+__all__ = ["Trainer", "TrainingConfig"]
+
