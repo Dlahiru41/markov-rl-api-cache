@@ -1,39 +1,42 @@
 """
-User-provided validation code for replay buffers.
+User's exact validation code from the requirements.
 """
 
-from src.rl.replay_buffer import ReplayBuffer, PrioritizedReplayBuffer
+from src.rl.agents.dqn_agent import DQNAgent, DoubleDQNAgent, DQNConfig
 import numpy as np
 
-# Test basic buffer
-buffer = ReplayBuffer(capacity=1000, seed=42)
-for i in range(100):
+config = DQNConfig(
+    state_dim=60,
+    action_dim=7,
+    hidden_dims=[128, 64],
+    epsilon_start=1.0,
+    epsilon_end=0.1
+)
+agent = DQNAgent(config, seed=42)
+
+# Test action selection
+state = np.random.randn(60).astype(np.float32)
+action = agent.select_action(state)
+print(f"Selected action: {action} (epsilon={agent.epsilon:.2f})")
+
+# Collect some experiences
+for i in range(200):
     state = np.random.randn(60).astype(np.float32)
+    action = agent.select_action(state)
     next_state = np.random.randn(60).astype(np.float32)
-    buffer.push(state, action=i % 7, reward=np.random.randn(),
-                next_state=next_state, done=False)
+    reward = np.random.randn()
+    done = (i % 50 == 49)
+    agent.store_transition(state, action, reward, next_state, done)
 
-print(f"Buffer size: {len(buffer)}")
-print(f"Ready for batch of 32: {buffer.is_ready(32)}")
+# Train
+for i in range(10):
+    metrics = agent.train_step()
+    if metrics:
+        print(f"Step {i}: loss={metrics['loss']:.4f}, q_mean={metrics['q_mean']:.2f}, eps={metrics['epsilon']:.3f}")
 
-states, actions, rewards, next_states, dones = buffer.sample(32)
-print(f"Batch shapes: states={states.shape}, actions={actions.shape}")
-
-# Test prioritized buffer
-pbuffer = PrioritizedReplayBuffer(capacity=1000)
-for i in range(100):
-    state = np.random.randn(60).astype(np.float32)
-    next_state = np.random.randn(60).astype(np.float32)
-    pbuffer.push(state, action=i % 7, reward=np.random.randn(),
-                 next_state=next_state, done=False)
-
-states, actions, rewards, next_states, dones, weights, indices = pbuffer.sample(32)
-print(f"Weights shape: {weights.shape}")
-print(f"Indices: {indices[:5]}")
-
-# Update priorities
-new_priorities = np.abs(np.random.randn(32)) + 0.01
-pbuffer.update_priorities(indices, new_priorities)
-
-print("\n✓ User validation code executed successfully!")
+# Test save/load
+agent.save("test_agent.pt")
+agent2 = DQNAgent(config)
+agent2.load("test_agent.pt")
+print(f"Loaded epsilon: {agent2.epsilon}")
 
