@@ -37,8 +37,8 @@ def main():
 
     print("2. Training on sequences with contexts...")
     mc_ctx.fit(sequences, contexts)
-    print(f"   ✓ Trained on {len(sequences)} sequences")
-    print(f"   ✓ Unique contexts: {len(mc_ctx.contexts)}")
+    print(f"   [OK] Trained on {len(sequences)} sequences")
+    print(f"   [OK] Unique contexts: {len(mc_ctx.contexts)}")
 
     # Test context-aware predictions
     print("\n3. Premium user in morning:")

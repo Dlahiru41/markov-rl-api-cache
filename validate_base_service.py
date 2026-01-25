@@ -31,11 +31,11 @@ def test_basic_initialization():
     service = BaseService(config)
 
     # Check FastAPI app was created
-    print(f"✓ Service name: {service.config.name}")
-    print(f"✓ FastAPI app type: {type(service.app).__name__}")
-    print(f"✓ Service port: {service.config.port}")
-    print(f"✓ Base latency: {service.config.base_latency_ms}ms")
-    print(f"✓ Failure rate: {service.config.failure_rate}")
+    print(f"[OK] Service name: {service.config.name}")
+    print(f"[OK] FastAPI app type: {type(service.app).__name__}")
+    print(f"[OK] Service port: {service.config.port}")
+    print(f"[OK] Base latency: {service.config.base_latency_ms}ms")
+    print(f"[OK] Failure rate: {service.config.failure_rate}")
     print()
 
 
@@ -68,17 +68,17 @@ def test_endpoint_registration():
     required_endpoints = ["/health", "/metrics", "/config"]
     for endpoint in required_endpoints:
         if endpoint in routes:
-            print(f"✓ Standard endpoint '{endpoint}' registered")
+            print(f"[OK] Standard endpoint '{endpoint}' registered")
         else:
-            print(f"✗ Missing standard endpoint '{endpoint}'")
+            print(f"[FAIL] Missing standard endpoint '{endpoint}'")
 
     # Verify custom endpoints exist
     custom_endpoints = ["/test", "/users/{id}", "/data"]
     for endpoint in custom_endpoints:
         if endpoint in routes:
-            print(f"✓ Custom endpoint '{endpoint}' registered")
+            print(f"[OK] Custom endpoint '{endpoint}' registered")
         else:
-            print(f"✗ Missing custom endpoint '{endpoint}'")
+            print(f"[FAIL] Missing custom endpoint '{endpoint}'")
     print()
 
 
@@ -111,14 +111,14 @@ def test_configuration_options():
 
     service = BaseService(config)
 
-    print(f"✓ Service name: {service.config.name}")
-    print(f"✓ Host: {service.config.host}")
-    print(f"✓ Port: {service.config.port}")
-    print(f"✓ Base latency: {service.config.base_latency_ms}ms ± {service.config.latency_std_ms}ms")
-    print(f"✓ Failure rate: {service.config.failure_rate:.1%}")
-    print(f"✓ Timeout rate: {service.config.timeout_rate:.1%}")
-    print(f"✓ Dependencies: {', '.join(service.config.dependencies)}")
-    print(f"✓ Endpoints count: {len(service.config.endpoints)}")
+    print(f"[OK] Service name: {service.config.name}")
+    print(f"[OK] Host: {service.config.host}")
+    print(f"[OK] Port: {service.config.port}")
+    print(f"[OK] Base latency: {service.config.base_latency_ms}ms ± {service.config.latency_std_ms}ms")
+    print(f"[OK] Failure rate: {service.config.failure_rate:.1%}")
+    print(f"[OK] Timeout rate: {service.config.timeout_rate:.1%}")
+    print(f"[OK] Dependencies: {', '.join(service.config.dependencies)}")
+    print(f"[OK] Endpoints count: {len(service.config.endpoints)}")
 
     # Check endpoint details
     ep = service.config.endpoints[0]
@@ -158,9 +158,9 @@ def test_metrics_collector():
     # Get metrics
     metrics = service.metrics.get_metrics()
 
-    print(f"✓ Total requests: {metrics['total_requests']}")
-    print(f"✓ Total errors: {metrics['total_errors']}")
-    print(f"✓ Uptime: {metrics['uptime_seconds']:.2f}s")
+    print(f"[OK] Total requests: {metrics['total_requests']}")
+    print(f"[OK] Total errors: {metrics['total_errors']}")
+    print(f"[OK] Uptime: {metrics['uptime_seconds']:.2f}s")
 
     print(f"\nEndpoint metrics:")
     for endpoint, stats in metrics['endpoints'].items():
@@ -177,7 +177,7 @@ def test_metrics_collector():
 
     # Test Prometheus format
     prom_metrics = service.metrics.get_prometheus_metrics()
-    print(f"\n✓ Prometheus metrics generated ({len(prom_metrics)} chars)")
+    print(f"\n[OK] Prometheus metrics generated ({len(prom_metrics)} chars)")
     print()
 
 
@@ -199,19 +199,19 @@ def test_chaos_engineering():
     # Test latency multiplier
     print(f"Initial latency multiplier: {service._latency_multiplier}x")
     service.set_latency_multiplier(3.0)
-    print(f"✓ Set latency multiplier to: {service._latency_multiplier}x")
+    print(f"[OK] Set latency multiplier to: {service._latency_multiplier}x")
 
     # Test failure rate override
     print(f"\nInitial failure rate: {service.config.failure_rate:.1%}")
     service.set_failure_rate(0.25)
-    print(f"✓ Set failure rate to: {service._failure_rate_override:.1%}")
+    print(f"[OK] Set failure rate to: {service._failure_rate_override:.1%}")
 
     # Test offline mode
     print(f"\nInitial offline status: {service._is_offline}")
     service.set_offline(True)
-    print(f"✓ Service offline: {service._is_offline}")
+    print(f"[OK] Service offline: {service._is_offline}")
     service.set_offline(False)
-    print(f"✓ Service back online: {service._is_offline}")
+    print(f"[OK] Service back online: {service._is_offline}")
     print()
 
 
@@ -233,7 +233,7 @@ def test_service_registry():
     service.register_service("user-service", "http://localhost:8001")
     service.register_service("auth-service", "http://localhost:8002")
 
-    print(f"✓ Registered {len(service.service_registry)} services")
+    print(f"[OK] Registered {len(service.service_registry)} services")
     for service_name, url in service.service_registry.items():
         print(f"  - {service_name}: {url}")
     print()
@@ -272,11 +272,11 @@ def test_complete_example():
     all_present = all(route in routes for route in required)
 
     if all_present:
-        print(f"✓ All required routes present: {required}")
+        print(f"[OK] All required routes present: {required}")
     else:
-        print(f"✗ Some routes missing")
+        print(f"[FAIL] Some routes missing")
         for route in required:
-            status = "✓" if route in routes else "✗"
+            status = "[OK]" if route in routes else "[FAIL]"
             print(f"  {status} {route}")
     print()
 
@@ -284,9 +284,9 @@ def test_complete_example():
 def main():
     """Run all validation tests."""
     print("\n")
-    print("╔" + "═" * 68 + "╗")
-    print("║" + " " * 15 + "BASE SERVICE VALIDATION SUITE" + " " * 24 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print("=" + "=" * 68 + "=")
+    print("|" + " " * 15 + "BASE SERVICE VALIDATION SUITE" + " " * 24 + "|")
+    print("=" + "=" * 68 + "╝")
     print()
 
     try:
@@ -299,7 +299,7 @@ def main():
         test_complete_example()
 
         print("=" * 70)
-        print("✓ ALL TESTS PASSED")
+        print("[OK] ALL TESTS PASSED")
         print("=" * 70)
         print()
         print("The base service template is ready for use!")
@@ -312,7 +312,7 @@ def main():
 
     except Exception as e:
         print("=" * 70)
-        print(f"✗ TEST FAILED: {str(e)}")
+        print(f"[FAIL] TEST FAILED: {str(e)}")
         print("=" * 70)
         import traceback
         traceback.print_exc()

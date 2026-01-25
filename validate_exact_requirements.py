@@ -23,11 +23,11 @@ tm.save("test_matrix.json")
 tm2 = TransitionMatrix.load("test_matrix.json")
 assert tm.get_probability("login", "profile") == tm2.get_probability("login", "profile")
 
-print("\n✓ All validation checks passed!")
+print("\n[OK] All validation checks passed!")
 
 # Clean up
 import os
 if os.path.exists("test_matrix.json"):
     os.remove("test_matrix.json")
-    print("✓ Cleaned up test file")
+    print("[OK] Cleaned up test file")
 

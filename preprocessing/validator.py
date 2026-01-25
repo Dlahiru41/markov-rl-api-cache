@@ -484,7 +484,7 @@ class DataValidator:
             f"Total Calls: {result['total_calls']}",
             "",
             "VALIDATION RESULTS:",
-            f"  Valid: {'✓ YES' if result['valid'] else '✗ NO'}",
+            f"  Valid: {'[OK] YES' if result['valid'] else '[FAIL] NO'}",
             f"  Invalid Sessions: {result['invalid_sessions']}",
             f"  Invalid Calls: {result['invalid_calls']}",
             f"  Errors: {len(result['errors'])}",

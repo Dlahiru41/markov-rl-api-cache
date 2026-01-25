@@ -407,9 +407,9 @@ def run_tests():
     print(f"Errors: {len(result.errors)}")
 
     if result.wasSuccessful():
-        print("\n✅ ALL TESTS PASSED!")
+        print("\n[SUCCESS] ALL TESTS PASSED!")
     else:
-        print("\n❌ SOME TESTS FAILED")
+        print("\n[ERROR] SOME TESTS FAILED")
 
     return result.wasSuccessful()
 

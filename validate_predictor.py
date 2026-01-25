@@ -17,7 +17,7 @@ def test_basic_predictor():
 
     # Create predictor
     predictor = MarkovPredictor(order=1, context_aware=False)
-    print("\n✓ Created first-order predictor")
+    print("\n[OK] Created first-order predictor")
 
     # Train
     sequences = [
@@ -26,20 +26,20 @@ def test_basic_predictor():
         ['browse', 'product', 'cart'],
     ]
     predictor.fit(sequences)
-    print(f"✓ Trained on {len(sequences)} sequences")
-    print(f"✓ Vocabulary size: {predictor.vocab_size}")
+    print(f"[OK] Trained on {len(sequences)} sequences")
+    print(f"[OK] Vocabulary size: {predictor.vocab_size}")
 
     # Observe and predict
     predictor.reset_history()
     predictor.observe('login')
     predictions = predictor.predict(k=3)
-    print(f"\n✓ After observing 'login', predictions:")
+    print(f"\n[OK] After observing 'login', predictions:")
     for api, prob in predictions:
         print(f"    - {api}: {prob:.3f}")
 
     assert len(predictions) > 0, "Should get predictions"
 
-    print("\n✓ TEST 1 PASSED\n")
+    print("\n[OK] TEST 1 PASSED\n")
 
 
 def test_history_management():
@@ -53,21 +53,21 @@ def test_history_management():
     predictor.fit(sequences)
 
     predictor.reset_history()
-    print("\n✓ Reset history")
+    print("\n[OK] Reset history")
 
     # Add observations
     for api in ['A', 'B', 'C', 'D', 'E', 'F', 'G']:
         predictor.observe(api)
 
-    print(f"✓ Observed 7 APIs")
-    print(f"✓ History size: {len(predictor.history)} (max: {predictor.history_size})")
-    print(f"✓ History: {list(predictor.history)}")
+    print(f"[OK] Observed 7 APIs")
+    print(f"[OK] History size: {len(predictor.history)} (max: {predictor.history_size})")
+    print(f"[OK] History: {list(predictor.history)}")
 
     # Should only keep last 5 due to sliding window
     assert len(predictor.history) == predictor.history_size, \
         f"History should be limited to {predictor.history_size}"
 
-    print("\n✓ TEST 2 PASSED\n")
+    print("\n[OK] TEST 2 PASSED\n")
 
 
 def test_state_vector():
@@ -90,12 +90,12 @@ def test_state_vector():
     # Get state vector
     state = predictor.get_state_vector(k=5, include_history=True)
 
-    print(f"\n✓ State vector generated")
-    print(f"✓ Shape: {state.shape}")
-    print(f"✓ First 5 values (predicted indices): {state[:5]}")
-    print(f"✓ Next 5 values (probabilities): {state[5:10]}")
-    print(f"✓ Confidence: {state[10]:.3f}")
-    print(f"✓ History encoding: {state[11:]}")
+    print(f"\n[OK] State vector generated")
+    print(f"[OK] Shape: {state.shape}")
+    print(f"[OK] First 5 values (predicted indices): {state[:5]}")
+    print(f"[OK] Next 5 values (probabilities): {state[5:10]}")
+    print(f"[OK] Confidence: {state[10]:.3f}")
+    print(f"[OK] History encoding: {state[11:]}")
 
     # Check fixed size
     assert isinstance(state, np.ndarray), "State should be numpy array"
@@ -107,9 +107,9 @@ def test_state_vector():
     state2 = predictor.get_state_vector(k=5, include_history=True)
     assert state2.shape == state.shape, "State vector size must be consistent"
 
-    print(f"\n✓ State vector size is consistent: {state.shape}")
+    print(f"\n[OK] State vector size is consistent: {state.shape}")
 
-    print("\n✓ TEST 3 PASSED\n")
+    print("\n[OK] TEST 3 PASSED\n")
 
 
 def test_second_order_predictor():
@@ -124,20 +124,20 @@ def test_second_order_predictor():
         ['A', 'B', 'E', 'F'],
     ]
     predictor.fit(sequences)
-    print("\n✓ Created second-order predictor")
+    print("\n[OK] Created second-order predictor")
 
     predictor.reset_history()
     predictor.observe('A')
     predictor.observe('B')
 
     predictions = predictor.predict(k=3)
-    print(f"\n✓ After observing 'A' then 'B', predictions:")
+    print(f"\n[OK] After observing 'A' then 'B', predictions:")
     for api, prob in predictions:
         print(f"    - {api}: {prob:.3f}")
 
     assert len(predictions) > 0, "Should get predictions with 2-step history"
 
-    print("\n✓ TEST 4 PASSED\n")
+    print("\n[OK] TEST 4 PASSED\n")
 
 
 def test_context_aware_predictor():
@@ -161,28 +161,28 @@ def test_context_aware_predictor():
         {'user_type': 'free', 'hour': 14},
     ]
     predictor.fit(sequences, contexts)
-    print("\n✓ Created context-aware predictor")
+    print("\n[OK] Created context-aware predictor")
 
     predictor.reset_history()
     predictor.observe('login', context={'user_type': 'premium', 'hour': 10})
 
     # Premium user prediction
     pred_premium = predictor.predict(k=2, context={'user_type': 'premium', 'hour': 10})
-    print(f"\n✓ Premium user predictions:")
+    print(f"\n[OK] Premium user predictions:")
     for api, prob in pred_premium:
         print(f"    - {api}: {prob:.3f}")
 
     # Free user prediction
     pred_free = predictor.predict(k=2, context={'user_type': 'free', 'hour': 14})
-    print(f"\n✓ Free user predictions:")
+    print(f"\n[OK] Free user predictions:")
     for api, prob in pred_free:
         print(f"    - {api}: {prob:.3f}")
 
     # State vector with context encoding
     state = predictor.get_state_vector(k=3, context={'user_type': 'premium', 'hour': 10})
-    print(f"\n✓ State vector shape with context: {state.shape}")
+    print(f"\n[OK] State vector shape with context: {state.shape}")
 
-    print("\n✓ TEST 5 PASSED\n")
+    print("\n[OK] TEST 5 PASSED\n")
 
 
 def test_sequence_prediction():
@@ -204,7 +204,7 @@ def test_sequence_prediction():
     # Predict next 5 positions
     seq_predictions = predictor.predict_sequence(length=5)
 
-    print(f"\n✓ Look-ahead predictions for next 5 positions:")
+    print(f"\n[OK] Look-ahead predictions for next 5 positions:")
     for i, preds in enumerate(seq_predictions, 1):
         if preds:
             top_api, top_prob = preds[0]
@@ -214,7 +214,7 @@ def test_sequence_prediction():
 
     assert len(seq_predictions) == 5, "Should return predictions for requested length"
 
-    print("\n✓ TEST 6 PASSED\n")
+    print("\n[OK] TEST 6 PASSED\n")
 
 
 def test_metrics_tracking():
@@ -247,7 +247,7 @@ def test_metrics_tracking():
 
     # Get metrics
     metrics = predictor.get_metrics()
-    print(f"\n✓ Metrics after 2 predictions:")
+    print(f"\n[OK] Metrics after 2 predictions:")
     print(f"    - Prediction count: {metrics['prediction_count']}")
     print(f"    - Average confidence: {metrics['avg_confidence']:.3f}")
     for key, value in metrics.items():
@@ -256,7 +256,7 @@ def test_metrics_tracking():
 
     assert metrics['prediction_count'] == 2, "Should have 2 predictions recorded"
 
-    print("\n✓ TEST 7 PASSED\n")
+    print("\n[OK] TEST 7 PASSED\n")
 
 
 def test_online_learning():
@@ -269,7 +269,7 @@ def test_online_learning():
     sequences = [['A', 'B', 'C']]
     predictor.fit(sequences)
 
-    print("\n✓ Initial training on ['A', 'B', 'C']")
+    print("\n[OK] Initial training on ['A', 'B', 'C']")
 
     # Observe with online learning
     predictor.reset_history()
@@ -277,13 +277,13 @@ def test_online_learning():
     predictor.observe('B')
     predictor.observe('X', update=True)  # New pattern: A -> B -> X
 
-    print("✓ Observed new pattern with update=True")
+    print("[OK] Observed new pattern with update=True")
 
     # The model should now know about X
     assert 'X' in predictor.api_vocab, "New API should be in vocabulary"
-    print(f"✓ Vocabulary updated: {list(predictor.api_vocab.keys())}")
+    print(f"[OK] Vocabulary updated: {list(predictor.api_vocab.keys())}")
 
-    print("\n✓ TEST 8 PASSED\n")
+    print("\n[OK] TEST 8 PASSED\n")
 
 
 def test_persistence():
@@ -304,21 +304,21 @@ def test_persistence():
     # Save
     save_path = 'data/test/test_predictor.json'
     predictor.save(save_path)
-    print(f"\n✓ Saved to {save_path}")
+    print(f"\n[OK] Saved to {save_path}")
 
     # Load
     predictor_loaded = MarkovPredictor.load(save_path)
-    print(f"✓ Loaded from {save_path}")
+    print(f"[OK] Loaded from {save_path}")
 
     # Verify
     loaded_predictions = predictor_loaded.predict(k=2)
-    print(f"\n✓ Original predictions: {original_predictions}")
-    print(f"✓ Loaded predictions:   {loaded_predictions}")
+    print(f"\n[OK] Original predictions: {original_predictions}")
+    print(f"[OK] Loaded predictions:   {loaded_predictions}")
 
     assert len(original_predictions) == len(loaded_predictions), "Predictions should match"
     assert predictor_loaded.vocab_size == predictor.vocab_size, "Vocab size should match"
 
-    print("\n✓ TEST 9 PASSED\n")
+    print("\n[OK] TEST 9 PASSED\n")
 
 
 def test_validation_example():
@@ -345,7 +345,7 @@ def test_validation_example():
         {'user_type': 'premium', 'hour': 20},
     ]
     predictor.fit(sequences, contexts)
-    print("\n✓ Predictor fitted")
+    print("\n[OK] Predictor fitted")
 
     # Simulate a session
     predictor.reset_history()
@@ -353,12 +353,12 @@ def test_validation_example():
 
     # Get predictions
     predictions = predictor.predict(k=5, context={'user_type': 'premium', 'hour': 10})
-    print(f"\n✓ Predictions: {predictions}")
+    print(f"\n[OK] Predictions: {predictions}")
 
     # Get state vector for RL
     state = predictor.get_state_vector(k=5, context={'user_type': 'premium', 'hour': 10})
-    print(f"\n✓ State vector shape: {state.shape}")
-    print(f"✓ State vector: {state}")
+    print(f"\n[OK] State vector shape: {state.shape}")
+    print(f"[OK] State vector: {state}")
 
     # Track accuracy
     predictor.all_predictions.append(predictions)
@@ -366,9 +366,9 @@ def test_validation_example():
     predictor.observe('profile')
 
     metrics = predictor.get_metrics()
-    print(f"\n✓ Metrics: {metrics}")
+    print(f"\n[OK] Metrics: {metrics}")
 
-    print("\n✓ TEST 10 PASSED\n")
+    print("\n[OK] TEST 10 PASSED\n")
 
 
 def test_create_predictor_factory():
@@ -389,15 +389,15 @@ def test_create_predictor_factory():
     config = MockConfig()
     predictor = create_predictor(config)
 
-    print(f"\n✓ Created predictor from config")
-    print(f"✓ Order: {predictor.order}")
-    print(f"✓ Context-aware: {predictor.context_aware}")
-    print(f"✓ Context features: {predictor.context_features}")
+    print(f"\n[OK] Created predictor from config")
+    print(f"[OK] Order: {predictor.order}")
+    print(f"[OK] Context-aware: {predictor.context_aware}")
+    print(f"[OK] Context features: {predictor.context_features}")
 
     assert predictor.order == 1, "Should use config order"
     assert predictor.context_aware == True, "Should be context-aware"
 
-    print("\n✓ TEST 11 PASSED\n")
+    print("\n[OK] TEST 11 PASSED\n")
 
 
 def demonstrate_rl_integration():
@@ -415,8 +415,8 @@ def demonstrate_rl_integration():
     ]
     predictor.fit(sequences)
 
-    print("\n✓ Predictor trained on API sequences")
-    print(f"✓ Vocabulary size: {predictor.vocab_size}")
+    print("\n[OK] Predictor trained on API sequences")
+    print(f"[OK] Vocabulary size: {predictor.vocab_size}")
 
     # Simulate RL episode
     print("\n" + "=" * 60)
@@ -465,7 +465,7 @@ def demonstrate_rl_integration():
         else:
             print(f"  {key}: {value}")
 
-    print("\n✓ DEMONSTRATION COMPLETE\n")
+    print("\n[OK] DEMONSTRATION COMPLETE\n")
 
 
 def main():
@@ -489,26 +489,26 @@ def main():
         demonstrate_rl_integration()
 
         print("=" * 70)
-        print("ALL TESTS PASSED! ✓")
+        print("ALL TESTS PASSED! [OK]")
         print("=" * 70)
         print("\nMarkovPredictor implementation is validated and ready for RL integration.")
         print("\nKey features verified:")
-        print("  ✓ Unified interface for all Markov chain variants")
-        print("  ✓ Automatic history management with sliding window")
-        print("  ✓ Fixed-size state vector generation for RL")
-        print("  ✓ Support for 1st-order, 2nd-order, and context-aware")
-        print("  ✓ Look-ahead sequence predictions")
-        print("  ✓ Real-time accuracy tracking")
-        print("  ✓ Online learning capability")
-        print("  ✓ Model persistence")
-        print("  ✓ Factory function from config")
+        print("  [OK] Unified interface for all Markov chain variants")
+        print("  [OK] Automatic history management with sliding window")
+        print("  [OK] Fixed-size state vector generation for RL")
+        print("  [OK] Support for 1st-order, 2nd-order, and context-aware")
+        print("  [OK] Look-ahead sequence predictions")
+        print("  [OK] Real-time accuracy tracking")
+        print("  [OK] Online learning capability")
+        print("  [OK] Model persistence")
+        print("  [OK] Factory function from config")
         print()
 
     except AssertionError as e:
-        print(f"\n❌ TEST FAILED: {e}\n")
+        print(f"\n[ERROR] TEST FAILED: {e}\n")
         raise
     except Exception as e:
-        print(f"\n❌ ERROR: {e}\n")
+        print(f"\n[ERROR] ERROR: {e}\n")
         import traceback
         traceback.print_exc()
         raise

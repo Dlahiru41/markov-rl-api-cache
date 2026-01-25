@@ -29,7 +29,7 @@ def test_chronological_split():
 
     train, test = splitter.split_chronological(dataset, train_ratio=0.8)
 
-    print(f"\n✓ Split completed")
+    print(f"\n[OK] Split completed")
     print(f"  Train: {len(train.sessions)} sessions")
     print(f"  Test: {len(test.sessions)} sessions")
 
@@ -38,27 +38,27 @@ def test_chronological_split():
         latest_train = max(s.start_timestamp for s in train.sessions)
         earliest_test = min(s.start_timestamp for s in test.sessions)
 
-        print(f"\n✓ Chronological order:")
+        print(f"\n[OK] Chronological order:")
         print(f"  Latest train: {latest_train.strftime('%Y-%m-%d %H:%M')}")
         print(f"  Earliest test: {earliest_test.strftime('%Y-%m-%d %H:%M')}")
 
         if latest_train <= earliest_test:
-            print(f"  ✓ Proper chronological split (no time leakage)")
+            print(f"  [OK] Proper chronological split (no time leakage)")
         else:
-            print(f"  ✗ WARNING: Some test sessions are before train sessions")
+            print(f"  [FAIL] WARNING: Some test sessions are before train sessions")
 
     # Verify no session overlap
     train_sessions = {s.session_id for s in train.sessions}
     test_sessions = {s.session_id for s in test.sessions}
 
     if train_sessions.isdisjoint(test_sessions):
-        print(f"\n✓ No session overlap (train and test are disjoint)")
+        print(f"\n[OK] No session overlap (train and test are disjoint)")
     else:
-        print(f"\n✗ ERROR: Sessions overlap!")
+        print(f"\n[FAIL] ERROR: Sessions overlap!")
 
     # Get split summary
     summary = splitter.get_split_summary(train, test)
-    print(f"\n✓ Split summary:")
+    print(f"\n[OK] Split summary:")
     print(f"  Train ratio: {summary['train_ratio']:.1%}")
     print(f"  Train calls: {summary['train_calls']}")
     print(f"  Test calls: {summary['test_calls']}")
@@ -75,7 +75,7 @@ def test_user_based_split():
 
     train, test = splitter.split_by_users(dataset, train_ratio=0.8)
 
-    print(f"\n✓ Split completed")
+    print(f"\n[OK] Split completed")
     print(f"  Train: {len(train.sessions)} sessions")
     print(f"  Test: {len(test.sessions)} sessions")
 
@@ -83,20 +83,20 @@ def test_user_based_split():
     train_users = {s.user_id for s in train.sessions}
     test_users = {s.user_id for s in test.sessions}
 
-    print(f"\n✓ User distribution:")
+    print(f"\n[OK] User distribution:")
     print(f"  Train users: {len(train_users)}")
     print(f"  Test users: {len(test_users)}")
 
     # Check for user overlap
     overlapping_users = train_users & test_users
     if not overlapping_users:
-        print(f"  ✓ No user overlap (completely new users in test)")
+        print(f"  [OK] No user overlap (completely new users in test)")
     else:
-        print(f"  ✗ WARNING: {len(overlapping_users)} users appear in both sets")
+        print(f"  [FAIL] WARNING: {len(overlapping_users)} users appear in both sets")
 
     # Verify no session overlap
     assert splitter.verify_no_overlap(train, test), "Sessions should not overlap!"
-    print(f"\n✓ No session overlap verified")
+    print(f"\n[OK] No session overlap verified")
 
 
 def test_stratified_split():
@@ -110,14 +110,14 @@ def test_stratified_split():
 
     train, test = splitter.split_stratified(dataset, train_ratio=0.8, stratify_by='user_type')
 
-    print(f"\n✓ Split completed")
+    print(f"\n[OK] Split completed")
     print(f"  Train: {len(train.sessions)} sessions")
     print(f"  Test: {len(test.sessions)} sessions")
 
     # Get user type distributions
     summary = splitter.get_split_summary(train, test)
 
-    print(f"\n✓ User type distribution:")
+    print(f"\n[OK] User type distribution:")
     print(f"  Train:")
     for user_type, count in sorted(summary['train_user_type_dist'].items()):
         pct = count / len(train.sessions) * 100
@@ -129,7 +129,7 @@ def test_stratified_split():
         print(f"    {user_type}: {count} ({pct:.1f}%)")
 
     # Verify distributions are similar
-    print(f"\n✓ Distributions should be similar (stratified)")
+    print(f"\n[OK] Distributions should be similar (stratified)")
 
 
 def test_k_fold_split():
@@ -144,7 +144,7 @@ def test_k_fold_split():
     k = 5
     folds = splitter.k_fold_split(dataset, k=k, shuffle=True)
 
-    print(f"\n✓ Created {len(folds)} folds")
+    print(f"\n[OK] Created {len(folds)} folds")
 
     # Check each fold
     for idx, (train, test) in enumerate(folds, 1):
@@ -155,7 +155,7 @@ def test_k_fold_split():
         # Verify no overlap
         assert splitter.verify_no_overlap(train, test), f"Fold {idx} has overlap!"
 
-    print(f"\n✓ All folds have no session overlap")
+    print(f"\n[OK] All folds have no session overlap")
 
     # Verify all sessions appear in test exactly once
     all_test_sessions = set()
@@ -165,9 +165,9 @@ def test_k_fold_split():
 
     original_sessions = {s.session_id for s in dataset.sessions}
     if all_test_sessions == original_sessions:
-        print(f"✓ All sessions appear in test exactly once across all folds")
+        print(f"[OK] All sessions appear in test exactly once across all folds")
     else:
-        print(f"✗ Some sessions missing or duplicated")
+        print(f"[FAIL] Some sessions missing or duplicated")
 
 
 def test_validation():
@@ -182,7 +182,7 @@ def test_validation():
     # Validate dataset
     result = validator.validate_dataset(dataset)
 
-    print(f"\n✓ Validation completed")
+    print(f"\n[OK] Validation completed")
     print(f"  Valid: {'YES' if result['valid'] else 'NO'}")
     print(f"  Total sessions: {result['total_sessions']}")
     print(f"  Total calls: {result['total_calls']}")
@@ -199,14 +199,14 @@ def test_validation():
     # Check data quality
     quality = validator.check_data_quality(dataset)
 
-    print(f"\n✓ Quality metrics:")
+    print(f"\n[OK] Quality metrics:")
     for metric, value in quality.items():
         print(f"  {metric}: {value:.1%}")
 
     # Detect anomalies
     anomalies = validator.detect_anomalies(dataset)
 
-    print(f"\n✓ Anomaly detection:")
+    print(f"\n[OK] Anomaly detection:")
     print(f"  Flagged sessions: {len(anomalies)}")
 
     if anomalies:
@@ -231,19 +231,19 @@ def test_user_validation_code():
     # Test splitting
     splitter = DataSplitter()
     train, test = splitter.split_chronological(dataset, train_ratio=0.8)
-    print(f"\n✓ Chronological split:")
+    print(f"\n[OK] Chronological split:")
     print(f"  Train: {len(train.sessions)} sessions, Test: {len(test.sessions)} sessions")
 
     # Verify no session overlap
     train_sessions = {s.session_id for s in train.sessions}
     test_sessions = {s.session_id for s in test.sessions}
     assert train_sessions.isdisjoint(test_sessions), "Sessions should not overlap!"
-    print(f"  ✓ No session overlap verified")
+    print(f"  [OK] No session overlap verified")
 
     # Test validation
     validator = DataValidator()
     result = validator.validate_dataset(dataset)
-    print(f"\n✓ Validation:")
+    print(f"\n[OK] Validation:")
     print(f"  Dataset valid: {result['valid']}")
     if result['errors']:
         print(f"  First few errors: {result['errors'][:3]}")
@@ -344,7 +344,7 @@ def test_validation_with_bad_data():
     validator = DataValidator()
     result = validator.validate_dataset(bad_dataset)
 
-    print(f"\n✓ Validation detected issues:")
+    print(f"\n[OK] Validation detected issues:")
     print(f"  Valid: {'YES' if result['valid'] else 'NO (as expected)'}")
     print(f"  Errors found: {len(result['errors'])}")
     print(f"  Warnings found: {len(result['warnings'])}")
@@ -389,7 +389,7 @@ def main():
         test_validation_summary()
 
         print("\n" + "="*70)
-        print("✅ ALL TESTS PASSED!")
+        print("[SUCCESS] ALL TESTS PASSED!")
         print("="*70)
         print("\nData splitter and validator are working correctly!")
         print("Ready for ML experiment setup and data quality assurance.")
@@ -397,7 +397,7 @@ def main():
         return 0
 
     except Exception as e:
-        print(f"\n❌ ERROR: {e}")
+        print(f"\n[ERROR] ERROR: {e}")
         import traceback
         traceback.print_exc()
         return 1

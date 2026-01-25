@@ -61,11 +61,11 @@ def example_1_basic_integration():
     builder = SequenceBuilder(normalize_endpoints=True)
 
     sequences = builder.build_sequences([session])
-    print(f"\n✓ Extracted {len(sequences)} sequence(s)")
+    print(f"\n[OK] Extracted {len(sequences)} sequence(s)")
     print(f"  Sequence: {sequences[0]}")
 
     # Show normalization effect
-    print(f"\n✓ Normalization:")
+    print(f"\n[OK] Normalization:")
     print(f"  Original: {call1.endpoint} → {builder.normalize_endpoint(call1.endpoint)}")
     print(f"  Original: {call2.endpoint} → {builder.normalize_endpoint(call2.endpoint)}")
 
@@ -112,7 +112,7 @@ def example_2_dataset_workflow():
     # Create dataset
     dataset = Dataset(name="test_dataset", sessions=sessions)
 
-    print(f"\n✓ Created dataset:")
+    print(f"\n[OK] Created dataset:")
     print(f"  Name: {dataset.name}")
     print(f"  Sessions: {len(dataset.sessions)}")
     print(f"  Total calls: {dataset.total_calls}")
@@ -124,11 +124,11 @@ def example_2_dataset_workflow():
 
     # Get sequences
     sequences = builder.build_sequences(dataset.sessions)
-    print(f"\n✓ Extracted {len(sequences)} sequences")
+    print(f"\n[OK] Extracted {len(sequences)} sequences")
 
     # Get statistics
     stats = builder.get_sequence_statistics(dataset.sessions)
-    print(f"\n✓ Statistics:")
+    print(f"\n[OK] Statistics:")
     print(f"  Avg sequence length: {stats['avg_sequence_length']:.2f}")
     print(f"  Unique endpoints: {stats['unique_endpoints']}")
     print(f"  Total transitions: {stats['total_transitions']}")
@@ -186,17 +186,17 @@ def example_3_markov_training():
 
     # Split train/test
     train_sessions, test_sessions = builder.split_sequences(sessions, train_ratio=0.75)
-    print(f"\n✓ Split data:")
+    print(f"\n[OK] Split data:")
     print(f"  Training: {len(train_sessions)} sessions")
     print(f"  Testing: {len(test_sessions)} sessions")
 
     # Calculate transition probabilities for Markov chain
     train_probs = builder.get_transition_probabilities(train_sessions)
-    print(f"\n✓ Trained Markov model:")
+    print(f"\n[OK] Trained Markov model:")
     print(f"  States (endpoints): {len(train_probs)}")
 
     # Show some probabilities
-    print(f"\n✓ Sample transition probabilities:")
+    print(f"\n[OK] Sample transition probabilities:")
     for state in list(train_probs.keys())[:3]:
         print(f"\n  From '{state}':")
         for next_state, prob in train_probs[state].items():
@@ -240,7 +240,7 @@ def example_4_context_aware():
     builder = SequenceBuilder(normalize_endpoints=True)
     contextual = builder.build_contextual_sequences(sessions)
 
-    print(f"\n✓ Extracted {len(contextual)} contextual sequences:\n")
+    print(f"\n[OK] Extracted {len(contextual)} contextual sequences:\n")
 
     for i, ctx in enumerate(contextual, 1):
         print(f"  Session {i}:")
@@ -254,7 +254,7 @@ def example_4_context_aware():
     premium_seqs = [c.sequence for c in contextual if c.user_type == 'premium']
     free_seqs = [c.sequence for c in contextual if c.user_type == 'free']
 
-    print(f"✓ User type analysis:")
+    print(f"[OK] User type analysis:")
     print(f"  Premium users: {len(premium_seqs)} sessions")
     print(f"  Free users: {len(free_seqs)} sessions")
 
@@ -273,7 +273,7 @@ def main():
     example_4_context_aware()
 
     print("\n" + "="*70)
-    print("✅ ALL INTEGRATION EXAMPLES COMPLETE")
+    print("[SUCCESS] ALL INTEGRATION EXAMPLES COMPLETE")
     print("="*70)
     print("\nThe SequenceBuilder seamlessly integrates with existing models")
     print("to provide comprehensive data preparation for Markov chain training.\n")

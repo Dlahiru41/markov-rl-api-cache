@@ -82,7 +82,7 @@ def main():
             'All Tests with Coverage'
         )
         if success:
-            print("\n✅ Coverage report generated in htmlcov/index.html")
+            print("\n[SUCCESS] Coverage report generated in htmlcov/index.html")
 
     elif args.all:
         success = run_tests(
@@ -111,9 +111,9 @@ def main():
     # Print result
     print(f"\n{'='*70}")
     if success:
-        print("✅ Tests PASSED")
+        print("[SUCCESS] Tests PASSED")
     else:
-        print("❌ Tests FAILED")
+        print("[ERROR] Tests FAILED")
     print(f"{'='*70}\n")
 
     return 0 if success else 1

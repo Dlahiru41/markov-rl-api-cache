@@ -100,7 +100,7 @@ class ServiceOrchestrator:
         self.processes[name] = process
         self.services[name] = service_def
 
-        print(f"  ✓ {name} started (PID: {process.pid})")
+        print(f"  [OK] {name} started (PID: {process.pid})")
 
     def wait_for_service(self, name: str, port: int, timeout: int = 10):
         """Wait for a service to be ready.
@@ -117,7 +117,7 @@ class ServiceOrchestrator:
             try:
                 response = httpx.get(url, timeout=2.0)
                 if response.status_code == 200:
-                    print(f"  ✓ {name} is ready")
+                    print(f"  [OK] {name} is ready")
                     return True
             except:
                 time.sleep(0.5)
@@ -138,7 +138,7 @@ class ServiceOrchestrator:
             self.wait_for_service(service_def["name"], service_def["port"])
 
         print("\n" + "=" * 70)
-        print("✓ ALL SERVICES STARTED")
+        print("[OK] ALL SERVICES STARTED")
         print("=" * 70)
         self.print_status()
 
@@ -160,12 +160,12 @@ class ServiceOrchestrator:
                 else:
                     process.terminate()
                     process.wait(timeout=5)
-                print(f"  ✓ {name} stopped")
+                print(f"  [OK] {name} stopped")
             except Exception as e:
                 print(f"  ⚠ Error stopping {name}: {e}")
 
         self.processes.clear()
-        print("\n✓ All services stopped")
+        print("\n[OK] All services stopped")
 
     def print_status(self):
         """Print status of all services."""
@@ -206,11 +206,11 @@ class ServiceOrchestrator:
                 if response.status_code == 200:
                     data = response.json()
                     status = data.get("status", "unknown")
-                    print(f"{name:<25} ✓ {status}")
+                    print(f"{name:<25} [OK] {status}")
                 else:
-                    print(f"{name:<25} ✗ HTTP {response.status_code}")
+                    print(f"{name:<25} [FAIL] HTTP {response.status_code}")
             except Exception as e:
-                print(f"{name:<25} ✗ Not responding")
+                print(f"{name:<25} [FAIL] Not responding")
 
         print("-" * 70)
         print()

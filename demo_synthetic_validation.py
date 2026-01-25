@@ -51,18 +51,18 @@ def demo_ground_truth_validation():
         show_progress=False
     )
 
-    print(f"  ✓ Generated {len(dataset.sessions)} sessions")
-    print(f"  ✓ Total calls: {dataset.total_calls}")
+    print(f"  [OK] Generated {len(dataset.sessions)} sessions")
+    print(f"  [OK] Total calls: {dataset.total_calls}")
 
     # 3. Train Markov chain (learn transitions)
     print(f"\n🎓 Training Markov chain...")
     builder = SequenceBuilder(normalize_endpoints=True)
     learned_probs = builder.get_transition_probabilities(dataset.sessions)
 
-    print(f"  ✓ Learned {len(learned_probs)} states")
+    print(f"  [OK] Learned {len(learned_probs)} states")
 
     # 4. Compare learned vs ground truth
-    print(f"\n✅ Validation Results:")
+    print(f"\n[SUCCESS] Validation Results:")
     print(f"\n  {'Transition':<50} {'True':<8} {'Learned':<8} {'Error':<8}")
     print(f"  {'-'*50} {'-'*8} {'-'*8} {'-'*8}")
 
@@ -73,7 +73,7 @@ def demo_ground_truth_validation():
         error = abs(true_prob - learned_prob)
         errors.append(error)
 
-        status = "✓" if error < 0.10 else "✗"
+        status = "[OK]" if error < 0.10 else "[FAIL]"
         print(f"  {status} {from_ep:<48}")
         print(f"     → {to_ep:<44} {true_prob:>6.1%} {learned_prob:>8.1%} {error:>8.1%}")
 
@@ -81,7 +81,7 @@ def demo_ground_truth_validation():
     print(f"\n  Average error: {avg_error:.1%}")
 
     if avg_error < 0.10:
-        print(f"  ✓ Model learned correctly! (< 10% error)")
+        print(f"  [OK] Model learned correctly! (< 10% error)")
     else:
         print(f"  ⚠ Model has significant errors (> 10%)")
 
@@ -122,7 +122,7 @@ def demo_sample_size_effect():
         learned_prob = learned_probs.get(test_from, {}).get(test_to, 0)
         error = abs(true_prob - learned_prob)
 
-        status = "✓" if error < 0.05 else "→"
+        status = "[OK]" if error < 0.05 else "→"
         print(f"  {n_users:<8} {learned_prob:>8.1%} {error:>10.1%} {status:>6}")
 
 
@@ -210,14 +210,14 @@ def demo_workflow_customization():
         }
     )
 
-    print(f"\n✓ Created custom workflow: {api_workflow.name}")
+    print(f"\n[OK] Created custom workflow: {api_workflow.name}")
 
     # Validate
     errors = SyntheticGenerator.validate_workflow(api_workflow)
     if errors:
-        print(f"  ❌ Validation errors: {errors}")
+        print(f"  [ERROR] Validation errors: {errors}")
     else:
-        print(f"  ✓ Workflow is valid")
+        print(f"  [OK] Workflow is valid")
 
     # Generate data
     gen = SyntheticGenerator(seed=42)
@@ -227,7 +227,7 @@ def demo_workflow_customization():
         show_progress=False
     )
 
-    print(f"\n✓ Generated data from custom workflow:")
+    print(f"\n[OK] Generated data from custom workflow:")
     print(f"  Sessions: {len(dataset.sessions)}")
     print(f"  Total calls: {dataset.total_calls}")
     print(f"  Unique endpoints: {len(dataset.unique_endpoints)}")
@@ -273,12 +273,12 @@ def demo_reproducibility():
     print(f"    Path: {' → '.join(session3.endpoint_sequence[:5])}...")
 
     if session1.endpoint_sequence == session2.endpoint_sequence:
-        print(f"\n  ✓ Sessions 1 and 2 are identical (same seed)")
+        print(f"\n  [OK] Sessions 1 and 2 are identical (same seed)")
     else:
-        print(f"\n  ❌ Sessions 1 and 2 differ (should be same!)")
+        print(f"\n  [ERROR] Sessions 1 and 2 differ (should be same!)")
 
     if session1.endpoint_sequence != session3.endpoint_sequence:
-        print(f"  ✓ Session 3 is different (different seed)")
+        print(f"  [OK] Session 3 is different (different seed)")
     else:
         print(f"  Note: Sessions may be same by chance for simple workflows")
 
@@ -330,7 +330,7 @@ def main():
     demo_user_type_distribution()
 
     print("\n" + "="*70)
-    print("✅ ALL DEMONSTRATIONS COMPLETE")
+    print("[SUCCESS] ALL DEMONSTRATIONS COMPLETE")
     print("="*70)
     print("\nKey Takeaways:")
     print("  1. Synthetic data has known ground truth probabilities")

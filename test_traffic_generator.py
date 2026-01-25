@@ -22,7 +22,7 @@ async def test_profile_loading():
 
     profile = TrafficProfile.from_yaml('simulator/traffic/profiles/normal.yaml')
 
-    print(f"✓ Profile loaded: {profile.name}")
+    print(f"[OK] Profile loaded: {profile.name}")
     print(f"  - RPS: {profile.requests_per_second}")
     print(f"  - Duration: {profile.duration_seconds}s")
     print(f"  - Ramp up: {profile.ramp_up_seconds}s")
@@ -31,7 +31,7 @@ async def test_profile_loading():
 
     assert profile.name == "normal"
     assert profile.requests_per_second == 200
-    print("✓ Profile validation passed\n")
+    print("[OK] Profile validation passed\n")
 
 
 async def test_traffic_generation():
@@ -64,13 +64,13 @@ async def test_traffic_generation():
 
     generator = TrafficGenerator(profile, service_urls)
 
-    print("✓ Generator created")
+    print("[OK] Generator created")
     print("Starting traffic generation...")
 
     try:
         # Start generator
         await generator.start()
-        print("✓ Generator started")
+        print("[OK] Generator started")
 
         # Monitor for 10 seconds
         for i in range(10):
@@ -83,7 +83,7 @@ async def test_traffic_generation():
         # Get final stats
         stats = generator.get_stats()
 
-        print("\n✓ Generation complete")
+        print("\n[OK] Generation complete")
         print(f"Total requests: {stats['total']}")
         print(f"Successful: {stats['successful']}")
         print(f"Failed: {stats['failed']}")
@@ -99,10 +99,10 @@ async def test_traffic_generation():
 
         # Stop generator
         await generator.stop()
-        print("\n✓ Generator stopped cleanly")
+        print("\n[OK] Generator stopped cleanly")
 
     except Exception as e:
-        print(f"\n✗ Error: {e}")
+        print(f"\n[FAIL] Error: {e}")
         await generator.stop()
         raise
 
@@ -123,13 +123,13 @@ async def test_all_profiles():
     for profile_path in profiles:
         try:
             profile = TrafficProfile.from_yaml(profile_path)
-            print(f"✓ {profile.name}: {profile.requests_per_second} RPS, "
+            print(f"[OK] {profile.name}: {profile.requests_per_second} RPS, "
                   f"{profile.duration_seconds}s duration")
         except Exception as e:
-            print(f"✗ Failed to load {profile_path}: {e}")
+            print(f"[FAIL] Failed to load {profile_path}: {e}")
             raise
 
-    print("✓ All profiles loaded successfully\n")
+    print("[OK] All profiles loaded successfully\n")
 
 
 async def test_workflows():
@@ -162,14 +162,14 @@ async def test_workflows():
     for name, workflow_class in workflows:
         workflow = workflow_class('test_user', 'premium', service_urls)
         steps = workflow._define_steps()
-        print(f"✓ {name}: {len(steps)} steps defined")
+        print(f"[OK] {name}: {len(steps)} steps defined")
 
         # Test getting first request
         request = workflow.get_next_request()
         assert request is not None, f"{name} should return a request"
         print(f"  First request: {request[1]} {request[0]}")
 
-    print("✓ All workflows validated\n")
+    print("[OK] All workflows validated\n")
 
 
 async def test_pause_resume():
@@ -187,7 +187,7 @@ async def test_pause_resume():
 
     try:
         await generator.start()
-        print("✓ Generator started")
+        print("[OK] Generator started")
 
         # Run for 3 seconds
         await asyncio.sleep(3)
@@ -196,14 +196,14 @@ async def test_pause_resume():
 
         # Pause
         generator.pause()
-        print("✓ Generator paused")
+        print("[OK] Generator paused")
         await asyncio.sleep(2)
         stats2 = generator.get_stats()
         print(f"After pause: {stats2['total']} requests (should be same)")
 
         # Resume
         generator.resume()
-        print("✓ Generator resumed")
+        print("[OK] Generator resumed")
         await asyncio.sleep(3)
         stats3 = generator.get_stats()
         print(f"After resume: {stats3['total']} requests (should increase)")
@@ -211,7 +211,7 @@ async def test_pause_resume():
         assert stats3['total'] > stats2['total'], "Traffic should resume after pause"
 
         await generator.stop()
-        print("✓ Pause/resume working correctly\n")
+        print("[OK] Pause/resume working correctly\n")
 
     except Exception as e:
         await generator.stop()
@@ -221,9 +221,9 @@ async def test_pause_resume():
 async def main():
     """Run all tests."""
     print("\n")
-    print("╔" + "═" * 68 + "╗")
-    print("║" + " " * 18 + "TRAFFIC GENERATOR TESTS" + " " * 27 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print("=" + "=" * 68 + "=")
+    print("|" + " " * 18 + "TRAFFIC GENERATOR TESTS" + " " * 27 + "|")
+    print("=" + "=" * 68 + "╝")
 
     try:
         await test_profile_loading()
@@ -240,16 +240,16 @@ async def main():
         await test_pause_resume()
 
         print("=" * 70)
-        print("✅ ALL TESTS PASSED")
+        print("[SUCCESS] ALL TESTS PASSED")
         print("=" * 70)
         print()
         print("Summary:")
-        print("  ✓ Profile loading from YAML working")
-        print("  ✓ All 4 profile files valid")
-        print("  ✓ All 4 workflows defined correctly")
-        print("  ✓ Traffic generation working")
-        print("  ✓ Statistics tracking accurate")
-        print("  ✓ Pause/resume functionality working")
+        print("  [OK] Profile loading from YAML working")
+        print("  [OK] All 4 profile files valid")
+        print("  [OK] All 4 workflows defined correctly")
+        print("  [OK] Traffic generation working")
+        print("  [OK] Statistics tracking accurate")
+        print("  [OK] Pause/resume functionality working")
         print()
         print("Traffic generator is ready to use!")
         print()
@@ -260,7 +260,7 @@ async def main():
         print()
 
     except Exception as e:
-        print(f"\n✗ TEST FAILED: {e}")
+        print(f"\n[FAIL] TEST FAILED: {e}")
         import traceback
         traceback.print_exc()
         return False

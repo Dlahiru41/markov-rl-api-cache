@@ -23,10 +23,10 @@ def main():
     # Create and start manager
     manager = CacheManager(config)
     if not manager.start():
-        print("❌ Failed to start manager")
+        print("[ERROR] Failed to start manager")
         return 1
 
-    print("✅ Manager started successfully")
+    print("[SUCCESS] Manager started successfully")
 
     try:
         # Test 1: Basic caching
@@ -42,9 +42,9 @@ def main():
         print(f"Retrieved user: {retrieved}")
 
         if retrieved == user_data:
-            print("✅ Basic caching works")
+            print("[SUCCESS] Basic caching works")
         else:
-            print("❌ Retrieved data doesn't match")
+            print("[ERROR] Retrieved data doesn't match")
 
         # Test 2: get_or_set
         print("\n" + "="*70)
@@ -68,9 +68,9 @@ def main():
         print(f"Product (2nd call): {product2}")
 
         if call_count == 1:
-            print("✅ get_or_set uses cache correctly")
+            print("[SUCCESS] get_or_set uses cache correctly")
         else:
-            print(f"❌ Factory called {call_count} times (expected 1)")
+            print(f"[ERROR] Factory called {call_count} times (expected 1)")
 
         # Test 3: Default value
         print("\n" + "="*70)
@@ -81,9 +81,9 @@ def main():
         print(f"Missing key (with default): {missing}")
 
         if missing == {'error': 'not found'}:
-            print("✅ Default value works")
+            print("[SUCCESS] Default value works")
         else:
-            print("❌ Default value incorrect")
+            print("[ERROR] Default value incorrect")
 
         # Test 4: Delete
         print("\n" + "="*70)
@@ -100,9 +100,9 @@ def main():
         print(f"After delete: {after_delete}")
 
         if after_delete is None:
-            print("✅ Delete works")
+            print("[SUCCESS] Delete works")
         else:
-            print("❌ Delete failed")
+            print("[ERROR] Delete failed")
 
         # Test 5: Prefetch
         print("\n" + "="*70)
@@ -117,12 +117,12 @@ def main():
         print(f"Prefetch queue size: {len(queue)}")
 
         if len(queue) == 3:
-            print("✅ Prefetch queue works")
+            print("[SUCCESS] Prefetch queue works")
             print("\nQueue items (by priority):")
             for item in queue:
                 print(f"  - {item['endpoint']} (priority={item['priority']})")
         else:
-            print(f"❌ Expected 3 items in queue, got {len(queue)}")
+            print(f"[ERROR] Expected 3 items in queue, got {len(queue)}")
 
         # Test 6: Prefetch many
         print("\n" + "="*70)
@@ -140,9 +140,9 @@ def main():
         print(f"Queue size after prefetch_many: {len(queue)}")
 
         if len(queue) >= 6:
-            print("✅ prefetch_many works")
+            print("[SUCCESS] prefetch_many works")
         else:
-            print(f"❌ Expected at least 6 items, got {len(queue)}")
+            print(f"[ERROR] Expected at least 6 items, got {len(queue)}")
 
         # Test 7: Compression
         print("\n" + "="*70)
@@ -158,9 +158,9 @@ def main():
         retrieved_large = manager.get('/api/large')
 
         if retrieved_large == large_data:
-            print("✅ Compression and decompression works")
+            print("[SUCCESS] Compression and decompression works")
         else:
-            print("❌ Compression test failed")
+            print("[ERROR] Compression test failed")
 
         # Test 8: Different data types
         print("\n" + "="*70)
@@ -190,13 +190,13 @@ def main():
                 expected = value
 
             if retrieved == expected:
-                print(f"  ✅ {name}: {value}")
+                print(f"  [SUCCESS] {name}: {value}")
             else:
-                print(f"  ❌ {name}: expected {expected}, got {retrieved}")
+                print(f"  [ERROR] {name}: expected {expected}, got {retrieved}")
                 all_passed = False
 
         if all_passed:
-            print("✅ All data types work")
+            print("[SUCCESS] All data types work")
 
         # Test 9: Metrics
         print("\n" + "="*70)
@@ -217,9 +217,9 @@ def main():
         print(f"  Prefetch queue size: {metrics.get('prefetch_queue_size', 0)}")
 
         if metrics.get('cache_operations', 0) > 0:
-            print("✅ Metrics tracking works")
+            print("[SUCCESS] Metrics tracking works")
         else:
-            print("❌ No metrics recorded")
+            print("[ERROR] No metrics recorded")
 
         # Test 10: Cache key generation
         print("\n" + "="*70)
@@ -236,9 +236,9 @@ def main():
         print(f"Key 2: {key2}")
 
         if key1 == key2:
-            print("✅ Cache key generation is deterministic")
+            print("[SUCCESS] Cache key generation is deterministic")
         else:
-            print("❌ Keys don't match (parameter ordering issue)")
+            print("[ERROR] Keys don't match (parameter ordering issue)")
 
         # Test long key hashing
         long_params = {f'param{i}': f'value{i}' * 10 for i in range(50)}
@@ -246,9 +246,9 @@ def main():
         print(f"\nLong key (length {len(long_key)}): {long_key[:100]}...")
 
         if len(long_key) < 300:
-            print("✅ Long keys are hashed")
+            print("[SUCCESS] Long keys are hashed")
         else:
-            print("❌ Long key not hashed properly")
+            print("[ERROR] Long key not hashed properly")
 
         # Test 11: Eviction
         print("\n" + "="*70)
@@ -272,16 +272,16 @@ def main():
         print(f"Entries after eviction: {entries_after}")
 
         if evicted > 0:
-            print("✅ LRU eviction works")
+            print("[SUCCESS] LRU eviction works")
         else:
-            print("❌ No entries evicted")
+            print("[ERROR] No entries evicted")
 
         # Final summary
         print("\n" + "="*70)
         print("VALIDATION SUMMARY")
         print("="*70)
 
-        print("\n✅ All tests completed successfully!")
+        print("\n[SUCCESS] All tests completed successfully!")
         print("\nFinal metrics:")
         final_metrics = manager.get_metrics()
         for key, value in sorted(final_metrics.items()):
@@ -293,7 +293,7 @@ def main():
     finally:
         # Stop manager
         manager.stop()
-        print("\n✅ Manager stopped successfully")
+        print("\n[SUCCESS] Manager stopped successfully")
 
     return 0
 

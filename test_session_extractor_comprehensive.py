@@ -77,7 +77,7 @@ try:
     print(f"Total calls processed: {stats['total_calls_processed']}")
     print(f"Sessions created: {stats['total_sessions_created']}")
 
-    print("✓ Test 1 passed!")
+    print("[OK] Test 1 passed!")
 finally:
     temp_json_path.unlink()
 
@@ -102,7 +102,7 @@ try:
     print(f"Extracted {len(sessions2)} sessions from nested JSON")
     assert len(sessions2) == 1, f"Expected 1 session, got {len(sessions2)}"
 
-    print("✓ Test 2 passed!")
+    print("[OK] Test 2 passed!")
 finally:
     temp_json_path.unlink()
 
@@ -129,7 +129,7 @@ print(f"Sessions created: {stats3['sessions_kept']}")
 assert stats3['calls_with_missing_timestamps'] == 1, "Should detect 1 missing timestamp"
 assert stats3['total_calls_processed'] == 2, "Should process only calls with valid timestamps"
 
-print("✓ Test 3 passed!")
+print("[OK] Test 3 passed!")
 print()
 
 # Test 4: Edge case - all calls exceed timeout
@@ -151,7 +151,7 @@ assert len(sessions4) == 3, f"Expected 3 separate sessions, got {len(sessions4)}
 for i, session in enumerate(sessions4, 1):
     print(f"  Session {i}: {session.num_calls} call(s)")
 
-print("✓ Test 4 passed!")
+print("[OK] Test 4 passed!")
 print()
 
 # Test 5: Complex multi-user scenario
@@ -218,7 +218,7 @@ for user_id, count in sorted(user_session_count.items()):
     print(f"  {user_id}: {count} session(s)")
 
 print()
-print("✓ Test 5 passed!")
+print("[OK] Test 5 passed!")
 print()
 
 # Test 6: Session ID assignment
@@ -246,7 +246,7 @@ for session in sessions6:
 assert sessions6[0].session_id == "alice_session_0"
 assert sessions6[1].session_id == "alice_session_1"
 
-print("✓ Test 6 passed!")
+print("[OK] Test 6 passed!")
 print()
 
 # Test 7: Statistics accuracy
@@ -274,7 +274,7 @@ print(f"Min/Max length: {stats7['min_session_length']}/{stats7['max_session_leng
 assert abs(stats7['average_session_duration_seconds'] - expected_duration) < 1, "Duration calculation mismatch"
 assert stats7['average_session_length'] == 10, "Length calculation mismatch"
 
-print("✓ Test 7 passed!")
+print("[OK] Test 7 passed!")
 print()
 
 # Test 8: Repr method
@@ -294,22 +294,22 @@ assert "45" in repr_str, "Should include timeout value"
 assert "3" in repr_str, "Should include min_session_length"
 assert "100" in repr_str, "Should include max_session_length"
 
-print("✓ Test 8 passed!")
+print("[OK] Test 8 passed!")
 print()
 
 print("=" * 70)
-print("✓ ALL COMPREHENSIVE TESTS PASSED!")
+print("[OK] ALL COMPREHENSIVE TESTS PASSED!")
 print("=" * 70)
 print()
 
 # Print summary
 print("Summary:")
-print(f"  ✓ JSON file extraction")
-print(f"  ✓ Nested JSON structure")
-print(f"  ✓ Missing timestamp handling")
-print(f"  ✓ Far-apart calls")
-print(f"  ✓ Complex multi-user scenarios")
-print(f"  ✓ Session ID assignment")
-print(f"  ✓ Statistics accuracy")
-print(f"  ✓ String representation")
+print(f"  [OK] JSON file extraction")
+print(f"  [OK] Nested JSON structure")
+print(f"  [OK] Missing timestamp handling")
+print(f"  [OK] Far-apart calls")
+print(f"  [OK] Complex multi-user scenarios")
+print(f"  [OK] Session ID assignment")
+print(f"  [OK] Statistics accuracy")
+print(f"  [OK] String representation")
 

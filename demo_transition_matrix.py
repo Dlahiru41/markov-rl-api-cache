@@ -34,7 +34,7 @@ def demo_basic_operations():
     tm.increment("product", "cart", 70)
     tm.increment("product", "details", 30)
 
-    print("✓ Added 8 transition patterns")
+    print("[OK] Added 8 transition patterns")
 
     # Query counts and probabilities
     print("\nQuerying transition probabilities:")
@@ -155,7 +155,7 @@ def demo_serialization(tm):
     # Save to JSON
     output_file = "demo_matrix.json"
     tm.save(output_file)
-    print(f"\n✓ Saved matrix to '{output_file}'")
+    print(f"\n[OK] Saved matrix to '{output_file}'")
 
     # Check file size
     file_size = Path(output_file).stat().st_size
@@ -163,7 +163,7 @@ def demo_serialization(tm):
 
     # Load from JSON
     tm_loaded = TransitionMatrix.load(output_file)
-    print(f"\n✓ Loaded matrix from '{output_file}'")
+    print(f"\n[OK] Loaded matrix from '{output_file}'")
 
     # Verify data integrity
     original_prob = tm.get_probability("login", "profile")
@@ -172,7 +172,7 @@ def demo_serialization(tm):
     print(f"\nData Integrity Check:")
     print(f"  Original P(profile|login): {original_prob:.6f}")
     print(f"  Loaded P(profile|login):   {loaded_prob:.6f}")
-    print(f"  Match: {original_prob == loaded_prob} ✓")
+    print(f"  Match: {original_prob == loaded_prob} [OK]")
 
     # Show structure
     print(f"\nJSON Structure Preview:")
@@ -185,7 +185,7 @@ def demo_serialization(tm):
 
     # Clean up
     Path(output_file).unlink()
-    print(f"\n✓ Cleaned up '{output_file}'")
+    print(f"\n[OK] Cleaned up '{output_file}'")
 
 
 def demo_dataframe_conversion(tm):
@@ -195,7 +195,7 @@ def demo_dataframe_conversion(tm):
     try:
         df = tm.to_dataframe()
 
-        print("\n✓ Converted to pandas DataFrame")
+        print("\n[OK] Converted to pandas DataFrame")
         print(f"\nShape: {df.shape[0]} rows × {df.shape[1]} columns")
         print(f"Columns: {', '.join(df.columns)}")
 
@@ -224,7 +224,7 @@ def demo_cache_prefetching(tm):
     print(f"\nTop {len(candidates)} most likely next endpoints:")
     to_prefetch = []
     for state, prob in candidates:
-        status = "✓ PREFETCH" if prob > threshold else "✗ Skip"
+        status = "[OK] PREFETCH" if prob > threshold else "[FAIL] Skip"
         print(f"  {state:12s}: {prob:.2%}  [{status}]")
         if prob > threshold:
             to_prefetch.append(state)
@@ -268,9 +268,9 @@ def demo_incremental_learning():
 
 def main():
     """Run all demonstrations."""
-    print("\n" + "╔" + "═" * 68 + "╗")
-    print("║" + " " * 15 + "TransitionMatrix Comprehensive Demo" + " " * 18 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print("\n" + "=" + "=" * 68 + "=")
+    print("|" + " " * 15 + "TransitionMatrix Comprehensive Demo" + " " * 18 + "|")
+    print("=" + "=" * 68 + "╝")
 
     try:
         # Run all demos
@@ -286,7 +286,7 @@ def main():
 
         # Final summary
         print_section("Summary")
-        print("\n✓ All demonstrations completed successfully!")
+        print("\n[OK] All demonstrations completed successfully!")
         print("\nKey Takeaways:")
         print("  • Sparse storage is efficient for real-world transition data")
         print("  • Top-k queries enable efficient cache prefetching decisions")
@@ -301,7 +301,7 @@ def main():
         print("  4. Integrate with your Markov chain model")
 
     except Exception as e:
-        print(f"\n✗ Error during demo: {e}")
+        print(f"\n[FAIL] Error during demo: {e}")
         raise
 
 

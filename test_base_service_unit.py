@@ -26,8 +26,8 @@ def main():
         ]
     )
     service = BaseService(config)
-    print(f"  ✓ Service name: {service.config.name}")
-    print(f"  ✓ FastAPI app type: {type(service.app).__name__}")
+    print(f"  [OK] Service name: {service.config.name}")
+    print(f"  [OK] FastAPI app type: {type(service.app).__name__}")
     print()
 
     # Test 2: Endpoint registration
@@ -40,9 +40,9 @@ def main():
     required = ["/health", "/metrics", "/test"]
     all_present = all(route in routes for route in required)
     if all_present:
-        print(f"  ✓ All required routes present")
+        print(f"  [OK] All required routes present")
     else:
-        print(f"  ✗ Some routes missing")
+        print(f"  [FAIL] Some routes missing")
     print()
 
     # Test 3: Test client requests (without starting server)
@@ -55,7 +55,7 @@ def main():
     print(f"    Response: {response.json()}")
     assert response.status_code == 200
     assert "status" in response.json()
-    print(f"    ✓ Health check working")
+    print(f"    [OK] Health check working")
 
     # Config endpoint
     response = client.get("/config")
@@ -64,7 +64,7 @@ def main():
     print(f"    Service: {config_data['name']}")
     print(f"    Endpoints: {len(config_data['endpoints'])}")
     assert response.status_code == 200
-    print(f"    ✓ Config endpoint working")
+    print(f"    [OK] Config endpoint working")
 
     # Metrics endpoint
     response = client.get("/metrics/json")
@@ -72,34 +72,34 @@ def main():
     metrics = response.json()
     print(f"    Total requests: {metrics['total_requests']}")
     assert response.status_code == 200
-    print(f"    ✓ Metrics endpoint working")
+    print(f"    [OK] Metrics endpoint working")
 
     # Custom endpoint
     response = client.get("/test")
     print(f"  GET /test: {response.status_code}")
     assert response.status_code == 200
-    print(f"    ✓ Custom endpoint working")
+    print(f"    [OK] Custom endpoint working")
     print()
 
     # Test 4: Chaos engineering
     print("Test 4: Chaos Engineering Controls")
     service.set_latency_multiplier(5.0)
-    print(f"  ✓ Latency multiplier set to: {service._latency_multiplier}x")
+    print(f"  [OK] Latency multiplier set to: {service._latency_multiplier}x")
 
     service.set_failure_rate(0.25)
-    print(f"  ✓ Failure rate set to: {service._failure_rate_override:.1%}")
+    print(f"  [OK] Failure rate set to: {service._failure_rate_override:.1%}")
 
     service.set_offline(True)
-    print(f"  ✓ Service offline: {service._is_offline}")
+    print(f"  [OK] Service offline: {service._is_offline}")
 
     # Test offline mode
     response = client.get("/health")
     print(f"  GET /health (while offline): {response.status_code}")
     assert response.status_code == 503
-    print(f"    ✓ Offline mode working")
+    print(f"    [OK] Offline mode working")
 
     service.set_offline(False)
-    print(f"  ✓ Service back online: {not service._is_offline}")
+    print(f"  [OK] Service back online: {not service._is_offline}")
     print()
 
     # Test 5: Metrics collection
@@ -121,7 +121,7 @@ def main():
         print(f"    - Mean latency: {stats['latency_mean_ms']:.1f}ms")
         print(f"    - P95 latency: {stats['latency_p95_ms']:.1f}ms")
 
-    print(f"  ✓ Metrics collection working")
+    print(f"  [OK] Metrics collection working")
     print()
 
     # Test 6: Service registry
@@ -131,7 +131,7 @@ def main():
     print(f"  Registered services: {len(service.service_registry)}")
     for svc_name, url in service.service_registry.items():
         print(f"    - {svc_name}: {url}")
-    print(f"  ✓ Service registry working")
+    print(f"  [OK] Service registry working")
     print()
 
     # Test 7: Prometheus metrics
@@ -140,7 +140,7 @@ def main():
     print(f"  Prometheus text length: {len(prom_text)} bytes")
     print(f"  Contains HELP: {'# HELP' in prom_text}")
     print(f"  Contains TYPE: {'# TYPE' in prom_text}")
-    print(f"  ✓ Prometheus format working")
+    print(f"  [OK] Prometheus format working")
     print()
 
     # Test 8: Complex service configuration
@@ -171,24 +171,24 @@ def main():
     custom_routes = ["/fast", "/slow", "/data"]
     all_registered = all(route in routes for route in custom_routes)
     print(f"  Custom endpoints registered: {all_registered}")
-    print(f"  ✓ Complex configuration working")
+    print(f"  [OK] Complex configuration working")
     print()
 
     print("=" * 70)
-    print("✓ ALL UNIT TESTS PASSED")
+    print("[OK] ALL UNIT TESTS PASSED")
     print("=" * 70)
     print()
     print("Summary:")
-    print("  ✓ ServiceConfig and EndpointConfig dataclasses working")
-    print("  ✓ BaseService initialization successful")
-    print("  ✓ FastAPI app created and configured")
-    print("  ✓ Standard endpoints registered (/health, /metrics, /config)")
-    print("  ✓ Custom endpoints registered from configuration")
-    print("  ✓ Chaos engineering controls functional")
-    print("  ✓ Metrics collection tracking requests correctly")
-    print("  ✓ Service registry for dependencies working")
-    print("  ✓ Prometheus metrics format generated")
-    print("  ✓ Complex configurations supported")
+    print("  [OK] ServiceConfig and EndpointConfig dataclasses working")
+    print("  [OK] BaseService initialization successful")
+    print("  [OK] FastAPI app created and configured")
+    print("  [OK] Standard endpoints registered (/health, /metrics, /config)")
+    print("  [OK] Custom endpoints registered from configuration")
+    print("  [OK] Chaos engineering controls functional")
+    print("  [OK] Metrics collection tracking requests correctly")
+    print("  [OK] Service registry for dependencies working")
+    print("  [OK] Prometheus metrics format generated")
+    print("  [OK] Complex configurations supported")
     print()
     print("🎉 BaseService template validation complete!")
     print()
@@ -201,14 +201,14 @@ def main():
 
 if __name__ == "__main__":
     print("\n")
-    print("╔" + "═" * 68 + "╗")
-    print("║" + " " * 20 + "UNIT TEST SUITE" + " " * 33 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print("=" + "=" * 68 + "=")
+    print("|" + " " * 20 + "UNIT TEST SUITE" + " " * 33 + "|")
+    print("=" + "=" * 68 + "╝")
 
     try:
         main()
     except Exception as e:
-        print(f"\n✗ Test failed: {e}")
+        print(f"\n[FAIL] Test failed: {e}")
         import traceback
         traceback.print_exc()
 

@@ -231,7 +231,7 @@ print(f"  {successful_calls}/{total_calls} = {success_rate:.1f}%")
 print()
 
 print("=" * 70)
-print("✓ WORKFLOW COMPLETE!")
+print("[OK] WORKFLOW COMPLETE!")
 print("=" * 70)
 print()
 print("Next steps:")

@@ -1,4 +1,18 @@
-"""Failure injection utilities (timeouts, errors, node drops)."""
+"""
+Failure Injection Package
 
-# Public API (to be implemented): injectors
-__all__ = []
+Tools for testing system resilience through controlled failure injection.
+"""
+
+from .injector import (
+    FailureScenario,
+    FailureInjector,
+    CascadeSimulator,
+)
+
+__all__ = [
+    "FailureScenario",
+    "FailureInjector",
+    "CascadeSimulator",
+]
+

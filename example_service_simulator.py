@@ -178,7 +178,7 @@ async def demonstrate_service_calls():
     order_service.register_service("user-service", "http://localhost:8001")
     order_service.register_service("product-service", "http://localhost:8002")
 
-    print("✓ Services created and dependencies registered")
+    print("[OK] Services created and dependencies registered")
     print(f"  - {user_service.config.name} on port {user_service.config.port}")
     print(f"  - {product_service.config.name} on port {product_service.config.port}")
     print(f"  - {order_service.config.name} on port {order_service.config.port}")
@@ -231,14 +231,14 @@ def demonstrate_chaos_engineering():
         print(f"Scenario: {scenario['name']}")
         print(f"  Description: {scenario['description']}")
         scenario['actions'](service)
-        print(f"  Status: Applied ✓")
+        print(f"  Status: Applied [OK]")
         print()
 
     # Reset
     service.set_latency_multiplier(1.0)
     service.set_failure_rate(0.01)
     service.set_offline(False)
-    print("✓ Service reset to normal operation")
+    print("[OK] Service reset to normal operation")
     print()
 
 
@@ -322,9 +322,9 @@ def show_service_summary():
 def main():
     """Run all demonstrations."""
     print("\n")
-    print("╔" + "═" * 68 + "╗")
-    print("║" + " " * 15 + "MICROSERVICE SIMULATOR DEMO" + " " * 26 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print("=" + "=" * 68 + "=")
+    print("|" + " " * 15 + "MICROSERVICE SIMULATOR DEMO" + " " * 26 + "|")
+    print("=" + "=" * 68 + "╝")
 
     # Run demonstrations
     show_service_summary()
@@ -333,7 +333,7 @@ def main():
     asyncio.run(demonstrate_service_calls())
 
     print("=" * 70)
-    print("✓ DEMONSTRATION COMPLETE")
+    print("[OK] DEMONSTRATION COMPLETE")
     print("=" * 70)
     print()
     print("Key Takeaways:")

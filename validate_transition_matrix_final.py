@@ -11,10 +11,10 @@ def test_import():
     """Test that TransitionMatrix can be imported."""
     try:
         from src.markov import TransitionMatrix
-        print("✅ Import successful: from src.markov import TransitionMatrix")
+        print("[SUCCESS] Import successful: from src.markov import TransitionMatrix")
         return True
     except ImportError as e:
-        print(f"❌ Import failed: {e}")
+        print(f"[ERROR] Import failed: {e}")
         return False
 
 def test_basic_functionality():
@@ -32,12 +32,12 @@ def test_basic_functionality():
         assert abs(prob_b - 0.667) < 0.01, f"Expected ~0.667, got {prob_b}"
         assert abs(prob_c - 0.333) < 0.01, f"Expected ~0.333, got {prob_c}"
 
-        print(f"✅ Basic operations working:")
+        print(f"[SUCCESS] Basic operations working:")
         print(f"   P(B|A) = {prob_b:.3f}")
         print(f"   P(C|A) = {prob_c:.3f}")
         return True
     except Exception as e:
-        print(f"❌ Basic operations failed: {e}")
+        print(f"[ERROR] Basic operations failed: {e}")
         return False
 
 def test_top_k():
@@ -54,11 +54,11 @@ def test_top_k():
         assert len(top) == 2, f"Expected 2 results, got {len(top)}"
         assert top[0][0] == "Y", f"Expected 'Y' first, got {top[0][0]}"
 
-        print(f"✅ Top-K queries working:")
+        print(f"[SUCCESS] Top-K queries working:")
         print(f"   Top from 'X': {top}")
         return True
     except Exception as e:
-        print(f"❌ Top-K failed: {e}")
+        print(f"[ERROR] Top-K failed: {e}")
         return False
 
 def test_serialization():
@@ -83,12 +83,12 @@ def test_serialization():
 
         os.remove(test_file)
 
-        print(f"✅ Serialization working:")
+        print(f"[SUCCESS] Serialization working:")
         print(f"   Saved and loaded successfully")
         print(f"   Probability preserved: {prob1:.3f}")
         return True
     except Exception as e:
-        print(f"❌ Serialization failed: {e}")
+        print(f"[ERROR] Serialization failed: {e}")
         return False
 
 def test_statistics():
@@ -106,13 +106,13 @@ def test_statistics():
         assert stats['num_states'] == 3, f"Expected 3 states, got {stats['num_states']}"
         assert stats['num_transitions'] == 3, f"Expected 3 transitions"
 
-        print(f"✅ Statistics working:")
+        print(f"[SUCCESS] Statistics working:")
         print(f"   States: {stats['num_states']}")
         print(f"   Transitions: {stats['num_transitions']}")
         print(f"   Sparsity: {stats['sparsity']:.1%}")
         return True
     except Exception as e:
-        print(f"❌ Statistics failed: {e}")
+        print(f"[ERROR] Statistics failed: {e}")
         return False
 
 def check_files():
@@ -134,9 +134,9 @@ def check_files():
         path = Path(file_path)
         if path.exists():
             size = path.stat().st_size
-            print(f"   ✅ {file_path:50s} ({size:6,} bytes)")
+            print(f"   [SUCCESS] {file_path:50s} ({size:6,} bytes)")
         else:
-            print(f"   ❌ {file_path:50s} (missing)")
+            print(f"   [ERROR] {file_path:50s} (missing)")
             all_exist = False
 
     return all_exist
@@ -176,7 +176,7 @@ def main():
     total = len(results)
 
     for name, result in results:
-        status = "✅ PASS" if result else "❌ FAIL"
+        status = "[SUCCESS] PASS" if result else "[ERROR] FAIL"
         print(f"  {status}  {name}")
 
     print(f"\n  Total: {passed}/{total} tests passed")
@@ -185,10 +185,10 @@ def main():
         print("\n" + "🎉" * 35)
         print("\n  ✨ ALL VALIDATION TESTS PASSED! ✨")
         print("\n  The TransitionMatrix implementation is:")
-        print("    ✅ Fully functional")
-        print("    ✅ Well tested")
-        print("    ✅ Production ready")
-        print("    ✅ Documented")
+        print("    [SUCCESS] Fully functional")
+        print("    [SUCCESS] Well tested")
+        print("    [SUCCESS] Production ready")
+        print("    [SUCCESS] Documented")
         print("\n  Next steps:")
         print("    • Run: python demo_transition_matrix.py")
         print("    • Run: python example_transition_matrix_integration.py")
@@ -197,7 +197,7 @@ def main():
         print("\n" + "🎉" * 35 + "\n")
         return 0
     else:
-        print("\n❌ Some tests failed. Please review the errors above.\n")
+        print("\n[ERROR] Some tests failed. Please review the errors above.\n")
         return 1
 
 if __name__ == "__main__":

@@ -265,7 +265,7 @@ def demonstrate_markov_training(dataset):
             is_correct = (predicted_next == actual_next)
             correct += is_correct
 
-            status = "✓ CORRECT" if is_correct else "✗ WRONG"
+            status = "[OK] CORRECT" if is_correct else "[FAIL] WRONG"
             print(f"  Current: {current}")
             print(f"    Predicted: {predicted_next} | Actual: {actual_next} | {status}\n")
         else:
@@ -300,7 +300,7 @@ def main():
     demonstrate_markov_training(dataset)
 
     print("\n" + "="*80)
-    print("✅ DEMONSTRATION COMPLETE!")
+    print("[SUCCESS] DEMONSTRATION COMPLETE!")
     print("="*80)
     print("\nThe SequenceBuilder module is ready for Markov chain training.")
     print("See SEQUENCE_BUILDER_GUIDE.md for detailed documentation.\n")

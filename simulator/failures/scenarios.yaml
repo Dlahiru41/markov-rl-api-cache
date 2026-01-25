@@ -1,0 +1,193 @@
+# Pre-defined Failure Scenarios
+# Common failure patterns for testing system resilience
+
+scenarios:
+  # Payment Gateway Slowdown
+  - name: "payment_gateway_slow"
+    description: "Payment gateway experiencing high latency due to external API issues"
+    affected_services:
+      - "payment-service"
+    failure_type: "latency"
+    parameters:
+      multiplier: 5.0
+    duration_seconds: 60
+    start_delay_seconds: 0
+
+  # Database Connection Exhaustion
+  - name: "database_connection_exhaustion"
+    description: "User service database connection pool exhausted, causing errors"
+    affected_services:
+      - "user-service"
+    failure_type: "error"
+    parameters:
+      rate: 0.5
+      status_code: 503
+    duration_seconds: 120
+    start_delay_seconds: 0
+
+  # Memory Pressure
+  - name: "memory_pressure"
+    description: "All services experiencing memory pressure, gradually slowing down"
+    affected_services:
+      - "user-service"
+      - "product-service"
+      - "cart-service"
+      - "order-service"
+      - "payment-service"
+      - "inventory-service"
+      - "auth-service"
+    failure_type: "latency"
+    parameters:
+      multiplier: 3.0
+    duration_seconds: 180
+    start_delay_seconds: 0
+
+  # Full Cascade Failure
+  - name: "full_cascade"
+    description: "Complete cascade starting from payment service failure"
+    affected_services:
+      - "payment-service"
+    failure_type: "cascade"
+    parameters:
+      trigger_service: "payment-service"
+      propagation_rate: 0.8
+    duration_seconds: null  # Manual stop required
+    start_delay_seconds: 0
+
+  # Partial Outage (Datacenter)
+  - name: "partial_outage"
+    description: "Simulates one datacenter's services becoming unavailable"
+    affected_services:
+      - "product-service"
+      - "inventory-service"
+    failure_type: "error"
+    parameters:
+      rate: 1.0  # 100% errors
+      status_code: 503
+    duration_seconds: 300
+    start_delay_seconds: 0
+
+  # Network Partition
+  - name: "network_partition"
+    description: "Order service cannot reach payment service due to network issues"
+    affected_services:
+      - "order-service"
+      - "payment-service"
+    failure_type: "partition"
+    parameters: {}
+    duration_seconds: 90
+    start_delay_seconds: 0
+
+  # Authentication Service Overload
+  - name: "auth_overload"
+    description: "Auth service overwhelmed, causing timeouts"
+    affected_services:
+      - "auth-service"
+    failure_type: "timeout"
+    parameters:
+      rate: 0.3
+      timeout_ms: 30000
+    duration_seconds: 60
+    start_delay_seconds: 0
+
+  # Product Service Degradation
+  - name: "product_search_slow"
+    description: "Product search functionality extremely slow"
+    affected_services:
+      - "product-service"
+    failure_type: "latency"
+    parameters:
+      multiplier: 10.0
+    duration_seconds: 120
+    start_delay_seconds: 0
+
+  # Inventory Service Intermittent
+  - name: "inventory_intermittent"
+    description: "Inventory service returning errors intermittently"
+    affected_services:
+      - "inventory-service"
+    failure_type: "error"
+    parameters:
+      rate: 0.3
+      status_code: 500
+    duration_seconds: 180
+    start_delay_seconds: 0
+
+  # Cart Service Timeout
+  - name: "cart_timeout"
+    description: "Cart service timing out due to backend issues"
+    affected_services:
+      - "cart-service"
+    failure_type: "timeout"
+    parameters:
+      rate: 0.5
+    duration_seconds: 90
+    start_delay_seconds: 0
+
+  # Multi-Service Degradation
+  - name: "multi_service_degradation"
+    description: "Multiple services experiencing degraded performance simultaneously"
+    affected_services:
+      - "user-service"
+      - "product-service"
+      - "order-service"
+    failure_type: "latency"
+    parameters:
+      multiplier: 4.0
+    duration_seconds: 150
+    start_delay_seconds: 0
+
+  # Thundering Herd
+  - name: "thundering_herd"
+    description: "Sudden spike causing all services to slow down"
+    affected_services:
+      - "user-service"
+      - "auth-service"
+      - "product-service"
+      - "cart-service"
+      - "order-service"
+    failure_type: "latency"
+    parameters:
+      multiplier: 8.0
+    duration_seconds: 30
+    start_delay_seconds: 0
+
+  # Payment Service Complete Outage
+  - name: "payment_outage"
+    description: "Payment service completely unavailable"
+    affected_services:
+      - "payment-service"
+    failure_type: "error"
+    parameters:
+      rate: 1.0
+      status_code: 503
+    duration_seconds: 120
+    start_delay_seconds: 0
+
+  # Gradual Degradation
+  - name: "gradual_degradation"
+    description: "Services gradually slow down over time (testing gradual failures)"
+    affected_services:
+      - "product-service"
+      - "cart-service"
+    failure_type: "latency"
+    parameters:
+      multiplier: 2.0
+    duration_seconds: 300
+    start_delay_seconds: 60
+
+  # Chaos Monkey Random
+  - name: "chaos_monkey"
+    description: "Random service failures to test overall resilience"
+    affected_services:
+      - "user-service"
+      - "product-service"
+      - "cart-service"
+      - "payment-service"
+    failure_type: "error"
+    parameters:
+      rate: 0.2
+      status_code: 500
+    duration_seconds: 600
+    start_delay_seconds: 0
+

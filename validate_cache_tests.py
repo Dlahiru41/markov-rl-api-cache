@@ -40,7 +40,7 @@ def test_cache_entry():
     assert not entry.is_expired
     assert entry.ttl_remaining > 0
 
-    print("✅ CacheEntry tests passed")
+    print("[SUCCESS] CacheEntry tests passed")
 
 
 def test_cache_stats():
@@ -72,7 +72,7 @@ def test_cache_stats():
     assert 'hits' in d
     assert 'hit_rate' in d
 
-    print("✅ CacheStats tests passed")
+    print("[SUCCESS] CacheStats tests passed")
 
 
 def test_inmemory_backend():
@@ -135,7 +135,7 @@ def test_inmemory_backend():
     assert stats.hits >= 0
     assert stats.misses >= 0
 
-    print("✅ InMemoryBackend tests passed")
+    print("[SUCCESS] InMemoryBackend tests passed")
 
 
 def test_redis_backend_imports():
@@ -169,10 +169,10 @@ def test_redis_backend_imports():
         except CacheError:
             pass
 
-        print(f"✅ Redis backend imports passed (REDIS_AVAILABLE={REDIS_AVAILABLE})")
+        print(f"[SUCCESS] Redis backend imports passed (REDIS_AVAILABLE={REDIS_AVAILABLE})")
 
     except Exception as e:
-        print(f"⚠️  Redis backend import issue: {e}")
+        print(f"[WARNING]  Redis backend import issue: {e}")
 
 
 def main():
@@ -193,12 +193,12 @@ def main():
         return 0
 
     except AssertionError as e:
-        print(f"\n❌ Test failed: {e}")
+        print(f"\n[ERROR] Test failed: {e}")
         import traceback
         traceback.print_exc()
         return 1
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n[ERROR] Error: {e}")
         import traceback
         traceback.print_exc()
         return 1

@@ -233,14 +233,14 @@ def demo_feature_extraction():
 
     # Create dataset
     dataset = create_demo_dataset()
-    print(f"\n✓ Created dataset with {len(dataset.sessions)} sessions")
+    print(f"\n[OK] Created dataset with {len(dataset.sessions)} sessions")
     print(f"  Total calls: {dataset.total_calls}")
 
     # Fit feature engineer
     fe = FeatureEngineer()
     fe.fit(dataset.sessions)
 
-    print(f"\n✓ Fitted FeatureEngineer")
+    print(f"\n[OK] Fitted FeatureEngineer")
     info = fe.get_feature_info()
     print(f"  Feature dimension: {info['feature_dim']}")
     print(f"  Categories: {info['categories']}")
@@ -252,7 +252,7 @@ def demo_feature_extraction():
 
     features = fe.transform(call, session, history)
 
-    print(f"\n✓ Extracted features for sample call:")
+    print(f"\n[OK] Extracted features for sample call:")
     print(f"  Call: {call.endpoint} ({call.method})")
     print(f"  Feature vector shape: {features.shape}")
     print(f"  Feature range: [{features.min():.3f}, {features.max():.3f}]")
@@ -277,13 +277,13 @@ def demo_environment():
 
     env = SimpleCachingEnvironment(fe, dataset.sessions[:3])
 
-    print(f"\n✓ Created caching environment")
+    print(f"\n[OK] Created caching environment")
     print(f"  State dimension: {fe.get_feature_dim()}")
     print(f"  Action space: {{0: don't cache, 1: cache}}")
     print(f"  Cache capacity: {env.cache_capacity}")
 
     # Run one episode
-    print(f"\n✓ Running sample episode:")
+    print(f"\n[OK] Running sample episode:")
     state = env.reset()
     total_reward = 0
 
@@ -326,7 +326,7 @@ def demo_training():
     env = SimpleCachingEnvironment(fe, train_sessions)
     agent = SimpleQLearningAgent(state_dim=fe.get_feature_dim())
 
-    print(f"\n✓ Training setup:")
+    print(f"\n[OK] Training setup:")
     print(f"  Training sessions: {len(train_sessions)}")
     print(f"  Feature dimension: {fe.get_feature_dim()}")
     print(f"  Agent: Simple Q-Learning")
@@ -335,7 +335,7 @@ def demo_training():
     num_episodes = 20
     episode_rewards = []
 
-    print(f"\n✓ Training for {num_episodes} episodes...")
+    print(f"\n[OK] Training for {num_episodes} episodes...")
 
     for episode in range(num_episodes):
         state = env.reset()
@@ -360,7 +360,7 @@ def demo_training():
             print(f"  Episode {episode + 1:2d}: avg reward = {avg_reward:+7.2f}")
 
     # Show learning curve
-    print(f"\n✓ Training complete!")
+    print(f"\n[OK] Training complete!")
     print(f"  Early episodes (1-5): {np.mean(episode_rewards[:5]):+7.2f}")
     print(f"  Late episodes (16-20): {np.mean(episode_rewards[-5:]):+7.2f}")
     improvement = np.mean(episode_rewards[-5:]) - np.mean(episode_rewards[:5])
@@ -424,7 +424,7 @@ def demo_comparison():
     print(f"  Average reward (last 10): {np.mean(q_rewards[-10:]):+7.2f}")
 
     # Comparison
-    print(f"\n✓ Comparison:")
+    print(f"\n[OK] Comparison:")
     print(f"  Random agent:     {np.mean(random_rewards):+7.2f}")
     print(f"  Q-learning agent: {np.mean(q_rewards[-10:]):+7.2f}")
     print(f"  Improvement:      {np.mean(q_rewards[-10:]) - np.mean(random_rewards):+7.2f}")
@@ -445,7 +445,7 @@ def main():
     demo_comparison()
 
     print("\n" + "="*70)
-    print("✅ DEMONSTRATION COMPLETE")
+    print("[SUCCESS] DEMONSTRATION COMPLETE")
     print("="*70)
     print("\nKey Takeaways:")
     print("  1. FeatureEngineer converts API calls to numerical states")

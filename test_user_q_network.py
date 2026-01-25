@@ -34,5 +34,5 @@ print(f"Advantages shape: {advantages.shape}")  # Should be (32, 7)
 net2 = create_network(config_dueling)
 assert isinstance(net2, DuelingQNetwork)
 
-print("\n✓ User validation code executed successfully!")
+print("\n[OK] User validation code executed successfully!")
 

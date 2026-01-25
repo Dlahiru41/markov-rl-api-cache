@@ -185,7 +185,7 @@ def train_dqn_agent(
 
     # Save trained agent
     agent.save(save_path)
-    print(f"\n✓ Agent saved to {save_path}")
+    print(f"\n[OK] Agent saved to {save_path}")
 
     # Summary
     print("\n" + "=" * 80)
@@ -219,7 +219,7 @@ def evaluate_agent(agent_path, num_episodes=10):
     agent = DQNAgent(config)
     agent.load(agent_path)
 
-    print(f"✓ Agent loaded from {agent_path}")
+    print(f"[OK] Agent loaded from {agent_path}")
     print(f"Epsilon: {agent.epsilon:.3f}")
     print(f"Evaluating for {num_episodes} episodes...")
     print()

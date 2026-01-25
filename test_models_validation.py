@@ -96,5 +96,5 @@ print("Dataset repr:")
 print(dataset)
 print()
 
-print("✓ All validations passed!")
+print("[OK] All validations passed!")
 

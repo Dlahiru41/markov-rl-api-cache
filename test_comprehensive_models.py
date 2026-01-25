@@ -30,7 +30,7 @@ call_restored = APICall.from_dict(call_dict)
 assert call1.call_id == call_restored.call_id
 assert call1.endpoint == call_restored.endpoint
 assert call1.status_code == call_restored.status_code
-print("  ✓ Serialization/deserialization works correctly")
+print("  [OK] Serialization/deserialization works correctly")
 print()
 
 # Test 2: Service name extraction
@@ -57,7 +57,7 @@ for endpoint, expected in test_cases:
     )
     result = call.get_service_name()
     assert result == expected, f"Expected {expected}, got {result}"
-    print(f"  ✓ {endpoint} → {result}")
+    print(f"  [OK] {endpoint} → {result}")
 print()
 
 # Test 3: Success status check
@@ -86,7 +86,7 @@ for status, expected in status_tests:
     )
     result = call.is_successful()
     assert result == expected, f"Status {status}: expected {expected}, got {result}"
-print(f"  ✓ Tested {len(status_tests)} status codes")
+print(f"  [OK] Tested {len(status_tests)} status codes")
 print()
 
 # Test 4: Session with multiple calls
@@ -121,9 +121,9 @@ transitions = session.get_endpoint_transitions()
 assert len(transitions) == 4, f"Expected 4 transitions, got {len(transitions)}"
 assert transitions[0] == ("/api/home", "/api/products")
 assert transitions[-1] == ("/api/cart", "/api/checkout")
-print(f"  ✓ Generated {len(transitions)} transitions correctly")
-print(f"  ✓ Session duration: {session.duration_seconds:.2f}s")
-print(f"  ✓ Number of calls: {session.num_calls}")
+print(f"  [OK] Generated {len(transitions)} transitions correctly")
+print(f"  [OK] Session duration: {session.duration_seconds:.2f}s")
+print(f"  [OK] Number of calls: {session.num_calls}")
 print()
 
 # Test 5: Session serialization
@@ -133,7 +133,7 @@ session_restored = Session.from_dict(session_dict)
 assert session.session_id == session_restored.session_id
 assert session.num_calls == session_restored.num_calls
 assert len(session.get_endpoint_transitions()) == len(session_restored.get_endpoint_transitions())
-print("  ✓ Session serialization works correctly")
+print("  [OK] Session serialization works correctly")
 print()
 
 # Test 6: Dataset with multiple sessions
@@ -170,16 +170,16 @@ dataset = Dataset(
     metadata={"version": "1.0", "source": "test"}
 )
 
-print(f"  ✓ Total calls: {dataset.total_calls}")
-print(f"  ✓ Unique users: {dataset.num_unique_users}")
-print(f"  ✓ Unique endpoints: {len(dataset.unique_endpoints)}")
-print(f"  ✓ Date range: {dataset.date_range}")
+print(f"  [OK] Total calls: {dataset.total_calls}")
+print(f"  [OK] Unique users: {dataset.num_unique_users}")
+print(f"  [OK] Unique endpoints: {len(dataset.unique_endpoints)}")
+print(f"  [OK] Date range: {dataset.date_range}")
 print()
 
 # Test 7: Endpoint counting
 print("Test 7: Endpoint occurrence counting")
 counts = dataset.count_endpoint_occurrences()
-print(f"  ✓ Counted {len(counts)} unique endpoints")
+print(f"  [OK] Counted {len(counts)} unique endpoints")
 for endpoint, count in sorted(counts.items()):
     print(f"    {endpoint}: {count} times")
 print()
@@ -187,18 +187,18 @@ print()
 # Test 8: Dataset splitting
 print("Test 8: Dataset train/test split")
 train, test = dataset.split(train_ratio=0.7)
-print(f"  ✓ Train sessions: {len(train.sessions)}")
-print(f"  ✓ Test sessions: {len(test.sessions)}")
-print(f"  ✓ Train calls: {train.total_calls}")
-print(f"  ✓ Test calls: {test.total_calls}")
+print(f"  [OK] Train sessions: {len(train.sessions)}")
+print(f"  [OK] Test sessions: {len(test.sessions)}")
+print(f"  [OK] Train calls: {train.total_calls}")
+print(f"  [OK] Test calls: {test.total_calls}")
 assert len(train.sessions) + len(test.sessions) == len(dataset.sessions)
 print()
 
 # Test 9: All sequences extraction
 print("Test 9: Sequence extraction for Markov training")
 sequences = dataset.get_all_sequences()
-print(f"  ✓ Extracted {len(sequences)} sequences")
-print(f"  ✓ Sample sequence: {sequences[0][:3]}...")
+print(f"  [OK] Extracted {len(sequences)} sequences")
+print(f"  [OK] Sample sequence: {sequences[0][:3]}...")
 print()
 
 # Test 10: Validation tests
@@ -217,9 +217,9 @@ try:
         response_size_bytes=100,
         user_type="free"
     )
-    print("  ✗ Should have raised ValueError for negative response time")
+    print("  [FAIL] Should have raised ValueError for negative response time")
 except ValueError as e:
-    print(f"  ✓ Correctly caught negative response_time_ms")
+    print(f"  [OK] Correctly caught negative response_time_ms")
 
 try:
     bad_call = APICall(
@@ -235,9 +235,9 @@ try:
         response_size_bytes=100,
         user_type="invalid"  # Invalid type!
     )
-    print("  ✗ Should have raised ValueError for invalid user_type")
+    print("  [FAIL] Should have raised ValueError for invalid user_type")
 except ValueError as e:
-    print(f"  ✓ Correctly caught invalid user_type")
+    print(f"  [OK] Correctly caught invalid user_type")
 
 try:
     bad_call = APICall(
@@ -253,9 +253,9 @@ try:
         response_size_bytes=100,
         user_type="free"
     )
-    print("  ✗ Should have raised ValueError for endpoint without leading slash")
+    print("  [FAIL] Should have raised ValueError for endpoint without leading slash")
 except ValueError as e:
-    print(f"  ✓ Correctly caught endpoint without leading slash")
+    print(f"  [OK] Correctly caught endpoint without leading slash")
 
 print()
 
@@ -267,6 +267,6 @@ print(f"  Dataset repr: {repr(dataset)}")
 print()
 
 print("=" * 60)
-print("ALL TESTS PASSED! ✓")
+print("ALL TESTS PASSED! [OK]")
 print("=" * 60)
 

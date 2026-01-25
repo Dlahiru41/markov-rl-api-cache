@@ -51,9 +51,9 @@ def test_user_service():
             print(f"Status Code: {response.status_code}")
             print(f"Response: {response.json()}")
             assert response.status_code == 200, "Health check failed"
-            print("✓ PASSED")
+            print("[OK] PASSED")
         except Exception as e:
-            print(f"✗ FAILED: {e}")
+            print(f"[FAIL] FAILED: {e}")
             return False
 
         # Test 2: Login (should return fake token)
@@ -80,13 +80,13 @@ def test_user_service():
             if data.get("status") == "success":
                 assert "token" in data, "Missing token field"
                 assert "user_id" in data, "Missing user_id field"
-                print("✓ PASSED - Full login successful")
+                print("[OK] PASSED - Full login successful")
             else:
                 print("⚠ Login returned expected failure (AuthService not running)")
                 print("  UserService is responding correctly")
 
         except Exception as e:
-            print(f"✗ FAILED: {e}")
+            print(f"[FAIL] FAILED: {e}")
             return False
 
         # Test 3: Get Profile
@@ -102,9 +102,9 @@ def test_user_service():
             assert response.status_code == 200, "Get profile failed"
             assert "user_id" in data, "Missing user_id field"
             assert "username" in data, "Missing username field"
-            print("✓ PASSED")
+            print("[OK] PASSED")
         except Exception as e:
-            print(f"✗ FAILED: {e}")
+            print(f"[FAIL] FAILED: {e}")
             return False
 
         # Test 4: Metrics
@@ -118,9 +118,9 @@ def test_user_service():
 
             assert response.status_code == 200, "Get metrics failed"
             assert "user-service" in response.text, "Metrics missing service name"
-            print("✓ PASSED")
+            print("[OK] PASSED")
         except Exception as e:
-            print(f"✗ FAILED: {e}")
+            print(f"[FAIL] FAILED: {e}")
             return False
 
         # Test 5: Register new user
@@ -146,13 +146,13 @@ def test_user_service():
 
             assert response.status_code == 200, "Registration failed"
             assert data.get("status") == "success", "Registration not successful"
-            print("✓ PASSED")
+            print("[OK] PASSED")
         except Exception as e:
-            print(f"✗ FAILED: {e}")
+            print(f"[FAIL] FAILED: {e}")
             return False
 
         print("\n" + "=" * 70)
-        print("✓ ALL TESTS PASSED")
+        print("[OK] ALL TESTS PASSED")
         print("=" * 70)
         print()
         print("UserService is working correctly!")

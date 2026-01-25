@@ -55,14 +55,14 @@ with tempfile.TemporaryDirectory() as tmpdir:
 
     print(f"Saving to: {filepath}")
     dataset.save_to_parquet(filepath)
-    print(f"  ✓ File saved successfully")
-    print(f"  ✓ File size: {filepath.stat().st_size} bytes")
+    print(f"  [OK] File saved successfully")
+    print(f"  [OK] File size: {filepath.stat().st_size} bytes")
     print()
 
     # Load from parquet
     print(f"Loading from: {filepath}")
     loaded_dataset = Dataset.load_from_parquet(filepath)
-    print(f"  ✓ Dataset loaded successfully")
+    print(f"  [OK] Dataset loaded successfully")
     print()
 
     # Verify loaded data
@@ -108,6 +108,6 @@ with tempfile.TemporaryDirectory() as tmpdir:
     print()
 
 print("=" * 60)
-print("✓ ALL PARQUET TESTS PASSED!")
+print("[OK] ALL PARQUET TESTS PASSED!")
 print("=" * 60)
 

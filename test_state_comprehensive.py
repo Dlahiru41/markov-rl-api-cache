@@ -26,7 +26,7 @@ def test_basic_functionality():
     print(f"State min/max: {state.min():.2f}, {state.max():.2f}")
     print(f"State dtype: {state.dtype}")
     assert state.shape[0] == config.state_dim, f"Shape mismatch: {state.shape[0]} != {config.state_dim}"
-    print("✓ Basic functionality test passed!\n")
+    print("[OK] Basic functionality test passed!\n")
 
 def test_missing_inputs():
     """Test handling of missing inputs."""
@@ -43,7 +43,7 @@ def test_missing_inputs():
     print(f"State with all defaults shape: {state.shape}")
     print(f"State with all defaults: {state}")
     assert state.shape[0] == config.state_dim
-    print("✓ Missing inputs test passed!\n")
+    print("[OK] Missing inputs test passed!\n")
 
 def test_feature_names():
     """Test feature names generation."""
@@ -59,7 +59,7 @@ def test_feature_names():
     print(f"Total features: {len(feature_names)}")
     print(f"Feature names: {feature_names}")
     assert len(feature_names) == config.state_dim
-    print("✓ Feature names test passed!\n")
+    print("[OK] Feature names test passed!\n")
 
 def test_cyclical_encoding():
     """Test cyclical encoding for temporal features."""
@@ -85,7 +85,7 @@ def test_cyclical_encoding():
     print(f"Hour 0: {state_0}")
     print(f"Hour 12: {state_12}")
     print(f"Hour 23: {state_23}")
-    print("✓ Cyclical encoding test passed!\n")
+    print("[OK] Cyclical encoding test passed!\n")
 
 def test_value_ranges():
     """Test that all values are in expected ranges."""
@@ -117,7 +117,7 @@ def test_value_ranges():
     for i, (name, value) in enumerate(zip(feature_names, state)):
         print(f"{i:2d}. {name:25s}: {value:7.3f}")
 
-    print("✓ Value ranges test passed!\n")
+    print("[OK] Value ranges test passed!\n")
 
 def test_different_user_types():
     """Test one-hot encoding for different user types."""
@@ -142,7 +142,7 @@ def test_different_user_types():
     print(f"Free user: {state_free}")
     print(f"Guest user: {state_guest}")
     print(f"Unknown user: {state_unknown}")
-    print("✓ User type encoding test passed!\n")
+    print("[OK] User type encoding test passed!\n")
 
 def test_unfitted_builder():
     """Test that unfitted builder raises error."""
@@ -155,10 +155,10 @@ def test_unfitted_builder():
 
     try:
         state = builder.build_state()
-        print("✗ Should have raised ValueError!")
+        print("[FAIL] Should have raised ValueError!")
         assert False
     except ValueError as e:
-        print(f"✓ Correctly raised ValueError: {e}\n")
+        print(f"[OK] Correctly raised ValueError: {e}\n")
 
 if __name__ == "__main__":
     test_basic_functionality()
@@ -170,6 +170,6 @@ if __name__ == "__main__":
     test_unfitted_builder()
 
     print("="*60)
-    print("ALL TESTS PASSED! ✓")
+    print("ALL TESTS PASSED! [OK]")
     print("="*60)
 

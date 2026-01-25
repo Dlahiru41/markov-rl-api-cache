@@ -44,7 +44,7 @@ def main():
         sessions_per_user=(5, 2)
     )
 
-    print("\n✓ Pipeline completed successfully!")
+    print("\n[OK] Pipeline completed successfully!")
     print()
 
     # Step 2: Verify outputs exist
@@ -65,9 +65,9 @@ def main():
         filepath = output_dir / filename
         if filepath.exists():
             size_kb = filepath.stat().st_size / 1024
-            print(f"  ✓ {filename:<25} ({size_kb:.1f} KB)")
+            print(f"  [OK] {filename:<25} ({size_kb:.1f} KB)")
         else:
-            print(f"  ✗ {filename:<25} (MISSING!)")
+            print(f"  [FAIL] {filename:<25} (MISSING!)")
 
     print()
 
@@ -181,7 +181,7 @@ def main():
 
     # Summary
     print("=" * 70)
-    print("  ✓ Demo completed successfully!")
+    print("  [OK] Demo completed successfully!")
     print("=" * 70)
     print()
     print("Key takeaways:")

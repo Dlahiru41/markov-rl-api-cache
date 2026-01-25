@@ -33,12 +33,12 @@ def main():
     # Train first-order model
     predictor_first = MarkovPredictor(order=1, history_size=10)
     predictor_first.fit(sequences)
-    print("   ✓ First-order model trained")
+    print("   [OK] First-order model trained")
 
     # Train second-order model
     predictor_second = MarkovPredictor(order=2, history_size=10)
     predictor_second.fit(sequences)
-    print("   ✓ Second-order model trained")
+    print("   [OK] Second-order model trained")
 
     # 2. Basic evaluation
     print("\n2. Basic Evaluation Metrics")
@@ -152,7 +152,7 @@ def main():
             output_path='data/test/demo_model_comparison.png'
         )
 
-        print("\n   ✓ All visualizations saved to data/test/")
+        print("\n   [OK] All visualizations saved to data/test/")
 
     except Exception as e:
         print(f"\n   ⚠ Visualizations skipped: {e}")

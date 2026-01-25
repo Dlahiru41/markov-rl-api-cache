@@ -34,26 +34,26 @@ state = torch.randn(32, 60)  # Batch of 32 states
 q_values = net(state)
 print(f"\nQ-values shape: {q_values.shape}")  # Should be (32, 7)
 assert q_values.shape == (32, 7), f"Expected (32, 7), got {q_values.shape}"
-print("✓ Q-values shape correct!")
+print("[OK] Q-values shape correct!")
 
 # Test action selection
 actions = net.get_action(state)
 print(f"\nActions shape: {actions.shape}")  # Should be (32,)
 assert actions.shape == (32,), f"Expected (32,), got {actions.shape}"
 assert actions.dtype == torch.int64, f"Expected int64, got {actions.dtype}"
-print("✓ Actions shape and dtype correct!")
+print("[OK] Actions shape and dtype correct!")
 
 # Test single state (no batch)
 single_state = torch.randn(60)
 single_q = net(single_state)
 print(f"\nSingle state Q-values shape: {single_q.shape}")  # Should be (7,)
 assert single_q.shape == (7,), f"Expected (7,), got {single_q.shape}"
-print("✓ Single state forward pass works!")
+print("[OK] Single state forward pass works!")
 
 single_action = net.get_action(single_state)
 print(f"Single state action shape: {single_action.shape}")  # Should be ()
 assert single_action.ndim == 0, f"Expected scalar, got shape {single_action.shape}"
-print("✓ Single state action selection works!")
+print("[OK] Single state action selection works!")
 
 # Test 2: Dueling QNetwork
 print("\n" + "=" * 70)
@@ -75,31 +75,31 @@ print(f"\nParameters: {sum(p.numel() for p in dueling_net.parameters()):,}")
 q_values = dueling_net(state)
 print(f"\nQ-values shape: {q_values.shape}")  # Should be (32, 7)
 assert q_values.shape == (32, 7), f"Expected (32, 7), got {q_values.shape}"
-print("✓ Dueling Q-values shape correct!")
+print("[OK] Dueling Q-values shape correct!")
 
 # Test value stream
 values = dueling_net.get_value(state)
 print(f"\nValues shape: {values.shape}")  # Should be (32, 1)
 assert values.shape == (32, 1), f"Expected (32, 1), got {values.shape}"
-print("✓ Values shape correct!")
+print("[OK] Values shape correct!")
 
 # Test advantage stream
 advantages = dueling_net.get_advantage(state)
 print(f"Advantages shape: {advantages.shape}")  # Should be (32, 7)
 assert advantages.shape == (32, 7), f"Expected (32, 7), got {advantages.shape}"
-print("✓ Advantages shape correct!")
+print("[OK] Advantages shape correct!")
 
 # Verify dueling architecture property: Q = V + (A - mean(A))
 reconstructed_q = values + (advantages - advantages.mean(dim=-1, keepdim=True))
 print(f"\nVerifying dueling decomposition...")
 assert torch.allclose(q_values, reconstructed_q, atol=1e-6), "Q-value decomposition mismatch!"
-print("✓ Dueling decomposition verified: Q(s,a) = V(s) + A(s,a) - mean(A)")
+print("[OK] Dueling decomposition verified: Q(s,a) = V(s) + A(s,a) - mean(A)")
 
 # Test action selection
 actions = dueling_net.get_action(state)
 print(f"\nActions shape: {actions.shape}")  # Should be (32,)
 assert actions.shape == (32,), f"Expected (32,), got {actions.shape}"
-print("✓ Dueling actions shape correct!")
+print("[OK] Dueling actions shape correct!")
 
 # Test 3: Factory function
 print("\n" + "=" * 70)
@@ -108,11 +108,11 @@ print("-" * 70)
 
 net2 = create_network(config_dueling)
 assert isinstance(net2, DuelingQNetwork), f"Expected DuelingQNetwork, got {type(net2)}"
-print("✓ Factory function creates DuelingQNetwork for dueling=True")
+print("[OK] Factory function creates DuelingQNetwork for dueling=True")
 
 net3 = create_network(config)
 assert isinstance(net3, QNetwork), f"Expected QNetwork, got {type(net3)}"
-print("✓ Factory function creates QNetwork for dueling=False")
+print("[OK] Factory function creates QNetwork for dueling=False")
 
 # Test 4: Different configurations
 print("\n" + "=" * 70)
@@ -127,7 +127,7 @@ config_dropout = QNetworkConfig(
     dropout=0.2
 )
 net_dropout = QNetwork(config_dropout)
-print(f"✓ Network with dropout=0.2 created")
+print(f"[OK] Network with dropout=0.2 created")
 print(f"  Parameters: {count_parameters(net_dropout):,}")
 
 # Test with layer normalization
@@ -138,7 +138,7 @@ config_ln = QNetworkConfig(
     use_layer_norm=True
 )
 net_ln = QNetwork(config_ln)
-print(f"✓ Network with layer normalization created")
+print(f"[OK] Network with layer normalization created")
 print(f"  Parameters: {count_parameters(net_ln):,}")
 
 # Test different activations
@@ -150,7 +150,7 @@ for act in ['relu', 'leaky_relu', 'elu', 'tanh']:
         activation=act
     )
     net_act = QNetwork(config_act)
-    print(f"✓ Network with {act} activation created")
+    print(f"[OK] Network with {act} activation created")
 
 # Test 5: Gradient flow
 print("\n" + "=" * 70)
@@ -176,7 +176,7 @@ optimizer.step()
 # Check gradients
 has_grad = any(p.grad is not None and p.grad.abs().sum() > 0 for p in net_grad.parameters())
 assert has_grad, "No gradients computed!"
-print("✓ Gradients computed successfully")
+print("[OK] Gradients computed successfully")
 print(f"  Loss: {loss.item():.4f}")
 
 # Test 6: Parameter counting
@@ -186,8 +186,8 @@ print("-" * 70)
 
 total_params = count_parameters(net, trainable_only=False)
 trainable_params = count_parameters(net, trainable_only=True)
-print(f"✓ Total parameters: {total_params:,}")
-print(f"✓ Trainable parameters: {trainable_params:,}")
+print(f"[OK] Total parameters: {total_params:,}")
+print(f"[OK] Trainable parameters: {trainable_params:,}")
 assert total_params == trainable_params, "All parameters should be trainable"
 
 # Test model summary
@@ -207,7 +207,7 @@ for batch_size in [1, 8, 32, 64, 128]:
     assert q_batch.shape == (batch_size, 7), f"Q-values shape mismatch for batch_size={batch_size}"
     assert actions_batch.shape == (batch_size,), f"Actions shape mismatch for batch_size={batch_size}"
 
-print("✓ All batch sizes work correctly: [1, 8, 32, 64, 128]")
+print("[OK] All batch sizes work correctly: [1, 8, 32, 64, 128]")
 
 # Test 8: Deterministic output
 print("\n" + "=" * 70)
@@ -222,7 +222,7 @@ out1 = net(state_det)
 out2 = net(state_det)
 
 assert torch.allclose(out1, out2), "Network output is not deterministic!"
-print("✓ Network output is deterministic in eval mode")
+print("[OK] Network output is deterministic in eval mode")
 
 # Test 9: Network dimensions
 print("\n" + "=" * 70)
@@ -248,7 +248,7 @@ for state_dim, action_dim, hidden_dims in configs:
     test_q = test_net(test_state)
 
     assert test_q.shape == (4, action_dim), f"Shape mismatch for dims ({state_dim}, {action_dim})"
-    print(f"✓ Network works with state_dim={state_dim}, action_dim={action_dim}, hidden={hidden_dims}")
+    print(f"[OK] Network works with state_dim={state_dim}, action_dim={action_dim}, hidden={hidden_dims}")
 
 # Test 10: Error handling
 print("\n" + "=" * 70)
@@ -258,49 +258,49 @@ print("-" * 70)
 # Invalid state_dim
 try:
     QNetworkConfig(state_dim=0, action_dim=7)
-    print("✗ Should have raised error for state_dim=0")
+    print("[FAIL] Should have raised error for state_dim=0")
 except ValueError:
-    print("✓ Correctly rejects invalid state_dim")
+    print("[OK] Correctly rejects invalid state_dim")
 
 # Invalid action_dim
 try:
     QNetworkConfig(state_dim=60, action_dim=-1)
-    print("✗ Should have raised error for action_dim=-1")
+    print("[FAIL] Should have raised error for action_dim=-1")
 except ValueError:
-    print("✓ Correctly rejects invalid action_dim")
+    print("[OK] Correctly rejects invalid action_dim")
 
 # Invalid dropout
 try:
     QNetworkConfig(state_dim=60, action_dim=7, dropout=1.5)
-    print("✗ Should have raised error for dropout=1.5")
+    print("[FAIL] Should have raised error for dropout=1.5")
 except ValueError:
-    print("✓ Correctly rejects invalid dropout")
+    print("[OK] Correctly rejects invalid dropout")
 
 # Invalid activation
 try:
     QNetworkConfig(state_dim=60, action_dim=7, activation='invalid')
-    print("✗ Should have raised error for invalid activation")
+    print("[FAIL] Should have raised error for invalid activation")
 except ValueError:
-    print("✓ Correctly rejects invalid activation")
+    print("[OK] Correctly rejects invalid activation")
 
 # Empty hidden_dims
 try:
     QNetworkConfig(state_dim=60, action_dim=7, hidden_dims=[])
-    print("✗ Should have raised error for empty hidden_dims")
+    print("[FAIL] Should have raised error for empty hidden_dims")
 except ValueError:
-    print("✓ Correctly rejects empty hidden_dims")
+    print("[OK] Correctly rejects empty hidden_dims")
 
 print("\n" + "=" * 70)
-print("✓ ALL TESTS PASSED!")
+print("[OK] ALL TESTS PASSED!")
 print("=" * 70)
 print("\nQ-Networks are ready for DQN training!")
 print("\nKey features verified:")
-print("  ✓ Standard QNetwork architecture")
-print("  ✓ Dueling QNetwork with value/advantage decomposition")
-print("  ✓ Configurable hidden layers, activations, dropout, layer norm")
-print("  ✓ Batch and single-state processing")
-print("  ✓ Gradient flow")
-print("  ✓ Factory function")
-print("  ✓ Helper utilities")
-print("  ✓ Error handling")
+print("  [OK] Standard QNetwork architecture")
+print("  [OK] Dueling QNetwork with value/advantage decomposition")
+print("  [OK] Configurable hidden layers, activations, dropout, layer norm")
+print("  [OK] Batch and single-state processing")
+print("  [OK] Gradient flow")
+print("  [OK] Factory function")
+print("  [OK] Helper utilities")
+print("  [OK] Error handling")
 

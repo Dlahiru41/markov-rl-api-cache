@@ -120,6 +120,6 @@ print(f"  APIs to prefetch: {decoded_custom['apis_to_prefetch']}")
 print()
 
 print("="*70)
-print("✓ All validation tests completed successfully!")
+print("[OK] All validation tests completed successfully!")
 print("="*70)
 

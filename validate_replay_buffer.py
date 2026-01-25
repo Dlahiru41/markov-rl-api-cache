@@ -23,7 +23,7 @@ def test_basic_replay_buffer():
 
     # Create buffer
     buffer = ReplayBuffer(capacity=1000, seed=42)
-    print(f"✓ Created ReplayBuffer with capacity 1000")
+    print(f"[OK] Created ReplayBuffer with capacity 1000")
 
     # Add experiences
     for i in range(100):
@@ -37,14 +37,14 @@ def test_basic_replay_buffer():
             done=False
         )
 
-    print(f"✓ Added 100 experiences to buffer")
+    print(f"[OK] Added 100 experiences to buffer")
     print(f"  Buffer size: {len(buffer)}")
     print(f"  Ready for batch of 32: {buffer.is_ready(32)}")
 
     # Sample batch
     states, actions, rewards, next_states, dones = buffer.sample(32)
 
-    print(f"\n✓ Successfully sampled batch of 32")
+    print(f"\n[OK] Successfully sampled batch of 32")
     print(f"  States shape: {states.shape} (dtype: {states.dtype})")
     print(f"  Actions shape: {actions.shape} (dtype: {actions.dtype})")
     print(f"  Rewards shape: {rewards.shape} (dtype: {rewards.dtype})")
@@ -58,7 +58,7 @@ def test_basic_replay_buffer():
     assert next_states.dtype == np.float32, f"Next states dtype should be float32, got {next_states.dtype}"
     assert dones.dtype == np.float32, f"Dones dtype should be float32, got {dones.dtype}"
 
-    print(f"\n✓ All dtypes are correct for PyTorch compatibility")
+    print(f"\n[OK] All dtypes are correct for PyTorch compatibility")
 
     # Test FIFO behavior
     print(f"\n--- Testing FIFO behavior ---")
@@ -67,7 +67,7 @@ def test_basic_replay_buffer():
         state = np.array([i], dtype=np.float32)
         small_buffer.push(state, 0, 0.0, state, False)
 
-    print(f"✓ Added 15 experiences to buffer with capacity 10")
+    print(f"[OK] Added 15 experiences to buffer with capacity 10")
     print(f"  Buffer size: {len(small_buffer)} (should be 10)")
     assert len(small_buffer) == 10, "Buffer should have exactly 10 experiences"
 
@@ -75,11 +75,11 @@ def test_basic_replay_buffer():
     print(f"\n--- Testing save/load ---")
     temp_path = "temp_buffer.pkl"
     buffer.save(temp_path)
-    print(f"✓ Saved buffer to {temp_path}")
+    print(f"[OK] Saved buffer to {temp_path}")
 
     new_buffer = ReplayBuffer(capacity=1000, seed=42)
     new_buffer.load(temp_path)
-    print(f"✓ Loaded buffer from {temp_path}")
+    print(f"[OK] Loaded buffer from {temp_path}")
     print(f"  Loaded buffer size: {len(new_buffer)}")
 
     # Clean up
@@ -103,7 +103,7 @@ def test_prioritized_replay_buffer():
         beta_frames=100000,
         seed=42
     )
-    print(f"✓ Created PrioritizedReplayBuffer")
+    print(f"[OK] Created PrioritizedReplayBuffer")
     print(f"  Capacity: 1000")
     print(f"  Alpha: {pbuffer.alpha} (prioritization)")
     print(f"  Beta: {pbuffer.beta:.3f} (starts at {pbuffer.beta_start})")
@@ -120,14 +120,14 @@ def test_prioritized_replay_buffer():
             done=False
         )
 
-    print(f"\n✓ Added 100 experiences to buffer")
+    print(f"\n[OK] Added 100 experiences to buffer")
     print(f"  Buffer size: {len(pbuffer)}")
     print(f"  Ready for batch of 32: {pbuffer.is_ready(32)}")
 
     # Sample batch
     states, actions, rewards, next_states, dones, weights, indices = pbuffer.sample(32)
 
-    print(f"\n✓ Successfully sampled batch of 32")
+    print(f"\n[OK] Successfully sampled batch of 32")
     print(f"  States shape: {states.shape}")
     print(f"  Actions shape: {actions.shape}")
     print(f"  Rewards shape: {rewards.shape}")
@@ -147,7 +147,7 @@ def test_prioritized_replay_buffer():
     print(f"\n--- Testing priority updates ---")
     new_priorities = np.abs(np.random.randn(32)) + 0.01
     pbuffer.update_priorities(indices, new_priorities)
-    print(f"✓ Updated priorities for sampled experiences")
+    print(f"[OK] Updated priorities for sampled experiences")
     print(f"  Max priority: {pbuffer.max_priority:.4f}")
 
     # Test beta annealing
@@ -166,11 +166,11 @@ def test_prioritized_replay_buffer():
     print(f"\n--- Testing save/load ---")
     temp_path = "temp_pbuffer.pkl"
     pbuffer.save(temp_path)
-    print(f"✓ Saved prioritized buffer to {temp_path}")
+    print(f"[OK] Saved prioritized buffer to {temp_path}")
 
     new_pbuffer = PrioritizedReplayBuffer(capacity=1000)
     new_pbuffer.load(temp_path)
-    print(f"✓ Loaded prioritized buffer from {temp_path}")
+    print(f"[OK] Loaded prioritized buffer from {temp_path}")
     print(f"  Loaded buffer size: {len(new_pbuffer)}")
     print(f"  Loaded frame count: {new_pbuffer.frame_count}")
 
@@ -189,10 +189,10 @@ def test_edge_cases():
     # Test invalid capacity
     try:
         ReplayBuffer(capacity=0)
-        print("✗ Should have raised error for capacity=0")
+        print("[FAIL] Should have raised error for capacity=0")
         return False
     except ValueError as e:
-        print(f"✓ Correctly raised error for invalid capacity: {e}")
+        print(f"[OK] Correctly raised error for invalid capacity: {e}")
 
     # Test sampling more than available
     buffer = ReplayBuffer(capacity=100)
@@ -202,18 +202,18 @@ def test_edge_cases():
 
     try:
         buffer.sample(20)
-        print("✗ Should have raised error for sampling more than available")
+        print("[FAIL] Should have raised error for sampling more than available")
         return False
     except ValueError as e:
-        print(f"✓ Correctly raised error for over-sampling: {e}")
+        print(f"[OK] Correctly raised error for over-sampling: {e}")
 
     # Test is_ready
-    print(f"\n✓ Buffer with 10 items is_ready(5): {buffer.is_ready(5)}")
-    print(f"✓ Buffer with 10 items is_ready(20): {buffer.is_ready(20)}")
+    print(f"\n[OK] Buffer with 10 items is_ready(5): {buffer.is_ready(5)}")
+    print(f"[OK] Buffer with 10 items is_ready(20): {buffer.is_ready(20)}")
 
     # Test clear
     buffer.clear()
-    print(f"✓ After clear(), buffer size: {len(buffer)}")
+    print(f"[OK] After clear(), buffer size: {len(buffer)}")
     assert len(buffer) == 0, "Buffer should be empty after clear()"
 
     return True
@@ -233,7 +233,7 @@ def test_memory_efficiency():
 
     # Sample and verify it's a numpy array
     states, _, _, _, _ = buffer.sample(1)
-    print(f"✓ State stored as numpy array: {type(states[0])}")
+    print(f"[OK] State stored as numpy array: {type(states[0])}")
     print(f"  Shape: {states.shape}, dtype: {states.dtype}")
 
     # Test that float32 is used for memory efficiency
@@ -241,7 +241,7 @@ def test_memory_efficiency():
     buffer.push(state_float64, 0, 0.0, state_float64, False)
 
     states, _, _, _, _ = buffer.sample(1)
-    print(f"✓ Float64 converted to float32: {states.dtype}")
+    print(f"[OK] Float64 converted to float32: {states.dtype}")
     assert states.dtype == np.float32, "States should be float32"
 
     return True
@@ -267,7 +267,7 @@ def test_prioritized_sampling():
     high_priority = np.array([100.0] + [1.0] * 9)
     pbuffer.update_priorities(indices, high_priority)
 
-    print(f"✓ Set high priority for one experience")
+    print(f"[OK] Set high priority for one experience")
     print(f"  Max priority: {pbuffer.max_priority:.2f}")
 
     # Sample many times and count how often high-priority experience appears
@@ -277,7 +277,7 @@ def test_prioritized_sampling():
         for idx in sample_indices:
             sample_counts[idx] = sample_counts.get(idx, 0) + 1
 
-    print(f"\n✓ Sampled 100 batches of 5")
+    print(f"\n[OK] Sampled 100 batches of 5")
     print(f"  Sample distribution (top 5 most sampled):")
     sorted_counts = sorted(sample_counts.items(), key=lambda x: x[1], reverse=True)
     for idx, count in sorted_counts[:5]:
@@ -301,12 +301,12 @@ def main():
         test_prioritized_sampling()
 
         print("\n" + "="*60)
-        print("✓ ALL TESTS PASSED")
+        print("[OK] ALL TESTS PASSED")
         print("="*60)
         print("\nReplay buffers are ready for DQN training!")
 
     except Exception as e:
-        print(f"\n✗ TEST FAILED: {e}")
+        print(f"\n[FAIL] TEST FAILED: {e}")
         import traceback
         traceback.print_exc()
         return False

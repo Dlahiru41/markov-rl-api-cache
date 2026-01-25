@@ -23,8 +23,8 @@ def main():
         context_features=['user_type', 'time_of_day'],
         history_size=10
     )
-    print("   ✓ Created context-aware first-order predictor")
-    print(f"   ✓ History window size: {predictor.history_size}")
+    print("   [OK] Created context-aware first-order predictor")
+    print(f"   [OK] History window size: {predictor.history_size}")
 
     # 2. Train on data
     print("\n2. Training on API sequences...")
@@ -41,20 +41,20 @@ def main():
         {'user_type': 'free', 'hour': 11},
     ]
     predictor.fit(sequences, contexts)
-    print(f"   ✓ Trained on {len(sequences)} sequences")
-    print(f"   ✓ Vocabulary size: {predictor.vocab_size} unique APIs")
+    print(f"   [OK] Trained on {len(sequences)} sequences")
+    print(f"   [OK] Vocabulary size: {predictor.vocab_size} unique APIs")
 
     # 3. Simulate a session
     print("\n3. Simulating user session...")
     print("   " + "=" * 60)
 
     predictor.reset_history()
-    print("   ✓ Reset history for new session")
+    print("   [OK] Reset history for new session")
 
     # Step 1: User logs in
     print("\n   Step 1: User logs in")
     predictor.observe('login', context={'user_type': 'premium', 'hour': 10})
-    print("   ✓ Observed: 'login'")
+    print("   [OK] Observed: 'login'")
 
     # Get predictions
     predictions = predictor.predict(k=5, context={'user_type': 'premium', 'hour': 10})
@@ -75,8 +75,8 @@ def main():
     predictor.all_predictions.append(predictions)  # Track for metrics
     predictor.record_outcome('profile')
     predictor.observe('profile', context={'user_type': 'premium', 'hour': 10})
-    print("   ✓ Observed: 'profile'")
-    print("   ✓ Recorded prediction outcome")
+    print("   [OK] Observed: 'profile'")
+    print("   [OK] Recorded prediction outcome")
 
     predictions = predictor.predict(k=5, context={'user_type': 'premium', 'hour': 10})
     print("\n   Top predictions:")
@@ -88,7 +88,7 @@ def main():
     predictor.all_predictions.append(predictions)
     predictor.record_outcome('premium_features')
     predictor.observe('premium_features', context={'user_type': 'premium', 'hour': 10})
-    print("   ✓ Observed: 'premium_features'")
+    print("   [OK] Observed: 'premium_features'")
 
     # 4. Look-ahead predictions
     print("\n4. Look-ahead predictions (next 5 steps)...")
@@ -107,11 +107,11 @@ def main():
     # 5. Show metrics
     print("\n5. Prediction metrics...")
     metrics = predictor.get_metrics()
-    print(f"   ✓ Total predictions: {metrics['prediction_count']}")
-    print(f"   ✓ Average confidence: {metrics['avg_confidence']:.1%}")
+    print(f"   [OK] Total predictions: {metrics['prediction_count']}")
+    print(f"   [OK] Average confidence: {metrics['avg_confidence']:.1%}")
     for key, value in metrics.items():
         if 'accuracy' in key:
-            print(f"   ✓ {key}: {value:.1%}")
+            print(f"   [OK] {key}: {value:.1%}")
 
     # 6. Compare different contexts
     print("\n6. Comparing predictions across contexts...")
@@ -140,7 +140,7 @@ def main():
     print("\n7. Saving model...")
     save_path = 'data/test/demo_predictor.json'
     predictor.save(save_path)
-    print(f"   ✓ Saved to {save_path}")
+    print(f"   [OK] Saved to {save_path}")
 
     # 8. Show factory function
     print("\n8. Factory function example...")
@@ -155,9 +155,9 @@ def main():
 
     config = MockConfig()
     predictor2 = create_predictor(config)
-    print(f"   ✓ Created predictor from config")
-    print(f"   ✓ Order: {predictor2.order}")
-    print(f"   ✓ Context-aware: {predictor2.context_aware}")
+    print(f"   [OK] Created predictor from config")
+    print(f"   [OK] Order: {predictor2.order}")
+    print(f"   [OK] Context-aware: {predictor2.context_aware}")
 
     print("\n" + "=" * 70)
     print("Demo Complete!")

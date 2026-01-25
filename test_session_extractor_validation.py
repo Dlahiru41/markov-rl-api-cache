@@ -45,7 +45,7 @@ for i, session in enumerate(sessions, 1):
     print(f"    Endpoints: {session.endpoint_sequence}")
     print()
 
-print("✓ Test 1 passed!")
+print("[OK] Test 1 passed!")
 print()
 
 # Test 2: Multiple users
@@ -82,7 +82,7 @@ for session in sessions2:
     print(f"  {session.session_id}: {session.num_calls} calls")
 
 print()
-print("✓ Test 2 passed!")
+print("[OK] Test 2 passed!")
 print()
 
 # Test 3: Empty input
@@ -95,7 +95,7 @@ sessions3 = extractor3.extract_sessions([])
 print(f"Found {len(sessions3)} sessions")
 assert len(sessions3) == 0, f"Expected 0 sessions for empty input, got {len(sessions3)}"
 
-print("✓ Test 3 passed!")
+print("[OK] Test 3 passed!")
 print()
 
 # Test 4: Session length filtering
@@ -133,7 +133,7 @@ assert len(sessions4) == 1, f"Expected 1 session after filtering, got {len(sessi
 assert stats4['sessions_filtered_too_short'] == 1, "Should filter user1 (too short)"
 assert stats4['sessions_filtered_too_long'] == 1, "Should filter user3 (too long)"
 
-print("✓ Test 4 passed!")
+print("[OK] Test 4 passed!")
 print()
 
 # Test 5: Inactivity timeout creates multiple sessions
@@ -158,7 +158,7 @@ print(f"  Session 1: {sessions5[0].num_calls} calls, duration: {sessions5[0].dur
 print(f"  Session 2: {sessions5[1].num_calls} calls, duration: {sessions5[1].duration_seconds:.0f}s")
 
 print()
-print("✓ Test 5 passed!")
+print("[OK] Test 5 passed!")
 print()
 
 # Test 6: Statistics calculation
@@ -203,10 +203,10 @@ assert stats6['unique_users'] == 3, "Should have 3 unique users"
 assert stats6['total_sessions_created'] == 3, "Should create 3 sessions (one per user)"
 
 print()
-print("✓ Test 6 passed!")
+print("[OK] Test 6 passed!")
 print()
 
 print("=" * 70)
-print("✓ ALL VALIDATION TESTS PASSED!")
+print("[OK] ALL VALIDATION TESTS PASSED!")
 print("=" * 70)
 

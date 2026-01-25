@@ -58,18 +58,18 @@ def demo_basic_replay_buffer():
         print(f"   → Compute Q-values")
         print(f"   → Calculate loss")
         print(f"   → Update network")
-        print(f"   ✓ Training step complete")
+        print(f"   [OK] Training step complete")
 
     # Save buffer
     print(f"\n4. Saving buffer for checkpointing...")
     buffer.save("checkpoint_buffer.pkl")
-    print(f"   ✓ Saved to checkpoint_buffer.pkl")
+    print(f"   [OK] Saved to checkpoint_buffer.pkl")
 
     # Clean up
     import os
     os.remove("checkpoint_buffer.pkl")
 
-    print(f"\n✓ Basic ReplayBuffer demo complete!")
+    print(f"\n[OK] Basic ReplayBuffer demo complete!")
 
 
 def demo_prioritized_replay_buffer():
@@ -148,7 +148,7 @@ def demo_prioritized_replay_buffer():
         print(f"   → Updated priorities in buffer")
         print(f"      - New max priority: {pbuffer.max_priority:.3f}")
 
-        print(f"   ✓ Training step complete")
+        print(f"   [OK] Training step complete")
 
         # Show effect of prioritization
         print(f"\n4. Demonstrating priority effect...")
@@ -181,7 +181,7 @@ def demo_prioritized_replay_buffer():
     print(f"   - After 50 samples: beta={pbuffer.beta:.4f}, frames={pbuffer.frame_count}")
     print(f"   → Beta gradually increases toward {pbuffer.beta_end}")
 
-    print(f"\n✓ PrioritizedReplayBuffer demo complete!")
+    print(f"\n[OK] PrioritizedReplayBuffer demo complete!")
 
 
 def demo_comparison():
@@ -209,7 +209,7 @@ def demo_comparison():
         uniform_buffer.push(state, action, reward, next_state, done)
         priority_buffer.push(state, action, reward, next_state, done)
 
-    print(f"   ✓ Both buffers have {len(uniform_buffer)} experiences")
+    print(f"   [OK] Both buffers have {len(uniform_buffer)} experiences")
 
     # Sample from both
     print(f"\n2. Sampling from both buffers...")
@@ -235,8 +235,8 @@ def demo_comparison():
     priorities[:5] = 5.0  # High priority for first 5
     priority_buffer.update_priorities(indices, priorities)
 
-    print(f"   ✓ Set 5 experiences with high priority (5.0)")
-    print(f"   ✓ Set rest with low priority (0.1)")
+    print(f"   [OK] Set 5 experiences with high priority (5.0)")
+    print(f"   [OK] Set rest with low priority (0.1)")
 
     # Sample again and count
     print(f"\n4. Sampling 100 times to see effect...")
@@ -256,7 +256,7 @@ def demo_comparison():
     print(f"   - Actual with prioritization: {percentage:.1f}%")
     print(f"\n   → Prioritization works! High-priority experiences sampled much more!")
 
-    print(f"\n✓ Comparison demo complete!")
+    print(f"\n[OK] Comparison demo complete!")
 
 
 def main():
@@ -273,7 +273,7 @@ def main():
         demo_comparison()
 
         print("\n" + "="*70)
-        print("✓ ALL DEMOS COMPLETE")
+        print("[OK] ALL DEMOS COMPLETE")
         print("="*70)
         print("\nKey Takeaways:")
         print("1. ReplayBuffer: Simple, uniform sampling, good baseline")
@@ -283,7 +283,7 @@ def main():
         print("5. Both are production-ready and fully integrated!")
 
     except Exception as e:
-        print(f"\n✗ Demo failed: {e}")
+        print(f"\n[FAIL] Demo failed: {e}")
         import traceback
         traceback.print_exc()
 

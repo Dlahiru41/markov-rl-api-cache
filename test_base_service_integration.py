@@ -46,7 +46,7 @@ def test_service_with_real_requests():
 
     # Wait for service to start
     time.sleep(2)
-    print("✓ Service started\n")
+    print("[OK] Service started\n")
 
     base_url = f"http://localhost:{config.port}"
 
@@ -58,7 +58,7 @@ def test_service_with_real_requests():
         print(f"  Response: {response.json()}")
         assert response.status_code == 200
         assert response.json()["status"] in ["healthy", "degraded"]
-        print("  ✓ Passed\n")
+        print("  [OK] Passed\n")
 
         # Test 2: Config endpoint
         print("Test 2: Service Configuration")
@@ -69,7 +69,7 @@ def test_service_with_real_requests():
         print(f"  Endpoints: {len(config_data['endpoints'])}")
         assert response.status_code == 200
         assert config_data["name"] == "integration-test-service"
-        print("  ✓ Passed\n")
+        print("  [OK] Passed\n")
 
         # Test 3: Make requests to custom endpoints
         print("Test 3: Custom Endpoints")
@@ -93,7 +93,7 @@ def test_service_with_real_requests():
         response = httpx.post(f"{base_url}/test/data", json={"test": "data"}, timeout=5.0)
         print(f"  /test/data (POST): {response.status_code}")
         assert response.status_code == 200
-        print("  ✓ Passed\n")
+        print("  [OK] Passed\n")
 
         # Test 4: Metrics after requests
         print("Test 4: Metrics Collection")
@@ -103,7 +103,7 @@ def test_service_with_real_requests():
         print(f"  Total errors: {metrics['total_errors']}")
         print(f"  Endpoints tracked: {len(metrics['endpoints'])}")
         assert metrics['total_requests'] >= 3  # At least our 3 test requests
-        print("  ✓ Passed\n")
+        print("  [OK] Passed\n")
 
         # Test 5: Chaos engineering - Latency
         print("Test 5: Chaos Engineering - Latency Multiplier")
@@ -117,7 +117,7 @@ def test_service_with_real_requests():
         latency = (time.time() - start) * 1000
         print(f"  Request with 10x latency: {latency:.1f}ms")
         assert latency > 100  # Should be much slower now
-        print("  ✓ Passed\n")
+        print("  [OK] Passed\n")
 
         # Test 6: Chaos engineering - Failure rate
         print("Test 6: Chaos Engineering - Failure Rate")
@@ -137,7 +137,7 @@ def test_service_with_real_requests():
 
         print(f"  Failures: {failures}/10 requests")
         assert failures > 0  # With 80% failure rate, we should see some failures
-        print("  ✓ Passed\n")
+        print("  [OK] Passed\n")
 
         # Test 7: Prometheus metrics
         print("Test 7: Prometheus Metrics Format")
@@ -147,7 +147,7 @@ def test_service_with_real_requests():
         assert "# HELP" in prom_text
         assert "# TYPE" in prom_text
         assert response.headers["content-type"] == "text/plain; charset=utf-8"
-        print("  ✓ Passed\n")
+        print("  [OK] Passed\n")
 
         # Test 8: Service offline
         print("Test 8: Chaos Engineering - Offline Mode")
@@ -171,29 +171,29 @@ def test_service_with_real_requests():
         response = httpx.get(f"{base_url}/test/fast", timeout=5.0)
         assert response.status_code == 200
         print(f"  Request after coming back online: {response.status_code}")
-        print("  ✓ Passed\n")
+        print("  [OK] Passed\n")
 
         print("=" * 70)
-        print("✓ ALL INTEGRATION TESTS PASSED")
+        print("[OK] ALL INTEGRATION TESTS PASSED")
         print("=" * 70)
         print()
         print("Summary:")
-        print("  ✓ Service successfully started in background")
-        print("  ✓ Standard endpoints working (/health, /metrics, /config)")
-        print("  ✓ Custom endpoints registered and responding")
-        print("  ✓ Latency simulation working (fast vs slow endpoints)")
-        print("  ✓ Metrics collection tracking all requests")
-        print("  ✓ Chaos engineering controls functional:")
+        print("  [OK] Service successfully started in background")
+        print("  [OK] Standard endpoints working (/health, /metrics, /config)")
+        print("  [OK] Custom endpoints registered and responding")
+        print("  [OK] Latency simulation working (fast vs slow endpoints)")
+        print("  [OK] Metrics collection tracking all requests")
+        print("  [OK] Chaos engineering controls functional:")
         print("    - Latency multiplier increases response time")
         print("    - Failure rate injection working")
         print("    - Offline mode blocks requests")
-        print("  ✓ Prometheus metrics format correct")
+        print("  [OK] Prometheus metrics format correct")
         print()
         print("🎉 The BaseService template is fully functional!")
         print()
 
     except Exception as e:
-        print(f"\n✗ Test failed: {e}")
+        print(f"\n[FAIL] Test failed: {e}")
         import traceback
         traceback.print_exc()
         raise
@@ -204,9 +204,9 @@ def test_service_with_real_requests():
 
 if __name__ == "__main__":
     print("\n")
-    print("╔" + "═" * 68 + "╗")
-    print("║" + " " * 18 + "INTEGRATION TEST SUITE" + " " * 29 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print("=" + "=" * 68 + "=")
+    print("|" + " " * 18 + "INTEGRATION TEST SUITE" + " " * 29 + "|")
+    print("=" + "=" * 68 + "╝")
 
     test_service_with_real_requests()
 

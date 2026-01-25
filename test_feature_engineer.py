@@ -7,9 +7,9 @@ from datetime import datetime, timedelta
 # Check if numpy is available
 try:
     import numpy as np
-    print("✓ NumPy is available")
+    print("[OK] NumPy is available")
 except ImportError:
-    print("✗ NumPy not found. Please install: pip install numpy")
+    print("[FAIL] NumPy not found. Please install: pip install numpy")
     sys.exit(1)
 
 from preprocessing.feature_engineer import FeatureEngineer
@@ -178,7 +178,7 @@ def test_fit():
     print(f"\nFitting on {len(sessions)} sessions...")
     fe.fit(sessions)
 
-    print(f"✓ Fit complete!")
+    print(f"[OK] Fit complete!")
     print(f"\nFeature Engineer Info:")
     info = fe.get_feature_info()
     for key, value in info.items():
@@ -206,7 +206,7 @@ def test_transform(fe, sessions):
 
     features = fe.transform(call, session, history=[])
 
-    print(f"\n✓ Feature vector created!")
+    print(f"\n[OK] Feature vector created!")
     print(f"  Shape: {features.shape}")
     print(f"  Dtype: {features.dtype}")
     print(f"  Min value: {features.min():.4f}")
@@ -223,7 +223,7 @@ def test_feature_names(fe, features):
 
     feature_names = fe.get_feature_names()
 
-    print(f"\n✓ Total features: {len(feature_names)}")
+    print(f"\n[OK] Total features: {len(feature_names)}")
     print(f"\nFirst 15 features:")
     for i, name in enumerate(feature_names[:15]):
         print(f"  {i:2d}. {name:30s} = {features[i]:7.4f}")
@@ -305,18 +305,18 @@ def test_edge_cases(fe, sessions):
         user_type="premium"
     )
     features = fe.transform(unknown_call, None, None)
-    print(f"  ✓ Handled unknown endpoint, feature vector shape: {features.shape}")
+    print(f"  [OK] Handled unknown endpoint, feature vector shape: {features.shape}")
 
     # Test 2: No session context
     print("\n2. No Session Context:")
     call = sessions[0].calls[0]
     features = fe.transform(call, session=None, history=None)
-    print(f"  ✓ Handled missing session, feature vector shape: {features.shape}")
+    print(f"  [OK] Handled missing session, feature vector shape: {features.shape}")
 
     # Test 3: No history
     print("\n3. No History:")
     features = fe.transform(call, sessions[0], history=None)
-    print(f"  ✓ Handled missing history, feature vector shape: {features.shape}")
+    print(f"  [OK] Handled missing history, feature vector shape: {features.shape}")
 
     # Test 4: Different HTTP methods
     print("\n4. Different HTTP Methods:")
@@ -353,7 +353,7 @@ def test_fit_transform():
     fe = FeatureEngineer()
     features_list = fe.fit_transform(sessions)
 
-    print(f"\n✓ Fit-transform complete!")
+    print(f"\n[OK] Fit-transform complete!")
     print(f"  Total calls processed: {len(features_list)}")
     print(f"  Feature vector shape: {features_list[0].shape}")
     print(f"  All vectors same shape: {all(f.shape == features_list[0].shape for f in features_list)}")
@@ -378,7 +378,7 @@ def test_user_validation():
     session = sessions[0]
     features = fe.transform(call, session, history=[])
 
-    print(f"\n✓ User validation code executed successfully!")
+    print(f"\n[OK] User validation code executed successfully!")
     print(f"  Feature vector shape: {features.shape}")
     print(f"  Feature names: {fe.get_feature_names()[:5]}... (showing first 5)")
     print(f"  First 10 features: {features[:10]}")
@@ -450,13 +450,13 @@ def main():
 
         # Summary
         print("\n" + "="*70)
-        print("✅ ALL TESTS PASSED!")
+        print("[SUCCESS] ALL TESTS PASSED!")
         print("="*70)
         print("\nThe FeatureEngineer module is working correctly!")
         print("Ready for RL state representation.")
 
     except Exception as e:
-        print(f"\n❌ ERROR: {e}")
+        print(f"\n[ERROR] ERROR: {e}")
         import traceback
         traceback.print_exc()
         return 1

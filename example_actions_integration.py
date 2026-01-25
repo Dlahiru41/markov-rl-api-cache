@@ -276,7 +276,7 @@ def main():
             # Print step info
             if step % 3 == 0:
                 print(f"  Step {step:2d}: API={current_api:10s} Action={action_name:25s} "
-                      f"Hit={'✓' if was_hit else '✗'} Reward={reward:+.3f}")
+                      f"Hit={'[OK]' if was_hit else '[FAIL]'} Reward={reward:+.3f}")
 
         print(f"  Episode reward: {episode_reward:.3f}")
         print(f"  Cache: {cache.size}/{cache.capacity} entries, "

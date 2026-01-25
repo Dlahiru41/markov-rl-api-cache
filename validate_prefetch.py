@@ -30,7 +30,7 @@ def main():
             created_at=time.time(),
             source_prediction=0.9
         )
-        print(f"✅ Created request: {r1.endpoint} (priority={r1.priority})")
+        print(f"[SUCCESS] Created request: {r1.endpoint} (priority={r1.priority})")
 
         r2 = PrefetchRequest(
             endpoint='/api/users/2',
@@ -50,13 +50,13 @@ def main():
 
         # Test comparison
         if r1 > r2:
-            print("✅ Priority comparison works (0.9 > 0.5)")
+            print("[SUCCESS] Priority comparison works (0.9 > 0.5)")
         else:
-            print("❌ Priority comparison failed")
+            print("[ERROR] Priority comparison failed")
 
         # Test cache key generation
         key = r1.get_cache_key()
-        print(f"✅ Cache key generated: {key}")
+        print(f"[SUCCESS] Cache key generated: {key}")
 
         # Test expiration
         old_request = PrefetchRequest(
@@ -69,12 +69,12 @@ def main():
         )
 
         if old_request.is_expired():
-            print("✅ Expiration check works")
+            print("[SUCCESS] Expiration check works")
         else:
-            print("❌ Expiration check failed")
+            print("[ERROR] Expiration check failed")
 
     except Exception as e:
-        print(f"❌ PrefetchRequest test failed: {e}")
+        print(f"[ERROR] PrefetchRequest test failed: {e}")
         return 1
 
     # Test 2: PrefetchQueue
@@ -84,62 +84,62 @@ def main():
 
     try:
         queue = PrefetchQueue(max_size=100)
-        print(f"✅ Created queue (max_size=100)")
+        print(f"[SUCCESS] Created queue (max_size=100)")
 
         # Add requests
         queue.put(r1)
         queue.put(r2)
         queue.put(r3)
 
-        print(f"✅ Added 3 requests, queue size: {queue.size}")
+        print(f"[SUCCESS] Added 3 requests, queue size: {queue.size}")
 
         if queue.size == 3:
-            print("✅ Queue size correct")
+            print("[SUCCESS] Queue size correct")
         else:
-            print(f"❌ Expected size 3, got {queue.size}")
+            print(f"[ERROR] Expected size 3, got {queue.size}")
 
         # Test duplicate rejection
         duplicate = queue.put(r1)
         if not duplicate:
-            print("✅ Duplicate request rejected")
+            print("[SUCCESS] Duplicate request rejected")
         else:
-            print("❌ Duplicate should have been rejected")
+            print("[ERROR] Duplicate should have been rejected")
 
         # Test contains
         if queue.contains('/api/users/1'):
-            print("✅ Contains check works")
+            print("[SUCCESS] Contains check works")
         else:
-            print("❌ Contains check failed")
+            print("[ERROR] Contains check failed")
 
         # Get highest priority (should be r1 with 0.9)
         next_req = queue.get(timeout=1.0)
         if next_req and next_req.endpoint == '/api/users/1':
-            print(f"✅ Got highest priority: {next_req.endpoint} (priority={next_req.priority})")
+            print(f"[SUCCESS] Got highest priority: {next_req.endpoint} (priority={next_req.priority})")
         else:
-            print(f"❌ Expected /api/users/1, got {next_req.endpoint if next_req else None}")
+            print(f"[ERROR] Expected /api/users/1, got {next_req.endpoint if next_req else None}")
 
         # Get next (should be r3 with 0.7)
         next_req = queue.get(timeout=1.0)
         if next_req and next_req.endpoint == '/api/products/1':
-            print(f"✅ Got next priority: {next_req.endpoint} (priority={next_req.priority})")
+            print(f"[SUCCESS] Got next priority: {next_req.endpoint} (priority={next_req.priority})")
         else:
-            print(f"❌ Expected /api/products/1, got {next_req.endpoint if next_req else None}")
+            print(f"[ERROR] Expected /api/products/1, got {next_req.endpoint if next_req else None}")
 
         # Test stats
         stats = queue.get_stats()
-        print(f"✅ Queue stats: {stats}")
+        print(f"[SUCCESS] Queue stats: {stats}")
 
         # Clear queue
         count = queue.clear()
-        print(f"✅ Cleared queue: {count} request(s) removed")
+        print(f"[SUCCESS] Cleared queue: {count} request(s) removed")
 
         if queue.is_empty:
-            print("✅ Queue is empty after clear")
+            print("[SUCCESS] Queue is empty after clear")
         else:
-            print("❌ Queue should be empty")
+            print("[ERROR] Queue should be empty")
 
     except Exception as e:
-        print(f"❌ PrefetchQueue test failed: {e}")
+        print(f"[ERROR] PrefetchQueue test failed: {e}")
         return 1
 
     # Test 3: PrefetchWorker with mock fetcher
@@ -179,16 +179,16 @@ def main():
             max_requests_per_second=10.0
         )
 
-        print("✅ Created worker with 2 threads")
+        print("[SUCCESS] Created worker with 2 threads")
 
         # Start worker
         worker.start()
-        print("✅ Worker started")
+        print("[SUCCESS] Worker started")
 
         if worker.is_running:
-            print("✅ Worker is running")
+            print("[SUCCESS] Worker is running")
         else:
-            print("❌ Worker should be running")
+            print("[ERROR] Worker should be running")
 
         # Add requests to queue
         for i in range(5):
@@ -201,7 +201,7 @@ def main():
             )
             queue.put(req)
 
-        print(f"✅ Added 5 requests to queue")
+        print(f"[SUCCESS] Added 5 requests to queue")
 
         # Wait for workers to process
         print("  Waiting for workers to process requests...")
@@ -217,30 +217,30 @@ def main():
         print(f"    Avg fetch time: {metrics['avg_fetch_time']:.3f}s")
 
         if metrics['successful_fetches'] >= 4:  # Allow for timing variations
-            print("✅ Worker processed requests successfully")
+            print("[SUCCESS] Worker processed requests successfully")
         else:
-            print(f"❌ Expected at least 4 successful fetches, got {metrics['successful_fetches']}")
+            print(f"[ERROR] Expected at least 4 successful fetches, got {metrics['successful_fetches']}")
 
         # Check cache
         cached = cache_manager.get('/api/test/0')
         if cached:
-            print(f"✅ Data was cached: {cached['endpoint']}")
+            print(f"[SUCCESS] Data was cached: {cached['endpoint']}")
         else:
-            print("❌ Data should be in cache")
+            print("[ERROR] Data should be in cache")
 
         # Stop worker
         worker.stop(timeout=5.0)
-        print("✅ Worker stopped")
+        print("[SUCCESS] Worker stopped")
 
         if not worker.is_running:
-            print("✅ Worker is not running")
+            print("[SUCCESS] Worker is not running")
         else:
-            print("❌ Worker should be stopped")
+            print("[ERROR] Worker should be stopped")
 
         cache_manager.stop()
 
     except Exception as e:
-        print(f"❌ PrefetchWorker test failed: {e}")
+        print(f"[ERROR] PrefetchWorker test failed: {e}")
         import traceback
         traceback.print_exc()
         return 1
@@ -266,7 +266,7 @@ def main():
             max_prefetch_per_schedule=10
         )
 
-        print("✅ Created scheduler")
+        print("[SUCCESS] Created scheduler")
 
         # Test predictions
         predictions = [
@@ -284,21 +284,21 @@ def main():
         # Schedule prefetches
         scheduled = scheduler.schedule_from_predictions(predictions)
 
-        print(f"\n✅ Scheduled {len(scheduled)} prefetches:")
+        print(f"\n[SUCCESS] Scheduled {len(scheduled)} prefetches:")
         for endpoint in scheduled:
             print(f"    - {endpoint}")
 
         # Should schedule 3 (0.8, 0.6, 0.3), skip 2 (0.1, 0.05)
         if len(scheduled) == 3:
-            print("✅ Correct number of requests scheduled")
+            print("[SUCCESS] Correct number of requests scheduled")
         else:
-            print(f"❌ Expected 3 scheduled, got {len(scheduled)}")
+            print(f"[ERROR] Expected 3 scheduled, got {len(scheduled)}")
 
         # Check queue
         if queue.size == 3:
-            print("✅ Queue has correct number of requests")
+            print("[SUCCESS] Queue has correct number of requests")
         else:
-            print(f"❌ Expected queue size 3, got {queue.size}")
+            print(f"[ERROR] Expected queue size 3, got {queue.size}")
 
         # Test get_prefetch_candidates (pure function)
         cached_keys = set()
@@ -313,9 +313,9 @@ def main():
             print(f"    {endpoint}: {prob:.2f}")
 
         if len(candidates) == 3:
-            print("✅ get_prefetch_candidates works correctly")
+            print("[SUCCESS] get_prefetch_candidates works correctly")
         else:
-            print(f"❌ Expected 3 candidates, got {len(candidates)}")
+            print(f"[ERROR] Expected 3 candidates, got {len(candidates)}")
 
         # Test with cached keys
         cached_keys = {'/api/products/42', '/api/cart'}
@@ -326,9 +326,9 @@ def main():
         )
 
         if len(candidates) == 1 and candidates[0][0] == '/api/checkout':
-            print("✅ Cached entries are filtered out")
+            print("[SUCCESS] Cached entries are filtered out")
         else:
-            print(f"❌ Expected only /api/checkout, got {candidates}")
+            print(f"[ERROR] Expected only /api/checkout, got {candidates}")
 
         # Get stats
         stats = scheduler.get_stats()
@@ -337,7 +337,7 @@ def main():
         cache_manager.stop()
 
     except Exception as e:
-        print(f"❌ PrefetchScheduler test failed: {e}")
+        print(f"[ERROR] PrefetchScheduler test failed: {e}")
         import traceback
         traceback.print_exc()
         return 1
@@ -386,12 +386,12 @@ def main():
             t.join()
 
         if len(errors) == 0:
-            print("✅ Thread safety test passed")
+            print("[SUCCESS] Thread safety test passed")
         else:
-            print(f"❌ Thread safety errors: {errors}")
+            print(f"[ERROR] Thread safety errors: {errors}")
 
     except Exception as e:
-        print(f"❌ Thread safety test failed: {e}")
+        print(f"[ERROR] Thread safety test failed: {e}")
         return 1
 
     # Final summary
@@ -399,13 +399,13 @@ def main():
     print("VALIDATION SUMMARY")
     print("="*70)
 
-    print("\n✅ All tests completed successfully!")
+    print("\n[SUCCESS] All tests completed successfully!")
     print("\nPrefetch System Components:")
-    print("  ✅ PrefetchRequest - Priority-based request dataclass")
-    print("  ✅ PrefetchQueue - Thread-safe priority queue")
-    print("  ✅ PrefetchWorker - Background processing with rate limiting")
-    print("  ✅ PrefetchScheduler - Intelligent request scheduling")
-    print("  ✅ Thread safety - Concurrent access validated")
+    print("  [SUCCESS] PrefetchRequest - Priority-based request dataclass")
+    print("  [SUCCESS] PrefetchQueue - Thread-safe priority queue")
+    print("  [SUCCESS] PrefetchWorker - Background processing with rate limiting")
+    print("  [SUCCESS] PrefetchScheduler - Intelligent request scheduling")
+    print("  [SUCCESS] Thread safety - Concurrent access validated")
 
     return 0
 

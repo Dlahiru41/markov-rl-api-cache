@@ -16,10 +16,10 @@ def test_imports():
 
     try:
         from src.markov import FirstOrderMarkovChain
-        print("✅ Import successful: FirstOrderMarkovChain")
+        print("[SUCCESS] Import successful: FirstOrderMarkovChain")
         return True, FirstOrderMarkovChain
     except ImportError as e:
-        print(f"❌ Import failed: {e}")
+        print(f"[ERROR] Import failed: {e}")
         return False, None
 
 
@@ -42,23 +42,23 @@ def test_training(FirstOrderMarkovChain):
         # Test fit
         mc.fit(sequences)
         assert mc.is_fitted, "Model should be fitted"
-        print("✅ fit() works correctly")
+        print("[SUCCESS] fit() works correctly")
 
         # Test partial_fit
         initial_count = len(mc.states)
         mc.partial_fit([['new_state', 'another_state']])
         assert len(mc.states) > initial_count, "Should add new states"
-        print("✅ partial_fit() works correctly")
+        print("[SUCCESS] partial_fit() works correctly")
 
         # Test update
         mc.update('test_from', 'test_to', count=5)
         assert 'test_from' in mc.states
-        print("✅ update() works correctly")
+        print("[SUCCESS] update() works correctly")
 
         return True, mc
 
     except Exception as e:
-        print(f"❌ Training failed: {e}")
+        print(f"[ERROR] Training failed: {e}")
         import traceback
         traceback.print_exc()
         return False, None
@@ -76,18 +76,18 @@ def test_prediction(mc):
         assert isinstance(predictions, list), "Should return list"
         assert len(predictions) > 0, "Should have predictions"
         assert all(len(p) == 2 for p in predictions), "Each prediction should be (state, prob)"
-        print(f"✅ predict() works: {len(predictions)} predictions for 'login'")
+        print(f"[SUCCESS] predict() works: {len(predictions)} predictions for 'login'")
 
         # Test predict_proba
         prob = mc.predict_proba('login', 'profile')
         assert isinstance(prob, float), "Should return float"
         assert 0 <= prob <= 1, "Probability should be in [0, 1]"
-        print(f"✅ predict_proba() works: P(profile|login) = {prob:.3f}")
+        print(f"[SUCCESS] predict_proba() works: P(profile|login) = {prob:.3f}")
 
         return True
 
     except Exception as e:
-        print(f"❌ Prediction failed: {e}")
+        print(f"[ERROR] Prediction failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -105,17 +105,17 @@ def test_sequence_operations(mc):
         assert isinstance(seq, list), "Should return list"
         assert len(seq) <= 10, "Should respect length limit"
         assert seq[0] == 'login', "Should start with given state"
-        print(f"✅ generate_sequence() works: generated {len(seq)} states")
+        print(f"[SUCCESS] generate_sequence() works: generated {len(seq)} states")
 
         # Test score_sequence
         score = mc.score_sequence(['login', 'profile', 'orders'])
         assert isinstance(score, float), "Should return float"
-        print(f"✅ score_sequence() works: score = {score:.3f}")
+        print(f"[SUCCESS] score_sequence() works: score = {score:.3f}")
 
         return True
 
     except Exception as e:
-        print(f"❌ Sequence operations failed: {e}")
+        print(f"[ERROR] Sequence operations failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -141,7 +141,7 @@ def test_evaluation(mc):
         for metric in required_metrics:
             assert metric in metrics, f"Missing metric: {metric}"
 
-        print(f"✅ evaluate() works:")
+        print(f"[SUCCESS] evaluate() works:")
         print(f"   Top-1 accuracy: {metrics['top_1_accuracy']:.2%}")
         print(f"   MRR: {metrics['mrr']:.3f}")
         print(f"   Coverage: {metrics['coverage']:.2%}")
@@ -149,7 +149,7 @@ def test_evaluation(mc):
         return True
 
     except Exception as e:
-        print(f"❌ Evaluation failed: {e}")
+        print(f"[ERROR] Evaluation failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -169,13 +169,13 @@ def test_persistence(mc):
         test_file = '_test_mc_temp.json'
         mc.save(test_file)
         assert Path(test_file).exists(), "File should be created"
-        print(f"✅ save() works: saved to {test_file}")
+        print(f"[SUCCESS] save() works: saved to {test_file}")
 
         # Load
         mc_loaded = FirstOrderMarkovChain.load(test_file)
         assert mc_loaded.is_fitted, "Loaded model should be fitted"
         assert mc_loaded.states == mc.states, "States should match"
-        print(f"✅ load() works: loaded {len(mc_loaded.states)} states")
+        print(f"[SUCCESS] load() works: loaded {len(mc_loaded.states)} states")
 
         # Clean up
         os.remove(test_file)
@@ -183,7 +183,7 @@ def test_persistence(mc):
         return True
 
     except Exception as e:
-        print(f"❌ Persistence failed: {e}")
+        print(f"[ERROR] Persistence failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -198,27 +198,27 @@ def test_properties(mc):
     try:
         # Test is_fitted
         assert mc.is_fitted == True, "Should be fitted"
-        print(f"✅ is_fitted property works: {mc.is_fitted}")
+        print(f"[SUCCESS] is_fitted property works: {mc.is_fitted}")
 
         # Test states
         states = mc.states
         assert isinstance(states, set), "Should return set"
         assert len(states) > 0, "Should have states"
-        print(f"✅ states property works: {len(states)} states")
+        print(f"[SUCCESS] states property works: {len(states)} states")
 
         # Test get_statistics
         stats = mc.get_statistics()
         assert 'is_fitted' in stats
         assert 'num_states' in stats
         assert 'num_transitions' in stats
-        print(f"✅ get_statistics() works:")
+        print(f"[SUCCESS] get_statistics() works:")
         print(f"   States: {stats['num_states']}")
         print(f"   Transitions: {stats['num_transitions']}")
 
         return True
 
     except Exception as e:
-        print(f"❌ Properties failed: {e}")
+        print(f"[ERROR] Properties failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -253,11 +253,11 @@ def test_user_requirements():
         print(f"\nTop-1 accuracy: {metrics['top_1_accuracy']:.3f}")
         print(f"MRR: {metrics['mrr']:.3f}")
 
-        print("\n✅ User requirements example works perfectly")
+        print("\n[SUCCESS] User requirements example works perfectly")
         return True
 
     except Exception as e:
-        print(f"❌ User requirements test failed: {e}")
+        print(f"[ERROR] User requirements test failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -283,9 +283,9 @@ def check_files():
         path = Path(file_path)
         if path.exists():
             size = path.stat().st_size
-            print(f"✅ {file_path:40s} ({size:6,} bytes)")
+            print(f"[SUCCESS] {file_path:40s} ({size:6,} bytes)")
         else:
-            print(f"❌ {file_path:40s} (missing)")
+            print(f"[ERROR] {file_path:40s} (missing)")
             all_exist = False
 
     return all_exist
@@ -293,9 +293,9 @@ def check_files():
 
 def main():
     """Run all validation tests."""
-    print("\n" + "╔" + "═" * 68 + "╗")
-    print("║" + " " * 10 + "FirstOrderMarkovChain - Final Validation" + " " * 17 + "║")
-    print("╚" + "═" * 68 + "╝\n")
+    print("\n" + "=" + "=" * 68 + "=")
+    print("|" + " " * 10 + "FirstOrderMarkovChain - Final Validation" + " " * 17 + "|")
+    print("=" + "=" * 68 + "╝\n")
 
     results = []
 
@@ -348,7 +348,7 @@ def main():
     total = len(results)
 
     for name, result in results:
-        status = "✅ PASS" if result else "❌ FAIL"
+        status = "[SUCCESS] PASS" if result else "[ERROR] FAIL"
         print(f"  {status}  {name}")
 
     print(f"\n  Total: {passed}/{total} tests passed")
@@ -357,10 +357,10 @@ def main():
         print("\n" + "🎉" * 35)
         print("\n  ✨ ALL VALIDATION TESTS PASSED! ✨")
         print("\n  The FirstOrderMarkovChain implementation is:")
-        print("    ✅ Fully functional")
-        print("    ✅ Meets all requirements")
-        print("    ✅ Production ready")
-        print("    ✅ Well documented")
+        print("    [SUCCESS] Fully functional")
+        print("    [SUCCESS] Meets all requirements")
+        print("    [SUCCESS] Production ready")
+        print("    [SUCCESS] Well documented")
         print("\n  Features implemented:")
         print("    • fit(), partial_fit(), update() for training")
         print("    • predict(), predict_proba() for predictions")
@@ -376,7 +376,7 @@ def main():
         print("\n" + "🎉" * 35 + "\n")
         return 0
     else:
-        print("\n❌ Some tests failed. Please review the errors above.\n")
+        print("\n[ERROR] Some tests failed. Please review the errors above.\n")
         return 1
 
 

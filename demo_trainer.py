@@ -101,7 +101,7 @@ def test_fresh_training():
     final_stats = trainer.train()
 
     # Verify outputs
-    print("\n✓ Training completed")
+    print("\n[OK] Training completed")
     print(f"  - Total episodes: {final_stats['total_episodes']}")
     print(f"  - Best eval reward: {final_stats['best_eval_reward']:.2f}")
     print(f"  - Total time: {final_stats['total_time']:.2f}s")
@@ -116,7 +116,7 @@ def test_fresh_training():
     assert (checkpoint_dir / "latest.pt").exists(), "Latest checkpoint not saved"
     assert (Path(output_dir) / "training_curves.png").exists(), "Training curves not saved"
 
-    print("\n✓ All outputs verified:")
+    print("\n[OK] All outputs verified:")
     print(f"  - Checkpoints: {checkpoint_dir}")
     print(f"  - Logs: {log_dir}")
     print(f"  - Training curves: {output_dir}/training_curves.png")
@@ -162,13 +162,13 @@ def test_resume_training(checkpoint_path: str):
 
     # Load checkpoint
     episode = trainer.load_checkpoint(checkpoint_path)
-    print(f"✓ Checkpoint loaded, resuming from episode {episode}")
+    print(f"[OK] Checkpoint loaded, resuming from episode {episode}")
 
     # Resume training
     print(f"\nTraining for {training_config.max_episodes - episode} more episodes...")
     final_stats = trainer.train()
 
-    print("\n✓ Resumed training completed")
+    print("\n[OK] Resumed training completed")
     print(f"  - Total episodes: {final_stats['total_episodes']}")
     print(f"  - Best eval reward: {final_stats['best_eval_reward']:.2f}")
 
@@ -203,7 +203,7 @@ def test_evaluation_only(checkpoint_path: str):
     # Evaluate
     eval_metrics = trainer.evaluate_only(checkpoint_path, num_episodes=20)
 
-    print("\n✓ Evaluation completed")
+    print("\n[OK] Evaluation completed")
     print(f"  - Mean reward: {eval_metrics['mean_reward']:.2f} +/- {eval_metrics['std_reward']:.2f}")
     print(f"  - Min/Max: {eval_metrics['min_reward']:.2f} / {eval_metrics['max_reward']:.2f}")
     print(f"  - Mean length: {eval_metrics['mean_length']:.0f}")
@@ -250,7 +250,7 @@ def test_early_stopping():
     print(f"\nTraining with early stopping (patience={training_config.patience})...")
     final_stats = trainer.train()
 
-    print("\n✓ Training completed (early stopping)")
+    print("\n[OK] Training completed (early stopping)")
     print(f"  - Total episodes: {final_stats['total_episodes']}")
     print(f"  - Stopped early: {final_stats['total_episodes'] < training_config.max_episodes}")
 
@@ -296,7 +296,7 @@ def test_metrics_tracking():
     final_stats = trainer.train()
 
     # Check metrics
-    print("\n✓ Metrics tracked:")
+    print("\n[OK] Metrics tracked:")
     print(f"  - Train rewards: {len(trainer.train_rewards)} episodes")
     print(f"  - Eval rewards: {len(trainer.eval_rewards)} evaluations")
     print(f"  - Losses: {len(trainer.losses)} episodes")
@@ -309,7 +309,7 @@ def test_metrics_tracking():
     assert metrics_file.exists(), "Metrics JSON not saved"
     assert curves_file.exists(), "Training curves not saved"
 
-    print("\n✓ Files created:")
+    print("\n[OK] Files created:")
     print(f"  - Metrics: {metrics_file}")
     print(f"  - Curves: {curves_file}")
 
@@ -340,7 +340,7 @@ def main():
 
         # Summary
         print("\n" + "=" * 80)
-        print("ALL TESTS PASSED! ✓")
+        print("ALL TESTS PASSED! [OK]")
         print("=" * 80)
         print("\nThe training orchestration system is fully functional!")
         print("\nGenerated outputs:")

@@ -158,7 +158,7 @@ class PreprocessingPipeline:
 
             # If validate_only, stop here
             if validate_only:
-                self.logger.info("\n✓ Validation complete (validate_only=True)")
+                self.logger.info("\n[OK] Validation complete (validate_only=True)")
                 return self._generate_validation_report(dataset, validation_result)
 
             # Step 3: Split into train/test
@@ -209,7 +209,7 @@ class PreprocessingPipeline:
 
 
             self.logger.info("\n" + "="*70)
-            self.logger.info("✓ PREPROCESSING PIPELINE COMPLETE")
+            self.logger.info("[OK] PREPROCESSING PIPELINE COMPLETE")
             self.logger.info("="*70)
             self.logger.info(f"\nProcessed {self.stats['raw_calls']} API calls")
             self.logger.info(f"Train: {self.stats['train_sessions']} sessions ({self.stats['train_calls']} calls)")
@@ -220,7 +220,7 @@ class PreprocessingPipeline:
             return output_paths
 
         except Exception as e:
-            self.logger.error(f"\n✗ Pipeline failed: {e}")
+            self.logger.error(f"\n[FAIL] Pipeline failed: {e}")
             raise
 
     def _load_or_generate_data(
@@ -244,7 +244,7 @@ class PreprocessingPipeline:
             )
 
             self.stats['input_source'] = 'synthetic'
-            self.logger.info(f"  ✓ Generated {len(dataset.sessions)} sessions")
+            self.logger.info(f"  [OK] Generated {len(dataset.sessions)} sessions")
 
         elif input_path:
             self.logger.info(f"\nStep 1: Loading data from {input_path}...")
@@ -262,7 +262,7 @@ class PreprocessingPipeline:
                 raise ValueError(f"Unsupported file format: {input_path.suffix}")
 
             self.stats['input_source'] = str(input_path)
-            self.logger.info(f"  ✓ Loaded {len(dataset.sessions)} sessions")
+            self.logger.info(f"  [OK] Loaded {len(dataset.sessions)} sessions")
 
         else:
             raise ValueError(
@@ -311,7 +311,7 @@ class PreprocessingPipeline:
         if not self.splitter.verify_no_overlap(train, test):
             self.logger.warning("  ⚠ Session overlap detected between train and test!")
         else:
-            self.logger.info("  ✓ No session overlap (proper split)")
+            self.logger.info("  [OK] No session overlap (proper split)")
 
         self.logger.info(f"  Train: {len(train.sessions)} sessions ({train.total_calls} calls)")
         self.logger.info(f"  Test: {len(test.sessions)} sessions ({test.total_calls} calls)")
@@ -322,7 +322,7 @@ class PreprocessingPipeline:
         """Build sequences for Markov chain training."""
         sequences = self.sequence_builder.build_sequences(dataset.sessions)
 
-        self.logger.info(f"  ✓ Extracted {len(sequences)} sequences")
+        self.logger.info(f"  [OK] Extracted {len(sequences)} sequences")
 
         # Show sample
         if sequences:
@@ -336,7 +336,7 @@ class PreprocessingPipeline:
         self.feature_engineer.fit(dataset.sessions)
 
         info = self.feature_engineer.get_feature_info()
-        self.logger.info(f"  ✓ Fitted feature engineer")
+        self.logger.info(f"  [OK] Fitted feature engineer")
         self.logger.info(f"  Feature dimension: {info['feature_dim']}")
         self.logger.info(f"  Unique endpoints: {info['num_endpoints']}")
         self.logger.info(f"  Categories: {info['num_categories']}")
@@ -355,33 +355,33 @@ class PreprocessingPipeline:
         train_path = self.output_dir / 'train.parquet'
         train_dataset.save_to_parquet(train_path)
         output_paths['train'] = str(train_path)
-        self.logger.info(f"  ✓ Saved train data: {train_path}")
+        self.logger.info(f"  [OK] Saved train data: {train_path}")
 
         # Save test dataset
         test_path = self.output_dir / 'test.parquet'
         test_dataset.save_to_parquet(test_path)
         output_paths['test'] = str(test_path)
-        self.logger.info(f"  ✓ Saved test data: {test_path}")
+        self.logger.info(f"  [OK] Saved test data: {test_path}")
 
         # Save sequences
         sequences_path = self.output_dir / 'sequences.json'
         sequences_path.write_text(json.dumps(sequences, indent=2))
         output_paths['sequences'] = str(sequences_path)
-        self.logger.info(f"  ✓ Saved sequences: {sequences_path}")
+        self.logger.info(f"  [OK] Saved sequences: {sequences_path}")
 
         # Save fitted feature engineer
         fe_path = self.output_dir / 'feature_engineer.pkl'
         with open(fe_path, 'wb') as f:
             pickle.dump(self.feature_engineer, f)
         output_paths['feature_engineer'] = str(fe_path)
-        self.logger.info(f"  ✓ Saved feature engineer: {fe_path}")
+        self.logger.info(f"  [OK] Saved feature engineer: {fe_path}")
 
         # Save statistics
         stats_path = self.output_dir / 'statistics.json'
         stats_to_save = self._serialize_stats()
         stats_path.write_text(json.dumps(stats_to_save, indent=2))
         output_paths['statistics'] = str(stats_path)
-        self.logger.info(f"  ✓ Saved statistics: {stats_path}")
+        self.logger.info(f"  [OK] Saved statistics: {stats_path}")
 
         return output_paths
 
@@ -423,7 +423,7 @@ class PreprocessingPipeline:
             "",
             "## Data Validation",
             "",
-            f"- **Valid:** {'✓ YES' if validation_result['valid'] else '✗ NO'}",
+            f"- **Valid:** {'[OK] YES' if validation_result['valid'] else '[FAIL] NO'}",
             f"- **Errors:** {self.stats['validation_errors']}",
             f"- **Warnings:** {self.stats['validation_warnings']}",
             f"- **Anomalies Detected:** {self.stats['anomalies_detected']}",
@@ -490,7 +490,7 @@ class PreprocessingPipeline:
             "",
             "---",
             "",
-            "**Pipeline Status:** ✓ Complete",
+            "**Pipeline Status:** [OK] Complete",
         ])
 
         report_path = self.output_dir / 'report.md'

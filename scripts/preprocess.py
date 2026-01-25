@@ -195,7 +195,7 @@ def preprocess(
         # Show results
         click.echo()
         click.echo(click.style("="*70, fg='green'))
-        click.echo(click.style("  ✓ Success!", fg='green', bold=True))
+        click.echo(click.style("  [OK] Success!", fg='green', bold=True))
         click.echo(click.style("="*70, fg='green'))
         click.echo()
 
@@ -260,7 +260,7 @@ def preprocess(
     except Exception as e:
         click.echo()
         click.echo(click.style("="*70, fg='red'))
-        click.echo(click.style("  ✗ Error!", fg='red', bold=True))
+        click.echo(click.style("  [FAIL] Error!", fg='red', bold=True))
         click.echo(click.style("="*70, fg='red'))
         click.echo()
         click.echo(click.style(f"Error: {str(e)}", fg='red'))

@@ -25,13 +25,13 @@ def test_basic_operations():
     mc2 = SecondOrderMarkovChain(smoothing=0.001, fallback_to_first_order=True)
     mc2.fit(sequences)
 
-    print(f"\n✓ Model fitted successfully")
+    print(f"\n[OK] Model fitted successfully")
     print(f"  - Individual states: {len(mc2.states)}")
     print(f"  - State pairs: {len(mc2.state_pairs)}")
     print(f"  - Is fitted: {mc2.is_fitted}")
 
     # Test predictions
-    print(f"\n✓ Testing predictions:")
+    print(f"\n[OK] Testing predictions:")
     predictions = mc2.predict('login', 'profile', k=3)
     print(f"  After 'login' → 'profile': {predictions}")
 
@@ -40,12 +40,12 @@ def test_basic_operations():
 
     # Test probability
     prob = mc2.predict_proba('login', 'profile', 'orders')
-    print(f"\n✓ P(orders | login, profile) = {prob:.3f}")
+    print(f"\n[OK] P(orders | login, profile) = {prob:.3f}")
 
     prob = mc2.predict_proba('login', 'profile', 'browse')
     print(f"  P(browse | login, profile) = {prob:.3f}")
 
-    print("\n✓ TEST 1 PASSED\n")
+    print("\n[OK] TEST 1 PASSED\n")
 
 
 def test_fallback():
@@ -64,12 +64,12 @@ def test_fallback():
     mc2.fit(sequences)
 
     # Test with seen pair
-    print("\n✓ Seen pair ('login', 'profile'):")
+    print("\n[OK] Seen pair ('login', 'profile'):")
     predictions = mc2.predict('login', 'profile', k=3, use_fallback=False)
     print(f"  Predictions (no fallback): {predictions}")
 
     # Test with unseen pair - should use fallback
-    print("\n✓ Unseen pair ('xyz', 'profile'):")
+    print("\n[OK] Unseen pair ('xyz', 'profile'):")
     predictions_no_fallback = mc2.predict('xyz', 'profile', k=3, use_fallback=False)
     print(f"  Predictions (no fallback): {predictions_no_fallback}")
 
@@ -77,13 +77,13 @@ def test_fallback():
     print(f"  Predictions (with fallback): {predictions_with_fallback}")
 
     # Test model without fallback enabled
-    print("\n✓ Model without fallback enabled:")
+    print("\n[OK] Model without fallback enabled:")
     mc2_no_fallback = SecondOrderMarkovChain(smoothing=0.001, fallback_to_first_order=False)
     mc2_no_fallback.fit(sequences)
     predictions = mc2_no_fallback.predict('xyz', 'profile', k=3, use_fallback=True)
     print(f"  Predictions for unseen pair: {predictions}")
 
-    print("\n✓ TEST 2 PASSED\n")
+    print("\n[OK] TEST 2 PASSED\n")
 
 
 def test_state_representation():
@@ -94,21 +94,21 @@ def test_state_representation():
 
     # Test key creation
     key = SecondOrderMarkovChain._make_state_key('login', 'profile')
-    print(f"\n✓ Created state key: '{key}'")
+    print(f"\n[OK] Created state key: '{key}'")
     assert key == 'login|profile', f"Expected 'login|profile', got '{key}'"
 
     # Test key parsing
     prev, curr = SecondOrderMarkovChain._parse_state_key(key)
-    print(f"✓ Parsed state key: previous='{prev}', current='{curr}'")
+    print(f"[OK] Parsed state key: previous='{prev}', current='{curr}'")
     assert prev == 'login' and curr == 'profile'
 
     # Test with special token
     key = SecondOrderMarkovChain._make_state_key(START_TOKEN, 'login')
-    print(f"✓ Start token key: '{key}'")
+    print(f"[OK] Start token key: '{key}'")
     prev, curr = SecondOrderMarkovChain._parse_state_key(key)
     assert prev == START_TOKEN and curr == 'login'
 
-    print("\n✓ TEST 3 PASSED\n")
+    print("\n[OK] TEST 3 PASSED\n")
 
 
 def test_sequence_generation():
@@ -129,11 +129,11 @@ def test_sequence_generation():
     # Generate sequences
     for i in range(3):
         seq = mc2.generate_sequence('A', length=5, seed=42+i)
-        print(f"✓ Generated sequence {i+1}: {seq}")
+        print(f"[OK] Generated sequence {i+1}: {seq}")
         assert seq[0] == 'A', "Sequence should start with 'A'"
         assert len(seq) <= 5, f"Sequence too long: {len(seq)}"
 
-    print("\n✓ TEST 4 PASSED\n")
+    print("\n[OK] TEST 4 PASSED\n")
 
 
 def test_sequence_scoring():
@@ -153,18 +153,18 @@ def test_sequence_scoring():
 
     # Score common sequence
     score1 = mc2.score_sequence(['A', 'B', 'C'])
-    print(f"✓ Score for ['A', 'B', 'C']: {score1:.3f}")
+    print(f"[OK] Score for ['A', 'B', 'C']: {score1:.3f}")
     assert score1 < 0, "Log likelihood should be negative"
 
     # Score less common sequence
     score2 = mc2.score_sequence(['A', 'B', 'D'])
-    print(f"✓ Score for ['A', 'B', 'D']: {score2:.3f}")
+    print(f"[OK] Score for ['A', 'B', 'D']: {score2:.3f}")
     assert score2 < 0, "Log likelihood should be negative"
 
     # More common sequence should have higher (less negative) score
-    print(f"✓ More common sequence has higher score: {score1 > score2}")
+    print(f"[OK] More common sequence has higher score: {score1 > score2}")
 
-    print("\n✓ TEST 5 PASSED\n")
+    print("\n[OK] TEST 5 PASSED\n")
 
 
 def test_evaluation():
@@ -194,7 +194,7 @@ def test_evaluation():
     # Evaluate
     metrics = mc2.evaluate(test_sequences, k_values=[1, 3, 5], track_fallback=True)
 
-    print(f"\n✓ Evaluation metrics:")
+    print(f"\n[OK] Evaluation metrics:")
     print(f"  - Top-1 accuracy: {metrics['top_1_accuracy']:.3f}")
     print(f"  - Top-3 accuracy: {metrics['top_3_accuracy']:.3f}")
     print(f"  - MRR: {metrics['mrr']:.3f}")
@@ -208,7 +208,7 @@ def test_evaluation():
     assert 0 <= metrics['coverage'] <= 1, "Coverage out of range"
     assert 0 <= metrics['fallback_rate'] <= 1, "Fallback rate out of range"
 
-    print("\n✓ TEST 6 PASSED\n")
+    print("\n[OK] TEST 6 PASSED\n")
 
 
 def test_comparison_with_first_order():
@@ -233,7 +233,7 @@ def test_comparison_with_first_order():
     # Compare
     comparison = mc2.compare_with_first_order(sequences, k_values=[1, 3, 5])
 
-    print(f"\n✓ Comparison results:")
+    print(f"\n[OK] Comparison results:")
     print(f"\nSecond-order metrics:")
     for key, value in comparison['second_order_metrics'].items():
         print(f"  - {key}: {value:.3f}")
@@ -249,7 +249,7 @@ def test_comparison_with_first_order():
 
     print(f"\nFallback rate: {comparison['fallback_rate']:.3f}")
 
-    print("\n✓ TEST 7 PASSED\n")
+    print("\n[OK] TEST 7 PASSED\n")
 
 
 def test_persistence():
@@ -272,11 +272,11 @@ def test_persistence():
 
     save_path = 'data/test/test_second_order_model.json'
     mc2.save(save_path)
-    print(f"✓ Model saved to {save_path}")
+    print(f"[OK] Model saved to {save_path}")
 
     # Load model
     mc2_loaded = SecondOrderMarkovChain.load(save_path)
-    print(f"✓ Model loaded from {save_path}")
+    print(f"[OK] Model loaded from {save_path}")
 
     # Verify predictions match
     loaded_predictions = mc2_loaded.predict('login', 'profile', k=3)
@@ -285,12 +285,12 @@ def test_persistence():
     assert len(original_predictions) == len(loaded_predictions), "Prediction count mismatch"
     assert abs(original_prob - loaded_prob) < 1e-10, "Probability mismatch"
 
-    print(f"✓ Predictions match:")
+    print(f"[OK] Predictions match:")
     print(f"  Original: {original_predictions}")
     print(f"  Loaded:   {loaded_predictions}")
-    print(f"✓ Probability matches: {original_prob:.6f} == {loaded_prob:.6f}")
+    print(f"[OK] Probability matches: {original_prob:.6f} == {loaded_prob:.6f}")
 
-    print("\n✓ TEST 8 PASSED\n")
+    print("\n[OK] TEST 8 PASSED\n")
 
 
 def test_partial_fit():
@@ -314,19 +314,19 @@ def test_partial_fit():
     # Initial training
     mc2.fit(initial_sequences)
     initial_predictions = mc2.predict('A', 'B', k=3)
-    print(f"✓ After initial fit: {initial_predictions}")
+    print(f"[OK] After initial fit: {initial_predictions}")
 
     # Incremental update
     mc2.partial_fit(new_sequences)
     updated_predictions = mc2.predict('A', 'B', k=3)
-    print(f"✓ After partial_fit: {updated_predictions}")
+    print(f"[OK] After partial_fit: {updated_predictions}")
 
     # Should now know about both C and D
     states_from_ab = [pred[0] for pred in updated_predictions]
     assert 'C' in states_from_ab, "Should still know about C"
     assert 'D' in states_from_ab, "Should now know about D"
 
-    print("\n✓ TEST 9 PASSED\n")
+    print("\n[OK] TEST 9 PASSED\n")
 
 
 def test_update_method():
@@ -342,21 +342,21 @@ def test_update_method():
     mc2.update('login', 'profile', 'settings', count=5)
     mc2.update('browse', 'profile', 'orders', count=3)
 
-    print(f"✓ Added individual transitions")
+    print(f"[OK] Added individual transitions")
 
     # Test predictions
     predictions1 = mc2.predict('login', 'profile', k=2)
-    print(f"✓ After 'login' → 'profile': {predictions1}")
+    print(f"[OK] After 'login' → 'profile': {predictions1}")
     assert predictions1[0][0] == 'orders', "Most common should be 'orders'"
 
     predictions2 = mc2.predict('browse', 'profile', k=2)
-    print(f"✓ After 'browse' → 'profile': {predictions2}")
+    print(f"[OK] After 'browse' → 'profile': {predictions2}")
 
     # Different contexts should give different predictions
     assert predictions1[0][0] != predictions2[0][0] or len(predictions2) == 1, \
         "Different contexts should give different top predictions"
 
-    print("\n✓ TEST 10 PASSED\n")
+    print("\n[OK] TEST 10 PASSED\n")
 
 
 def test_statistics():
@@ -376,7 +376,7 @@ def test_statistics():
 
     stats = mc2.get_statistics()
 
-    print(f"\n✓ Model statistics:")
+    print(f"\n[OK] Model statistics:")
     print(f"  - Is fitted: {stats['is_fitted']}")
     print(f"  - Individual states: {stats['num_individual_states']}")
     print(f"  - State pairs: {stats['num_state_pairs']}")
@@ -390,7 +390,7 @@ def test_statistics():
         print(f"    - States: {stats['first_order_stats']['num_states']}")
         print(f"    - Transitions: {stats['first_order_stats']['num_transitions']}")
 
-    print("\n✓ TEST 11 PASSED\n")
+    print("\n[OK] TEST 11 PASSED\n")
 
 
 def test_edge_cases():
@@ -402,14 +402,14 @@ def test_edge_cases():
     mc2 = SecondOrderMarkovChain(smoothing=0.001, fallback_to_first_order=True)
 
     # Test unfitted model
-    print("✓ Testing unfitted model:")
+    print("[OK] Testing unfitted model:")
     assert not mc2.is_fitted
     assert len(mc2.states) == 0
     assert mc2.predict('A', 'B', k=5) == []
     print("  - Unfitted model returns empty predictions")
 
     # Test with very short sequences
-    print("\n✓ Testing with short sequences:")
+    print("\n[OK] Testing with short sequences:")
     mc2.fit([['A'], ['B', 'C']])
     assert mc2.is_fitted
     print("  - Model handles short sequences gracefully")
@@ -427,7 +427,7 @@ def test_edge_cases():
     assert len(predictions) == 1 and predictions[0][0] == 'C'
     print("  - Single sequence predictions correct")
 
-    print("\n✓ TEST 12 PASSED\n")
+    print("\n[OK] TEST 12 PASSED\n")
 
 
 def demonstrate_context_importance():
@@ -471,10 +471,10 @@ def demonstrate_context_importance():
     for api, prob in so_predictions2:
         print(f"  - {api}: {prob:.3f}")
 
-    print("\n✓ Second-order model adapts predictions based on context!")
+    print("\n[OK] Second-order model adapts predictions based on context!")
     print("  After authentication flow: predicts 'orders'")
     print("  After browsing flow: predicts 'settings'")
-    print("\n✓ DEMONSTRATION COMPLETE\n")
+    print("\n[OK] DEMONSTRATION COMPLETE\n")
 
 
 def main():
@@ -499,24 +499,24 @@ def main():
         demonstrate_context_importance()
 
         print("=" * 70)
-        print("ALL TESTS PASSED! ✓")
+        print("ALL TESTS PASSED! [OK]")
         print("=" * 70)
         print("\nSecondOrderMarkovChain implementation is validated and ready to use.")
         print("\nKey features verified:")
-        print("  ✓ Second-order state representation (previous, current) → next")
-        print("  ✓ Fallback to first-order for unseen state pairs")
-        print("  ✓ Context-aware predictions that outperform first-order")
-        print("  ✓ Model persistence (save/load)")
-        print("  ✓ Incremental learning (partial_fit)")
-        print("  ✓ Comprehensive evaluation metrics with fallback tracking")
-        print("  ✓ Direct comparison with first-order baseline")
+        print("  [OK] Second-order state representation (previous, current) → next")
+        print("  [OK] Fallback to first-order for unseen state pairs")
+        print("  [OK] Context-aware predictions that outperform first-order")
+        print("  [OK] Model persistence (save/load)")
+        print("  [OK] Incremental learning (partial_fit)")
+        print("  [OK] Comprehensive evaluation metrics with fallback tracking")
+        print("  [OK] Direct comparison with first-order baseline")
         print()
 
     except AssertionError as e:
-        print(f"\n❌ TEST FAILED: {e}\n")
+        print(f"\n[ERROR] TEST FAILED: {e}\n")
         raise
     except Exception as e:
-        print(f"\n❌ ERROR: {e}\n")
+        print(f"\n[ERROR] ERROR: {e}\n")
         raise
 
 

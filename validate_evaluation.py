@@ -28,12 +28,12 @@ def test_basic_evaluation():
 
     # Create evaluator
     evaluator = MarkovEvaluator(predictor)
-    print("\n✓ Created evaluator")
+    print("\n[OK] Created evaluator")
 
     # Evaluate
     results = evaluator.evaluate_accuracy(sequences, k_values=[1, 3, 5, 10])
 
-    print(f"\n✓ Evaluation results:")
+    print(f"\n[OK] Evaluation results:")
     print(f"    - Top-1 Accuracy: {results['top_1_accuracy']:.3f}")
     print(f"    - Top-3 Accuracy: {results['top_3_accuracy']:.3f}")
     print(f"    - Top-5 Accuracy: {results['top_5_accuracy']:.3f}")
@@ -47,7 +47,7 @@ def test_basic_evaluation():
     assert 0 <= results['mrr'] <= 1
     assert 0 <= results['coverage'] <= 1
 
-    print("\n✓ TEST 1 PASSED\n")
+    print("\n[OK] TEST 1 PASSED\n")
 
 
 def test_per_endpoint_evaluation():
@@ -71,7 +71,7 @@ def test_per_endpoint_evaluation():
     # Per-endpoint evaluation
     per_endpoint = evaluator.evaluate_per_endpoint(sequences)
 
-    print(f"\n✓ Per-endpoint results:")
+    print(f"\n[OK] Per-endpoint results:")
     print(per_endpoint)
 
     assert not per_endpoint.empty
@@ -79,7 +79,7 @@ def test_per_endpoint_evaluation():
     assert 'sample_count' in per_endpoint.columns
     assert 'top_1_accuracy' in per_endpoint.columns
 
-    print("\n✓ TEST 2 PASSED\n")
+    print("\n[OK] TEST 2 PASSED\n")
 
 
 def test_per_context_evaluation():
@@ -113,7 +113,7 @@ def test_per_context_evaluation():
     # Per-context evaluation
     per_context = evaluator.evaluate_per_context(sequences, contexts)
 
-    print(f"\n✓ Per-context results:")
+    print(f"\n[OK] Per-context results:")
     print(per_context)
 
     assert not per_context.empty
@@ -121,7 +121,7 @@ def test_per_context_evaluation():
     assert 'sample_count' in per_context.columns
     assert 'top_1_accuracy' in per_context.columns
 
-    print("\n✓ TEST 3 PASSED\n")
+    print("\n[OK] TEST 3 PASSED\n")
 
 
 def test_calibration():
@@ -142,7 +142,7 @@ def test_calibration():
     # Calibration
     calibration = evaluator.evaluate_calibration(sequences, num_bins=5)
 
-    print(f"\n✓ Calibration results:")
+    print(f"\n[OK] Calibration results:")
     print(f"    - Bin centers: {len(calibration['bin_centers'])} bins")
     print(f"    - Predicted probs: {calibration['predicted_probs'][:3]}...")
     print(f"    - Actual accuracy: {calibration['actual_accuracy'][:3]}...")
@@ -152,7 +152,7 @@ def test_calibration():
     assert 'actual_accuracy' in calibration
     assert 'sample_counts' in calibration
 
-    print("\n✓ TEST 4 PASSED\n")
+    print("\n[OK] TEST 4 PASSED\n")
 
 
 def test_cross_validation():
@@ -173,10 +173,10 @@ def test_cross_validation():
     evaluator = MarkovEvaluator(predictor)
 
     # Cross-validation
-    print("\n✓ Running 3-fold cross-validation...")
+    print("\n[OK] Running 3-fold cross-validation...")
     cv_results = evaluator.cross_validate(sequences, k_folds=3, k_values=[1, 3])
 
-    print(f"\n✓ Cross-validation results:")
+    print(f"\n[OK] Cross-validation results:")
     for metric, (mean, std) in cv_results.items():
         if metric in ['top_1_accuracy', 'top_3_accuracy', 'mrr', 'coverage']:
             print(f"    - {metric}: {mean:.3f} ± {std:.3f}")
@@ -186,7 +186,7 @@ def test_cross_validation():
     assert isinstance(mean, float)
     assert isinstance(std, float)
 
-    print("\n✓ TEST 5 PASSED\n")
+    print("\n[OK] TEST 5 PASSED\n")
 
 
 def test_model_comparison():
@@ -216,10 +216,10 @@ def test_model_comparison():
     # Compare
     evaluator = MarkovEvaluator(predictor1)  # Just need an evaluator instance
 
-    print("\n✓ Comparing models...")
+    print("\n[OK] Comparing models...")
     comparison = evaluator.compare_models(models, sequences, k_values=[1, 3])
 
-    print(f"\n✓ Model comparison:")
+    print(f"\n[OK] Model comparison:")
     print(comparison)
 
     assert not comparison.empty
@@ -227,7 +227,7 @@ def test_model_comparison():
     assert 'top_1_accuracy' in comparison.columns
     assert len(comparison) == 2
 
-    print("\n✓ TEST 6 PASSED\n")
+    print("\n[OK] TEST 6 PASSED\n")
 
 
 def test_visualizations():
@@ -246,7 +246,7 @@ def test_visualizations():
 
     try:
         # Test transition heatmap
-        print("\n✓ Testing transition heatmap...")
+        print("\n[OK] Testing transition heatmap...")
         MarkovVisualizer.plot_transition_heatmap(
             predictor,
             top_k=5,
@@ -255,7 +255,7 @@ def test_visualizations():
         print("    Saved to data/test/heatmap.png")
 
         # Test accuracy by position
-        print("\n✓ Testing accuracy by position...")
+        print("\n[OK] Testing accuracy by position...")
         MarkovVisualizer.plot_accuracy_by_position(
             sequences,
             predictor,
@@ -265,7 +265,7 @@ def test_visualizations():
         print("    Saved to data/test/accuracy_by_position.png")
 
         # Test calibration curve
-        print("\n✓ Testing calibration curve...")
+        print("\n[OK] Testing calibration curve...")
         evaluator = MarkovEvaluator(predictor)
         calibration = evaluator.evaluate_calibration(sequences, num_bins=5)
         MarkovVisualizer.plot_calibration_curve(
@@ -275,7 +275,7 @@ def test_visualizations():
         print("    Saved to data/test/calibration.png")
 
         # Test confidence distribution
-        print("\n✓ Testing confidence distribution...")
+        print("\n[OK] Testing confidence distribution...")
         MarkovVisualizer.plot_prediction_confidence_distribution(
             sequences,
             predictor,
@@ -284,7 +284,7 @@ def test_visualizations():
         print("    Saved to data/test/confidence_dist.png")
 
         # Test model comparison plot
-        print("\n✓ Testing model comparison plot...")
+        print("\n[OK] Testing model comparison plot...")
         predictor2 = MarkovPredictor(order=2)
         predictor2.fit(sequences)
 
@@ -298,12 +298,12 @@ def test_visualizations():
         )
         print("    Saved to data/test/model_comparison.png")
 
-        print("\n✓ All visualizations created successfully")
+        print("\n[OK] All visualizations created successfully")
 
     except Exception as e:
         print(f"\n⚠ Visualization test skipped (matplotlib/seaborn may not be installed): {e}")
 
-    print("\n✓ TEST 7 PASSED\n")
+    print("\n[OK] TEST 7 PASSED\n")
 
 
 def test_validation_example():
@@ -331,19 +331,19 @@ def test_validation_example():
 
     # Basic evaluation
     results = evaluator.evaluate_accuracy(sequences, contexts, k_values=[1, 3, 5, 10])
-    print(f"\n✓ Top-1 Accuracy: {results['top_1_accuracy']:.3f}")
-    print(f"✓ Top-5 Accuracy: {results['top_5_accuracy']:.3f}")
-    print(f"✓ MRR: {results['mrr']:.3f}")
+    print(f"\n[OK] Top-1 Accuracy: {results['top_1_accuracy']:.3f}")
+    print(f"[OK] Top-5 Accuracy: {results['top_5_accuracy']:.3f}")
+    print(f"[OK] MRR: {results['mrr']:.3f}")
 
     # Per-endpoint breakdown
     per_endpoint = evaluator.evaluate_per_endpoint(sequences, contexts)
-    print(f"\n✓ Per-endpoint accuracy:")
+    print(f"\n[OK] Per-endpoint accuracy:")
     print(per_endpoint.head(10))
 
     # Cross validation
     cv_results = evaluator.cross_validate(sequences, contexts, k_folds=3)
     mean, std = cv_results['top_1_accuracy']
-    print(f"\n✓ CV Top-1 Accuracy: {mean:.3f} ± {std:.3f}")
+    print(f"\n[OK] CV Top-1 Accuracy: {mean:.3f} ± {std:.3f}")
 
     # Visualizations (if available)
     try:
@@ -352,11 +352,11 @@ def test_validation_example():
             top_k=5,
             output_path='data/test/validation_heatmap.png'
         )
-        print("\n✓ Heatmap saved to data/test/validation_heatmap.png")
+        print("\n[OK] Heatmap saved to data/test/validation_heatmap.png")
     except Exception as e:
         print(f"\n⚠ Visualization skipped: {e}")
 
-    print("\n✓ TEST 8 PASSED\n")
+    print("\n[OK] TEST 8 PASSED\n")
 
 
 def demonstrate_comprehensive_evaluation():
@@ -377,11 +377,11 @@ def demonstrate_comprehensive_evaluation():
 
     predictor1 = MarkovPredictor(order=1)
     predictor1.fit(sequences)
-    print("   ✓ First-order trained")
+    print("   [OK] First-order trained")
 
     predictor2 = MarkovPredictor(order=2)
     predictor2.fit(sequences)
-    print("   ✓ Second-order trained")
+    print("   [OK] Second-order trained")
 
     # Evaluation
     print("\n2. Evaluating models...")
@@ -419,7 +419,7 @@ def demonstrate_comprehensive_evaluation():
     calibration = evaluator1.evaluate_calibration(sequences, num_bins=5)
     print(f"   Number of bins: {len(calibration['bin_centers'])}")
 
-    print("\n✓ DEMONSTRATION COMPLETE\n")
+    print("\n[OK] DEMONSTRATION COMPLETE\n")
 
 
 def main():
@@ -440,24 +440,24 @@ def main():
         demonstrate_comprehensive_evaluation()
 
         print("=" * 70)
-        print("ALL TESTS PASSED! ✓")
+        print("ALL TESTS PASSED! [OK]")
         print("=" * 70)
         print("\nMarkovEvaluator and MarkovVisualizer are validated and ready.")
         print("\nKey features verified:")
-        print("  ✓ Core accuracy metrics (top-k, MRR, coverage, perplexity)")
-        print("  ✓ Per-endpoint breakdown analysis")
-        print("  ✓ Per-context breakdown analysis")
-        print("  ✓ Calibration evaluation")
-        print("  ✓ Cross-validation")
-        print("  ✓ Model comparison")
-        print("  ✓ Comprehensive visualizations")
+        print("  [OK] Core accuracy metrics (top-k, MRR, coverage, perplexity)")
+        print("  [OK] Per-endpoint breakdown analysis")
+        print("  [OK] Per-context breakdown analysis")
+        print("  [OK] Calibration evaluation")
+        print("  [OK] Cross-validation")
+        print("  [OK] Model comparison")
+        print("  [OK] Comprehensive visualizations")
         print()
 
     except AssertionError as e:
-        print(f"\n❌ TEST FAILED: {e}\n")
+        print(f"\n[ERROR] TEST FAILED: {e}\n")
         raise
     except Exception as e:
-        print(f"\n❌ ERROR: {e}\n")
+        print(f"\n[ERROR] ERROR: {e}\n")
         import traceback
         traceback.print_exc()
         raise

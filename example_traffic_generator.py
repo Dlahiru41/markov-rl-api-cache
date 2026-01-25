@@ -77,7 +77,7 @@ async def example_basic_usage():
 
     # Stop generator
     await generator.stop()
-    print("\n✓ Generator stopped\n")
+    print("\n[OK] Generator stopped\n")
 
 
 async def example_different_profiles():
@@ -148,7 +148,7 @@ async def example_monitoring():
 
     print()
     await generator.stop()
-    print("✓ Monitoring complete\n")
+    print("[OK] Monitoring complete\n")
 
 
 async def example_pause_resume():
@@ -175,7 +175,7 @@ async def example_pause_resume():
         print(f"  {i+1}s: {stats['total']} requests")
 
     # Pause
-    print("\n⏸ Pausing traffic...")
+    print("\n|| Pausing traffic...")
     generator.pause()
     requests_at_pause = generator.get_stats()['total']
 
@@ -185,7 +185,7 @@ async def example_pause_resume():
         print(f"  While paused: {stats['total']} requests (should stay at {requests_at_pause})")
 
     # Resume
-    print("\n▶ Resuming traffic...")
+    print("\n> Resuming traffic...")
     generator.resume()
 
     for i in range(5):
@@ -194,7 +194,7 @@ async def example_pause_resume():
         print(f"  {i+1}s after resume: {stats['total']} requests")
 
     await generator.stop()
-    print("\n✓ Pause/resume demo complete\n")
+    print("\n[OK] Pause/resume demo complete\n")
 
 
 async def example_workflow_analysis():
@@ -240,15 +240,15 @@ async def example_workflow_analysis():
               f"diff: {diff:+.0%})")
 
     await generator.stop()
-    print("\n✓ Workflow analysis complete\n")
+    print("\n[OK] Workflow analysis complete\n")
 
 
 async def main():
     """Run all examples."""
     print("\n")
-    print("╔" + "═" * 68 + "╗")
-    print("║" + " " * 15 + "TRAFFIC GENERATOR EXAMPLES" + " " * 27 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print("=" + "=" * 68 + "=")
+    print("|" + " " * 15 + "TRAFFIC GENERATOR EXAMPLES" + " " * 27 + "|")
+    print("=" + "=" * 68 + "╝")
 
     print("\nNOTE: These examples will attempt to connect to e-commerce services.")
     print("If services are not running, you will see connection errors.")
@@ -263,7 +263,7 @@ async def main():
         await example_workflow_analysis()
 
         print("=" * 70)
-        print("✅ ALL EXAMPLES COMPLETED")
+        print("[SUCCESS] ALL EXAMPLES COMPLETED")
         print("=" * 70)
         print()
         print("Key Takeaways:")
@@ -283,7 +283,7 @@ async def main():
     except KeyboardInterrupt:
         print("\n\nInterrupted by user")
     except Exception as e:
-        print(f"\n✗ Error: {e}")
+        print(f"\n[FAIL] Error: {e}")
         import traceback
         traceback.print_exc()
 

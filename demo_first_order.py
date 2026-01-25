@@ -32,7 +32,7 @@ def demo_training():
         print(f"  {i}. {' → '.join(seq)}")
 
     # Fit model
-    print("\n✓ Training model with fit()...")
+    print("\n[OK] Training model with fit()...")
     mc = FirstOrderMarkovChain(smoothing=0.001)
     mc.fit(sequences)
 
@@ -41,13 +41,13 @@ def demo_training():
     print(f"  States: {sorted(mc.states)}")
 
     # Partial fit
-    print("\n✓ Adding more data with partial_fit()...")
+    print("\n[OK] Adding more data with partial_fit()...")
     new_sequences = [['checkout', 'confirmation']]
     mc.partial_fit(new_sequences)
     print(f"  States after partial_fit: {len(mc.states)}")
 
     # Update single transition
-    print("\n✓ Adding single transition with update()...")
+    print("\n[OK] Adding single transition with update()...")
     mc.update('confirmation', 'logout')
     print(f"  Added: confirmation → logout")
 
@@ -163,11 +163,11 @@ def demo_persistence(mc):
     # Save model
     model_path = "demo_markov_model.json"
     mc.save(model_path)
-    print(f"\n✓ Saved model to '{model_path}'")
+    print(f"\n[OK] Saved model to '{model_path}'")
 
     # Load model
     mc_loaded = FirstOrderMarkovChain.load(model_path)
-    print(f"✓ Loaded model from '{model_path}'")
+    print(f"[OK] Loaded model from '{model_path}'")
 
     # Verify
     print(f"\nVerification:")
@@ -183,7 +183,7 @@ def demo_persistence(mc):
     # Clean up
     import os
     os.remove(model_path)
-    print(f"\n✓ Cleaned up '{model_path}'")
+    print(f"\n[OK] Cleaned up '{model_path}'")
 
 
 def demo_statistics(mc):
@@ -224,7 +224,7 @@ def demo_cache_prefetching(mc):
     print(f"\nPredictions:")
     to_prefetch = []
     for i, (endpoint, prob) in enumerate(predictions, 1):
-        decision = "✓ PREFETCH" if prob >= threshold else "✗ Skip"
+        decision = "[OK] PREFETCH" if prob >= threshold else "[FAIL] Skip"
         print(f"  {i}. {endpoint:15s}: {prob:.2%}  [{decision}]")
 
         if prob >= threshold:
@@ -245,9 +245,9 @@ def demo_cache_prefetching(mc):
 
 def main():
     """Run all demonstrations."""
-    print("\n" + "╔" + "═" * 68 + "╗")
-    print("║" + " " * 15 + "FirstOrderMarkovChain Demo" + " " * 27 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print("\n" + "=" + "=" * 68 + "=")
+    print("|" + " " * 15 + "FirstOrderMarkovChain Demo" + " " * 27 + "|")
+    print("=" + "=" * 68 + "╝")
 
     try:
         # Run all demos
@@ -262,7 +262,7 @@ def main():
 
         # Summary
         print_section("Summary")
-        print("\n✓ All demonstrations completed successfully!")
+        print("\n[OK] All demonstrations completed successfully!")
         print("\nKey Features Demonstrated:")
         print("  • Training: fit(), partial_fit(), update()")
         print("  • Prediction: predict(), predict_proba()")
@@ -280,7 +280,7 @@ def main():
         print("  4. Integrate with API caching system")
 
     except Exception as e:
-        print(f"\n✗ Error during demo: {e}")
+        print(f"\n[FAIL] Error during demo: {e}")
         import traceback
         traceback.print_exc()
         return 1

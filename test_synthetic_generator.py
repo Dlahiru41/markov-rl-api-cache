@@ -35,7 +35,7 @@ def test_workflow_definition():
         }
     )
 
-    print(f"\n✓ Created workflow: {workflow.name}")
+    print(f"\n[OK] Created workflow: {workflow.name}")
     print(f"  Entry points: {list(workflow.entry_points.keys())}")
     print(f"  Transitions: {len(workflow.transitions)} endpoints")
     print(f"  Exit points: {workflow.exit_points}")
@@ -47,7 +47,7 @@ def test_workflow_definition():
         for error in errors:
             print(f"    - {error}")
     else:
-        print(f"\n  ✓ Workflow is valid")
+        print(f"\n  [OK] Workflow is valid")
 
 
 def test_ecommerce_workflow():
@@ -58,7 +58,7 @@ def test_ecommerce_workflow():
 
     workflow = SyntheticGenerator.ECOMMERCE_WORKFLOW
 
-    print(f"\n✓ E-commerce workflow loaded")
+    print(f"\n[OK] E-commerce workflow loaded")
     print(f"  Name: {workflow.name}")
     print(f"  Entry points: {len(workflow.entry_points)}")
     for endpoint, prob in workflow.entry_points.items():
@@ -74,11 +74,11 @@ def test_ecommerce_workflow():
     # Validate
     errors = SyntheticGenerator.validate_workflow(workflow)
     if errors:
-        print(f"\n  ❌ Validation errors found:")
+        print(f"\n  [ERROR] Validation errors found:")
         for error in errors:
             print(f"    - {error}")
     else:
-        print(f"\n  ✓ Workflow is valid and ready to use")
+        print(f"\n  [OK] Workflow is valid and ready to use")
 
 
 def test_single_session_generation():
@@ -98,7 +98,7 @@ def test_single_session_generation():
         user_type="premium"
     )
 
-    print(f"\n✓ Generated session")
+    print(f"\n[OK] Generated session")
     print(f"  Session ID: {session.session_id}")
     print(f"  User: {session.user_id} ({session.user_type})")
     print(f"  Number of calls: {session.num_calls}")
@@ -140,20 +140,20 @@ def test_reproducibility():
     session3 = gen3.generate_session(workflow, "user1", start_time)
     sequence3 = session3.endpoint_sequence
 
-    print(f"\n✓ Reproducibility test:")
+    print(f"\n[OK] Reproducibility test:")
     print(f"  Seed 42 (run 1): {sequence1}")
     print(f"  Seed 42 (run 2): {sequence2}")
     print(f"  Seed 123:        {sequence3}")
 
     if sequence1 == sequence2:
-        print(f"\n  ✓ Same seed produces identical results")
+        print(f"\n  [OK] Same seed produces identical results")
     else:
-        print(f"\n  ❌ Same seed produced different results!")
+        print(f"\n  [ERROR] Same seed produced different results!")
 
     if sequence1 != sequence3:
-        print(f"  ✓ Different seeds produce different results")
+        print(f"  [OK] Different seeds produce different results")
     else:
-        print(f"  ❌ Different seeds produced identical results!")
+        print(f"  [ERROR] Different seeds produced identical results!")
 
 
 def test_dataset_generation():
@@ -172,7 +172,7 @@ def test_dataset_generation():
         show_progress=False
     )
 
-    print(f"\n✓ Generated dataset")
+    print(f"\n[OK] Generated dataset")
     print(f"  Name: {dataset.name}")
     print(f"  Sessions: {len(dataset.sessions)}")
     print(f"  Total calls: {dataset.total_calls}")
@@ -220,7 +220,7 @@ def test_cascade_failures():
     # Inject cascade failure
     cascade_session = gen.inject_cascade(normal_session)
 
-    print(f"\n✓ Cascade failure injection:")
+    print(f"\n[OK] Cascade failure injection:")
     print(f"  Normal session: {normal_session.num_calls} calls")
     print(f"  With cascade: {cascade_session.num_calls} calls")
 
@@ -240,7 +240,7 @@ def test_cascade_failures():
     print(f"\n  Sample calls (second half with cascade):")
     start_idx = len(cascade_session.calls) // 2
     for call in cascade_session.calls[start_idx:start_idx+3]:
-        status_icon = "✓" if call.status_code == 200 else "✗"
+        status_icon = "[OK]" if call.status_code == 200 else "[FAIL]"
         print(f"    {status_icon} {call.endpoint}: {call.status_code}, {call.response_time_ms:.0f}ms")
 
 
@@ -256,11 +256,11 @@ def test_workflow_yaml():
     # Save to YAML
     yaml_path = Path("test_workflow.yaml")
     workflow.to_yaml(yaml_path)
-    print(f"\n✓ Saved workflow to {yaml_path}")
+    print(f"\n[OK] Saved workflow to {yaml_path}")
 
     # Load from YAML
     loaded_workflow = WorkflowDefinition.from_yaml(yaml_path)
-    print(f"✓ Loaded workflow from {yaml_path}")
+    print(f"[OK] Loaded workflow from {yaml_path}")
 
     # Verify
     print(f"\n  Original workflow:")
@@ -273,9 +273,9 @@ def test_workflow_yaml():
 
     # Compare
     if workflow.name == loaded_workflow.name and workflow.entry_points == loaded_workflow.entry_points:
-        print(f"\n  ✓ Workflows match!")
+        print(f"\n  [OK] Workflows match!")
     else:
-        print(f"\n  ❌ Workflows don't match!")
+        print(f"\n  [ERROR] Workflows don't match!")
 
     # Cleanup
     yaml_path.unlink()
@@ -315,7 +315,7 @@ def test_transition_probabilities():
             total_from_endpoint[from_ep] += 1
 
     # Compare with expected probabilities for a few key transitions
-    print(f"\n✓ Transition probability validation:")
+    print(f"\n[OK] Transition probability validation:")
 
     test_transitions = [
         ("/api/login", "/api/users/{id}/profile"),
@@ -350,13 +350,13 @@ def test_user_validation_code():
     # Generate a single session
     session = gen.generate_session(gen.ECOMMERCE_WORKFLOW, user_id="test_user",
                                     start_time=datetime.now())
-    print(f"\n✓ Single session generation:")
+    print(f"\n[OK] Single session generation:")
     print(f"  Session has {len(session.calls)} calls")
     print(f"  Endpoints: {session.endpoint_sequence}")
 
     # Generate a full dataset
     dataset = gen.generate_dataset(num_users=100, sessions_per_user=(3, 2), show_progress=False)
-    print(f"\n✓ Dataset generation:")
+    print(f"\n[OK] Dataset generation:")
     print(f"  Generated {len(dataset.sessions)} sessions with {dataset.total_calls} total calls")
 
 
@@ -368,7 +368,7 @@ def test_microservices_workflow():
 
     workflow = create_microservices_workflow()
 
-    print(f"\n✓ Microservices workflow:")
+    print(f"\n[OK] Microservices workflow:")
     print(f"  Name: {workflow.name}")
     print(f"  Entry points: {len(workflow.entry_points)}")
     print(f"  Transitions: {len(workflow.transitions)} endpoints")
@@ -377,11 +377,11 @@ def test_microservices_workflow():
     # Validate
     errors = SyntheticGenerator.validate_workflow(workflow)
     if errors:
-        print(f"\n  ❌ Validation errors:")
+        print(f"\n  [ERROR] Validation errors:")
         for error in errors:
             print(f"    - {error}")
     else:
-        print(f"  ✓ Workflow is valid")
+        print(f"  [OK] Workflow is valid")
 
     # Generate sample session
     gen = SyntheticGenerator(seed=42)
@@ -391,7 +391,7 @@ def test_microservices_workflow():
         start_time=datetime.now()
     )
 
-    print(f"\n✓ Generated sample session:")
+    print(f"\n[OK] Generated sample session:")
     print(f"  Calls: {session.num_calls}")
     print(f"  Duration: {session.duration_seconds:.1f}s")
     print(f"  Path: {' → '.join(session.endpoint_sequence[:5])}...")
@@ -418,7 +418,7 @@ def main():
         test_microservices_workflow()
 
         print("\n" + "="*70)
-        print("✅ ALL TESTS PASSED!")
+        print("[SUCCESS] ALL TESTS PASSED!")
         print("="*70)
         print("\nThe SyntheticGenerator module is working correctly!")
         print("Ready to generate synthetic data for Markov chain validation.")
@@ -426,7 +426,7 @@ def main():
         return 0
 
     except Exception as e:
-        print(f"\n❌ ERROR: {e}")
+        print(f"\n[ERROR] ERROR: {e}")
         import traceback
         traceback.print_exc()
         return 1

@@ -17,9 +17,9 @@ print("=" * 70)
 print("\n1. Testing imports...")
 try:
     from tests.unit import test_markov
-    print("   ✓ Test module imported successfully")
+    print("   [OK] Test module imported successfully")
 except ImportError as e:
-    print(f"   ✗ Import error: {e}")
+    print(f"   [FAIL] Import error: {e}")
     sys.exit(1)
 
 # Test 2: Import Markov components
@@ -32,9 +32,9 @@ try:
         ContextAwareMarkovChain,
         MarkovPredictor
     )
-    print("   ✓ All Markov components imported")
+    print("   [OK] All Markov components imported")
 except ImportError as e:
-    print(f"   ✗ Import error: {e}")
+    print(f"   [FAIL] Import error: {e}")
     sys.exit(1)
 
 # Test 3: Run a simple inline test
@@ -46,9 +46,9 @@ try:
     tm.increment('A', 'B', 10)
     prob = tm.get_probability('A', 'B')
     assert 0 < prob <= 1
-    print("   ✓ TransitionMatrix working")
+    print("   [OK] TransitionMatrix working")
 except Exception as e:
-    print(f"   ✗ TransitionMatrix error: {e}")
+    print(f"   [FAIL] TransitionMatrix error: {e}")
 
 # Test FirstOrderMarkovChain
 try:
@@ -57,9 +57,9 @@ try:
     mc.fit(sequences)
     predictions = mc.predict('A', k=2)
     assert len(predictions) > 0
-    print("   ✓ FirstOrderMarkovChain working")
+    print("   [OK] FirstOrderMarkovChain working")
 except Exception as e:
-    print(f"   ✗ FirstOrderMarkovChain error: {e}")
+    print(f"   [FAIL] FirstOrderMarkovChain error: {e}")
 
 # Test MarkovPredictor
 try:
@@ -71,15 +71,15 @@ try:
     state = predictor.get_state_vector(k=3)
     assert len(predictions) > 0
     assert state.shape[0] > 0
-    print("   ✓ MarkovPredictor working")
+    print("   [OK] MarkovPredictor working")
 except Exception as e:
-    print(f"   ✗ MarkovPredictor error: {e}")
+    print(f"   [FAIL] MarkovPredictor error: {e}")
 
 # Test 4: Check pytest availability
 print("\n4. Checking pytest availability...")
 try:
     import pytest
-    print(f"   ✓ pytest version: {pytest.__version__}")
+    print(f"   [OK] pytest version: {pytest.__version__}")
 except ImportError:
     print("   ⚠ pytest not installed - install with: pip install pytest")
 
@@ -93,12 +93,12 @@ try:
         ['browse', 'product', 'cart'],
     ]
     assert len(simple_sequences) == 3
-    print("   ✓ Fixture data can be created")
+    print("   [OK] Fixture data can be created")
 except Exception as e:
-    print(f"   ✗ Fixture creation error: {e}")
+    print(f"   [FAIL] Fixture creation error: {e}")
 
 print("\n" + "=" * 70)
-print("✓ VERIFICATION COMPLETE")
+print("[OK] VERIFICATION COMPLETE")
 print("=" * 70)
 print("\nThe test suite is properly set up!")
 print("\nTo run the full test suite:")

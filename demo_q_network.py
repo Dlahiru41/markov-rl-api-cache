@@ -32,7 +32,7 @@ def demo_standard_qnetwork():
     )
 
     net = QNetwork(config)
-    print(f"\n✓ Created QNetwork")
+    print(f"\n[OK] Created QNetwork")
     print(f"  Parameters: {count_parameters(net):,}")
 
     # Single state
@@ -70,7 +70,7 @@ def demo_standard_qnetwork():
     q_eval2 = net(states)
     print(f"   Eval mode (no dropout): outputs same = {torch.allclose(q_eval1, q_eval2)}")
 
-    print(f"\n✓ Standard QNetwork demo complete!")
+    print(f"\n[OK] Standard QNetwork demo complete!")
 
 
 def demo_dueling_qnetwork():
@@ -90,7 +90,7 @@ def demo_dueling_qnetwork():
     )
 
     net = DuelingQNetwork(config)
-    print(f"\n✓ Created DuelingQNetwork")
+    print(f"\n[OK] Created DuelingQNetwork")
     print(f"  Parameters: {count_parameters(net):,}")
 
     # Forward pass
@@ -119,7 +119,7 @@ def demo_dueling_qnetwork():
     print(f"   Advantages (action 0): [{', '.join(f'{a.item():.3f}' for a in advantages[:3, 0])}...]")
     print(f"   Q-values (action 0): [{', '.join(f'{q.item():.3f}' for q in q_values[:3, 0])}...]")
 
-    print(f"\n✓ Dueling QNetwork demo complete!")
+    print(f"\n[OK] Dueling QNetwork demo complete!")
 
 
 def demo_training_step():
@@ -137,7 +137,7 @@ def demo_training_step():
     optimizer = torch.optim.Adam(q_network.parameters(), lr=1e-4)
     gamma = 0.99
 
-    print(f"\n✓ Setup complete")
+    print(f"\n[OK] Setup complete")
     print(f"  Q-network: {count_parameters(q_network):,} parameters")
     print(f"  Optimizer: Adam (lr=1e-4)")
     print(f"  Gamma: {gamma}")
@@ -182,7 +182,7 @@ def demo_training_step():
     print(f"   Gradient norm: {total_norm:.4f}")
 
     optimizer.step()
-    print(f"   ✓ Parameters updated")
+    print(f"   [OK] Parameters updated")
 
     # Check Q-values after update
     with torch.no_grad():
@@ -191,7 +191,7 @@ def demo_training_step():
 
     print(f"   Q-value change: {q_change:.6f}")
 
-    print(f"\n✓ Training step demo complete!")
+    print(f"\n[OK] Training step demo complete!")
 
 
 def demo_configurations():
@@ -226,7 +226,7 @@ def demo_configurations():
 
         print(f"{name:<20} {params:>12,} {str(q_values.shape):>15} {mean_q:>10.3f}")
 
-    print(f"\n✓ Configurations demo complete!")
+    print(f"\n[OK] Configurations demo complete!")
 
 
 def demo_comparison():
@@ -276,7 +276,7 @@ def demo_comparison():
     print(f"{'Mean Q-value':<30} {q_std.mean():>15.3f} {q_duel.mean():>15.3f}")
     print(f"{'Std Q-value':<30} {q_std.std():>15.3f} {q_duel.std():>15.3f}")
 
-    print(f"\n✓ Comparison demo complete!")
+    print(f"\n[OK] Comparison demo complete!")
 
 
 def main():
@@ -294,7 +294,7 @@ def main():
         demo_comparison()
 
         print("\n" + "="*70)
-        print("✓ ALL DEMOS COMPLETE")
+        print("[OK] ALL DEMOS COMPLETE")
         print("="*70)
         print("\nKey Takeaways:")
         print("1. QNetwork: Standard DQN architecture")
@@ -305,7 +305,7 @@ def main():
         print("\nQ-Networks are ready for DQN training!")
 
     except Exception as e:
-        print(f"\n✗ Demo failed: {e}")
+        print(f"\n[FAIL] Demo failed: {e}")
         import traceback
         traceback.print_exc()
 

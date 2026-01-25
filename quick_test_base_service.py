@@ -4,7 +4,7 @@ sys.path.insert(0, '.')
 
 try:
     from simulator.services.base_service import BaseService, ServiceConfig, EndpointConfig
-    print("✓ Imports successful")
+    print("[OK] Imports successful")
 
     config = ServiceConfig(
         name="test-service",
@@ -16,20 +16,20 @@ try:
             EndpointConfig("/test", "GET", 100, 1.0, [], "Test endpoint")
         ]
     )
-    print("✓ ServiceConfig created")
+    print("[OK] ServiceConfig created")
 
     service = BaseService(config)
-    print(f"✓ BaseService initialized: {service.config.name}")
-    print(f"✓ FastAPI app type: {type(service.app).__name__}")
+    print(f"[OK] BaseService initialized: {service.config.name}")
+    print(f"[OK] FastAPI app type: {type(service.app).__name__}")
 
     routes = [r.path for r in service.app.routes]
-    print(f"✓ Routes registered: {len(routes)}")
+    print(f"[OK] Routes registered: {len(routes)}")
     print(f"Routes: {routes}")
 
-    print("\n✓✓✓ ALL CHECKS PASSED ✓✓✓")
+    print("\n[OK][OK][OK] ALL CHECKS PASSED [OK][OK][OK]")
 
 except Exception as e:
-    print(f"✗ Error: {e}")
+    print(f"[FAIL] Error: {e}")
     import traceback
     traceback.print_exc()
 

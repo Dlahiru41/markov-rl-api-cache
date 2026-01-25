@@ -161,7 +161,7 @@ def generate_prefetch_rules(tm: TransitionMatrix, threshold: float = 0.15, outpu
     with open(output_file, 'w') as f:
         json.dump(rules, f, indent=2)
 
-    print(f"  ✓ Saved {total_rules} prefetch rules")
+    print(f"  [OK] Saved {total_rules} prefetch rules")
 
     return rules
 
@@ -228,9 +228,9 @@ def compare_time_periods(sequences_file1: str, sequences_file2: str, label1: str
 
 def main():
     """Example integration workflow."""
-    print("\n" + "╔" + "═" * 68 + "╗")
-    print("║" + " " * 10 + "TransitionMatrix + SequenceBuilder Integration" + " " * 11 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print("\n" + "=" + "=" * 68 + "=")
+    print("|" + " " * 10 + "TransitionMatrix + SequenceBuilder Integration" + " " * 11 + "|")
+    print("=" + "=" * 68 + "╝")
 
     # Check if example data exists
     sequences_file = "data/final_test/sequences.json"
@@ -278,9 +278,9 @@ def main():
             threshold = 0.15
             for endpoint, prob in top:
                 if prob >= threshold:
-                    print(f"  ✓ PREFETCH {endpoint:20s} ({prob:.1%} > {threshold:.1%})")
+                    print(f"  [OK] PREFETCH {endpoint:20s} ({prob:.1%} > {threshold:.1%})")
                 else:
-                    print(f"  ✗ Skip     {endpoint:20s} ({prob:.1%} < {threshold:.1%})")
+                    print(f"  [FAIL] Skip     {endpoint:20s} ({prob:.1%} < {threshold:.1%})")
 
         print(f"\n{'='*70}")
         print("Integration Complete!")
@@ -315,7 +315,7 @@ def main():
         """)
 
     except Exception as e:
-        print(f"\n✗ Error: {e}")
+        print(f"\n[FAIL] Error: {e}")
         import traceback
         traceback.print_exc()
 

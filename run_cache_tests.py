@@ -69,7 +69,7 @@ def main():
     print("="*70)
 
     for test_name, success in results:
-        status = "✅ PASSED" if success else "❌ FAILED"
+        status = "[SUCCESS] PASSED" if success else "[ERROR] FAILED"
         print(f"{status} - {test_name}")
 
     # Overall result
@@ -79,7 +79,7 @@ def main():
     if all_passed:
         print("🎉 ALL TESTS PASSED!")
     else:
-        print("⚠️  SOME TESTS FAILED")
+        print("[WARNING]  SOME TESTS FAILED")
     print("="*70)
 
     return 0 if all_passed else 1

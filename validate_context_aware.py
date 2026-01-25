@@ -34,30 +34,30 @@ def test_basic_validation():
     )
     mc_ctx.fit(sequences, contexts)
 
-    print("\n✓ Model fitted successfully")
+    print("\n[OK] Model fitted successfully")
     print(f"  - Unique contexts: {len(mc_ctx.contexts)}")
     print(f"  - Context features: {mc_ctx.context_features}")
 
     # Test context-aware prediction
-    print("\n✓ Premium user in morning:")
+    print("\n[OK] Premium user in morning:")
     pred = mc_ctx.predict('login', {'user_type': 'premium', 'hour': 10}, k=3)
     for api, prob in pred:
         print(f"    - {api}: {prob:.3f}")
 
-    print("\n✓ Free user in afternoon:")
+    print("\n[OK] Free user in afternoon:")
     pred = mc_ctx.predict('login', {'user_type': 'free', 'hour': 14}, k=3)
     for api, prob in pred:
         print(f"    - {api}: {prob:.3f}")
 
     # Check context statistics
     stats = mc_ctx.get_context_statistics()
-    print(f"\n✓ Context stats:")
+    print(f"\n[OK] Context stats:")
     print(f"    - Number of contexts: {stats['num_contexts']}")
     print(f"    - Total samples: {stats['total_samples']}")
     print(f"    - Contexts: {stats['contexts']}")
     print(f"    - Samples per context: {stats['samples_per_context']}")
 
-    print("\n✓ TEST 1 PASSED\n")
+    print("\n[OK] TEST 1 PASSED\n")
 
 
 def test_time_discretization():
@@ -76,14 +76,14 @@ def test_time_discretization():
     expected_categories = ['night', 'morning', 'morning', 'afternoon', 'afternoon',
                           'evening', 'evening', 'night', 'night']
 
-    print("\n✓ Hour discretization:")
+    print("\n[OK] Hour discretization:")
     for hour, expected in zip(test_hours, expected_categories):
         actual = mc_ctx._discretize_hour(hour)
-        status = "✓" if actual == expected else "✗"
+        status = "[OK]" if actual == expected else "[FAIL]"
         print(f"    {status} Hour {hour:2d} → {actual:10s} (expected: {expected})")
         assert actual == expected, f"Hour {hour} should be {expected}, got {actual}"
 
-    print("\n✓ TEST 2 PASSED\n")
+    print("\n[OK] TEST 2 PASSED\n")
 
 
 def test_day_discretization():
@@ -103,14 +103,14 @@ def test_day_discretization():
     expected_categories = ['weekday', 'weekday', 'weekday', 'weekday', 'weekday',
                           'weekend', 'weekend']
 
-    print("\n✓ Day discretization:")
+    print("\n[OK] Day discretization:")
     for day, name, expected in zip(test_days, day_names, expected_categories):
         actual = mc_ctx._discretize_day(day)
-        status = "✓" if actual == expected else "✗"
+        status = "[OK]" if actual == expected else "[FAIL]"
         print(f"    {status} {name} (day {day}) → {actual:8s} (expected: {expected})")
         assert actual == expected, f"Day {day} should be {expected}, got {actual}"
 
-    print("\n✓ TEST 3 PASSED\n")
+    print("\n[OK] TEST 3 PASSED\n")
 
 
 def test_context_differentiation():
@@ -146,23 +146,23 @@ def test_context_differentiation():
     )
     mc_ctx.fit(sequences, contexts)
 
-    print("\n✓ Trained on context-dependent data")
+    print("\n[OK] Trained on context-dependent data")
 
     # Test premium user
     pred_premium = mc_ctx.predict('login', {'user_type': 'premium', 'hour': 10}, k=1)
-    print(f"\n✓ Premium user after 'login':")
+    print(f"\n[OK] Premium user after 'login':")
     print(f"    Top prediction: {pred_premium[0][0]} ({pred_premium[0][1]:.3f})")
     assert pred_premium[0][0] == 'premium_features', "Premium users should get premium_features"
 
     # Test free user
     pred_free = mc_ctx.predict('login', {'user_type': 'free', 'hour': 10}, k=1)
-    print(f"\n✓ Free user after 'login':")
+    print(f"\n[OK] Free user after 'login':")
     print(f"    Top prediction: {pred_free[0][0]} ({pred_free[0][1]:.3f})")
     assert pred_free[0][0] == 'browse', "Free users should get browse"
 
-    print("\n✓ Different contexts give different predictions!")
+    print("\n[OK] Different contexts give different predictions!")
 
-    print("\n✓ TEST 4 PASSED\n")
+    print("\n[OK] TEST 4 PASSED\n")
 
 
 def test_fallback_strategies():
@@ -181,7 +181,7 @@ def test_fallback_strategies():
     ]
 
     # Test global fallback
-    print("\n✓ Testing 'global' fallback:")
+    print("\n[OK] Testing 'global' fallback:")
     mc_global = ContextAwareMarkovChain(
         context_features=['user_type', 'time_of_day'],
         order=1,
@@ -195,7 +195,7 @@ def test_fallback_strategies():
     assert len(pred) > 0, "Global fallback should return predictions"
 
     # Test similar fallback
-    print("\n✓ Testing 'similar' fallback:")
+    print("\n[OK] Testing 'similar' fallback:")
     mc_similar = ContextAwareMarkovChain(
         context_features=['user_type', 'time_of_day'],
         order=1,
@@ -208,7 +208,7 @@ def test_fallback_strategies():
     assert len(pred) > 0, "Similar fallback should return predictions"
 
     # Test none fallback
-    print("\n✓ Testing 'none' fallback:")
+    print("\n[OK] Testing 'none' fallback:")
     mc_none = ContextAwareMarkovChain(
         context_features=['user_type', 'time_of_day'],
         order=1,
@@ -220,7 +220,7 @@ def test_fallback_strategies():
     print(f"    Unknown context predictions: {pred}")
     assert len(pred) == 0, "None fallback should return empty for unknown context"
 
-    print("\n✓ TEST 5 PASSED\n")
+    print("\n[OK] TEST 5 PASSED\n")
 
 
 def test_second_order():
@@ -245,14 +245,14 @@ def test_second_order():
     )
     mc_ctx.fit(sequences, contexts)
 
-    print("\n✓ Second-order model fitted")
+    print("\n[OK] Second-order model fitted")
 
     # Test with previous state
     pred = mc_ctx.predict('B', {'user_type': 'premium', 'hour': 10}, k=2, prev='A')
-    print(f"\n✓ Predictions for ('A', 'B') with premium context: {pred}")
+    print(f"\n[OK] Predictions for ('A', 'B') with premium context: {pred}")
     assert len(pred) > 0, "Should get predictions"
 
-    print("\n✓ TEST 6 PASSED\n")
+    print("\n[OK] TEST 6 PASSED\n")
 
 
 def test_predict_with_confidence():
@@ -282,7 +282,7 @@ def test_predict_with_confidence():
     )
     mc_ctx.fit(sequences, contexts)
 
-    print("\n✓ Trained with varying data amounts")
+    print("\n[OK] Trained with varying data amounts")
 
     # High confidence context (50 samples)
     pred_high = mc_ctx.predict_with_confidence(
@@ -290,7 +290,7 @@ def test_predict_with_confidence():
         {'user_type': 'premium', 'hour': 10},
         k=2
     )
-    print(f"\n✓ High-data context (50 samples):")
+    print(f"\n[OK] High-data context (50 samples):")
     for api, prob, conf in pred_high:
         print(f"    - {api}: {prob:.3f} (confidence: {conf:.3f})")
     assert pred_high[0][2] > 0.3, "High data context should have high confidence"
@@ -301,12 +301,12 @@ def test_predict_with_confidence():
         {'user_type': 'free', 'hour': 14},
         k=2
     )
-    print(f"\n✓ Low-data context (5 samples):")
+    print(f"\n[OK] Low-data context (5 samples):")
     for api, prob, conf in pred_low:
         print(f"    - {api}: {prob:.3f} (confidence: {conf:.3f})")
     assert pred_low[0][2] < pred_high[0][2], "Low data context should have lower confidence"
 
-    print("\n✓ TEST 7 PASSED\n")
+    print("\n[OK] TEST 7 PASSED\n")
 
 
 def test_context_statistics():
@@ -334,7 +334,7 @@ def test_context_statistics():
 
     stats = mc_ctx.get_context_statistics()
 
-    print(f"\n✓ Context statistics:")
+    print(f"\n[OK] Context statistics:")
     print(f"    - Number of contexts: {stats['num_contexts']}")
     print(f"    - Total samples: {stats['total_samples']}")
     print(f"    - Average samples per context: {stats['avg_samples_per_context']:.1f}")
@@ -346,7 +346,7 @@ def test_context_statistics():
     assert stats['num_contexts'] == 2, "Should have 2 unique contexts"
     assert stats['total_samples'] == 3, "Should have 3 total samples"
 
-    print("\n✓ TEST 8 PASSED\n")
+    print("\n[OK] TEST 8 PASSED\n")
 
 
 def test_context_importance():
@@ -376,20 +376,20 @@ def test_context_importance():
     )
     mc_ctx.fit(sequences, contexts)
 
-    print("\n✓ Trained on data where user_type matters")
+    print("\n[OK] Trained on data where user_type matters")
 
     # Measure importance
     importance = mc_ctx.get_context_importance(sequences, contexts)
 
-    print(f"\n✓ Context importance scores:")
+    print(f"\n[OK] Context importance scores:")
     for feature, score in importance.items():
         print(f"    - {feature}: {score:.2f}%")
 
     # user_type should be more important than time_of_day
-    print(f"\n✓ user_type importance: {importance['user_type']:.1f}%")
-    print(f"✓ time_of_day importance: {importance['time_of_day']:.1f}%")
+    print(f"\n[OK] user_type importance: {importance['user_type']:.1f}%")
+    print(f"[OK] time_of_day importance: {importance['time_of_day']:.1f}%")
 
-    print("\n✓ TEST 9 PASSED\n")
+    print("\n[OK] TEST 9 PASSED\n")
 
 
 def test_persistence():
@@ -419,21 +419,21 @@ def test_persistence():
 
     save_path = 'data/test/test_context_aware.json'
     mc_ctx.save(save_path)
-    print(f"\n✓ Model saved to {save_path}")
+    print(f"\n[OK] Model saved to {save_path}")
 
     # Load and verify
     mc_ctx_loaded = ContextAwareMarkovChain.load(save_path)
-    print(f"✓ Model loaded from {save_path}")
+    print(f"[OK] Model loaded from {save_path}")
 
     loaded_pred = mc_ctx_loaded.predict('A', {'user_type': 'premium', 'hour': 10}, k=2)
 
-    print(f"\n✓ Original predictions: {original_pred}")
-    print(f"✓ Loaded predictions:   {loaded_pred}")
+    print(f"\n[OK] Original predictions: {original_pred}")
+    print(f"[OK] Loaded predictions:   {loaded_pred}")
 
     assert len(original_pred) == len(loaded_pred), "Prediction count mismatch"
     assert mc_ctx_loaded.context_features == mc_ctx.context_features
 
-    print("\n✓ TEST 10 PASSED\n")
+    print("\n[OK] TEST 10 PASSED\n")
 
 
 def test_partial_fit():
@@ -452,7 +452,7 @@ def test_partial_fit():
     mc_ctx.fit(initial_sequences, initial_contexts)
 
     initial_contexts_count = len(mc_ctx.contexts)
-    print(f"\n✓ Initial contexts: {initial_contexts_count}")
+    print(f"\n[OK] Initial contexts: {initial_contexts_count}")
 
     # Add new context
     new_sequences = [['D', 'E', 'F']]
@@ -461,11 +461,11 @@ def test_partial_fit():
     mc_ctx.partial_fit(new_sequences, new_contexts)
 
     updated_contexts_count = len(mc_ctx.contexts)
-    print(f"✓ Updated contexts: {updated_contexts_count}")
+    print(f"[OK] Updated contexts: {updated_contexts_count}")
 
     assert updated_contexts_count > initial_contexts_count, "Should have more contexts"
 
-    print("\n✓ TEST 11 PASSED\n")
+    print("\n[OK] TEST 11 PASSED\n")
 
 
 def demonstrate_real_world_scenario():
@@ -506,7 +506,7 @@ def demonstrate_real_world_scenario():
     )
     mc_ctx.fit(sequences, contexts)
 
-    print("\n✓ Trained on realistic e-commerce data")
+    print("\n[OK] Trained on realistic e-commerce data")
 
     # Test different scenarios
     print("\n" + "=" * 60)
@@ -543,7 +543,7 @@ def demonstrate_real_world_scenario():
     for ctx, count in stats['samples_per_context'].items():
         print(f"    • {ctx}: {count} samples")
 
-    print("\n✓ DEMONSTRATION COMPLETE\n")
+    print("\n[OK] DEMONSTRATION COMPLETE\n")
 
 
 def main():
@@ -567,25 +567,25 @@ def main():
         demonstrate_real_world_scenario()
 
         print("=" * 70)
-        print("ALL TESTS PASSED! ✓")
+        print("ALL TESTS PASSED! [OK]")
         print("=" * 70)
         print("\nContextAwareMarkovChain implementation is validated and ready to use.")
         print("\nKey features verified:")
-        print("  ✓ Context discretization (time of day, day of week)")
-        print("  ✓ Multiple context-specific Markov chains")
-        print("  ✓ Fallback strategies (global, similar, none)")
-        print("  ✓ Context-aware predictions")
-        print("  ✓ Confidence scoring based on data availability")
-        print("  ✓ Context statistics and importance analysis")
-        print("  ✓ First-order and second-order support")
-        print("  ✓ Model persistence and incremental learning")
+        print("  [OK] Context discretization (time of day, day of week)")
+        print("  [OK] Multiple context-specific Markov chains")
+        print("  [OK] Fallback strategies (global, similar, none)")
+        print("  [OK] Context-aware predictions")
+        print("  [OK] Confidence scoring based on data availability")
+        print("  [OK] Context statistics and importance analysis")
+        print("  [OK] First-order and second-order support")
+        print("  [OK] Model persistence and incremental learning")
         print()
 
     except AssertionError as e:
-        print(f"\n❌ TEST FAILED: {e}\n")
+        print(f"\n[ERROR] TEST FAILED: {e}\n")
         raise
     except Exception as e:
-        print(f"\n❌ ERROR: {e}\n")
+        print(f"\n[ERROR] ERROR: {e}\n")
         raise
 
 

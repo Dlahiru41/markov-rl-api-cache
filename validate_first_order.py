@@ -21,7 +21,7 @@ print("=" * 70)
 print("\n1. Training model on sequences...")
 mc = FirstOrderMarkovChain(smoothing=0.001)
 mc.fit(sequences)
-print(f"   ✓ Model trained")
+print(f"   [OK] Model trained")
 
 # Known states
 print(f"\n2. Known states: {mc.states}")
@@ -49,6 +49,6 @@ print(f"   Coverage: {metrics['coverage']:.3f}")
 print(f"   Perplexity: {metrics['perplexity']:.3f}")
 
 print("\n" + "=" * 70)
-print("✓ Validation Complete!")
+print("[OK] Validation Complete!")
 print("=" * 70)
 
