@@ -7,9 +7,23 @@ httpx>=0.25.0
 aiohttp>=3.9.0
 python-dotenv>=1.0.0
 
-# Data handling
+# Deep Learning and ML
+torch>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Data handling and processing
+pandas>=2.0.0
 pyyaml>=6.0
 faker>=20.0.0
+pyarrow>=12.0.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Caching and database
+redis>=4.5.0
 
 # Testing
 pytest>=7.4.0

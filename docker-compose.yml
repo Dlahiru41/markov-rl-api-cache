@@ -1,8 +1,0 @@
-# Placeholder docker-compose for markov-rl-api-cache
-# Define services (api, redis, prometheus, grafana) as needed.
-version: '3.8'
-services:
-  placeholder:
-    image: busybox
-    command: ["echo", "markov-rl-api-cache placeholder"]
-
