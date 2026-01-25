@@ -1,0 +1,23 @@
+# Burst Traffic Profile
+# Sudden spike in traffic (e.g., flash sale, product launch)
+# Very high rate, short duration, mostly browsing and purchasing
+
+name: "burst"
+requests_per_second: 5000
+duration_seconds: 120  # 2 minutes of intense load
+ramp_up_seconds: 10    # Quick ramp up
+ramp_down_seconds: 20   # Gradual cool down
+
+# During burst: mix of all user types
+user_type_distribution:
+  premium: 0.25   # 25% premium (trying to get deals)
+  free: 0.60      # 60% free users (attracted by sale)
+  guest: 0.15     # 15% guests (new users from ads)
+
+# Burst traffic: lots of browsing and impulse buying
+workflow_distribution:
+  browse: 0.45      # 45% browsing (checking deals)
+  purchase: 0.35    # 35% purchasing (flash sale)
+  account: 0.05     # 5% account (less time for this)
+  quickbuy: 0.15    # 15% quick buy (grabbing deals fast)
+

@@ -1,0 +1,24 @@
+# Normal Traffic Profile
+# Typical weekday traffic pattern with mixed user behavior
+
+name: "normal"
+requests_per_second: 200
+duration_seconds: 300  # 5 minutes
+ramp_up_seconds: 30
+ramp_down_seconds: 30
+
+# User type distribution
+# Represents typical user base composition
+user_type_distribution:
+  premium: 0.2   # 20% premium users
+  free: 0.7      # 70% free users
+  guest: 0.1     # 10% guest users
+
+# Workflow distribution
+# How users behave - most browse, fewer purchase
+workflow_distribution:
+  browse: 0.50      # 50% just browsing
+  purchase: 0.25    # 25% complete purchase
+  account: 0.15     # 15% manage account
+  quickbuy: 0.10    # 10% quick purchase (premium)
+

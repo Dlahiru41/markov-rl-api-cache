@@ -1,0 +1,23 @@
+# Peak Traffic Profile
+# High traffic period (e.g., evening hours, weekend)
+# More purchases, more premium users active
+
+name: "peak"
+requests_per_second: 2000
+duration_seconds: 600  # 10 minutes
+ramp_up_seconds: 60
+ramp_down_seconds: 60
+
+# Peak hours: more premium users, more purchasing
+user_type_distribution:
+  premium: 0.35   # 35% premium users (more active during peak)
+  free: 0.55      # 55% free users
+  guest: 0.10     # 10% guest users
+
+# More purchase-oriented during peak hours
+workflow_distribution:
+  browse: 0.35      # 35% browsing
+  purchase: 0.40    # 40% purchasing (high conversion)
+  account: 0.10     # 10% account management
+  quickbuy: 0.15    # 15% quick purchase
+

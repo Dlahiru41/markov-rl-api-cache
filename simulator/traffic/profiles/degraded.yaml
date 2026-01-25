@@ -1,0 +1,23 @@
+# Degraded Traffic Profile
+# For testing system behavior when services are slow or failing
+# Lower rate to avoid overwhelming degraded services
+
+name: "degraded"
+requests_per_second: 50
+duration_seconds: 180  # 3 minutes
+ramp_up_seconds: 15
+ramp_down_seconds: 15
+
+# Normal user distribution
+user_type_distribution:
+  premium: 0.2
+  free: 0.7
+  guest: 0.1
+
+# More retries, more account checking
+workflow_distribution:
+  browse: 0.40      # 40% browsing (lower due to slow responses)
+  purchase: 0.20    # 20% purchase (many fail)
+  account: 0.30     # 30% checking account/orders
+  quickbuy: 0.10    # 10% quick buy
+
