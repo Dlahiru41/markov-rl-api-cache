@@ -1,0 +1,144 @@
+version: '3.8'
+
+# Development overrides for docker-compose.yml
+# Enables hot reload, debugging, and relaxed resource limits
+
+services:
+  # Override base services for development
+  auth-service:
+    volumes:
+      # Mount source code for hot reload
+      - ./simulator:/app/simulator:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+    environment:
+      # Enable debug mode
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    deploy:
+      resources:
+        limits:
+          # Remove limits for easier local development
+          cpus: '2.0'
+          memory: 1G
+
+  user-service:
+    volumes:
+      - ./simulator:/app/simulator:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+    environment:
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+
+  inventory-service:
+    volumes:
+      - ./simulator:/app/simulator:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+    environment:
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+
+  product-service:
+    volumes:
+      - ./simulator:/app/simulator:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+    environment:
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+
+  cart-service:
+    volumes:
+      - ./simulator:/app/simulator:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+    environment:
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+
+  payment-service:
+    volumes:
+      - ./simulator:/app/simulator:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+    environment:
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+
+  order-service:
+    volumes:
+      - ./simulator:/app/simulator:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+    environment:
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+
+  traffic-generator:
+    volumes:
+      - ./simulator:/app/simulator:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+    environment:
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+
+  # Development tools
+  redis:
+    ports:
+      # Expose additional ports for debugging
+      - "6379:6379"
+    deploy:
+      resources:
+        limits:
+          # More generous limits for development
+          cpus: '1.0'
+          memory: 1G
+
+  prometheus:
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+
+  grafana:
+    environment:
+      # Enable development mode
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+

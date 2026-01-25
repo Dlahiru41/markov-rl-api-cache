@@ -1,0 +1,413 @@
+version: '3.8'
+
+# Docker Compose configuration for markov-rl-api-cache simulation environment
+# Includes: microservices, cache, monitoring, and traffic generation
+
+networks:
+  # Internal network for service-to-service communication
+  simulator-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  # Persistent volumes for data storage
+  redis-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+services:
+  # ============================================================================
+  # INFRASTRUCTURE SERVICES
+  # ============================================================================
+
+  # Redis - Cache backend
+  redis:
+    image: redis:7-alpine
+    container_name: simulator-redis
+    command: >
+      redis-server
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      --save 60 1000
+      --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - simulator-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # Prometheus - Metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: simulator-prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--storage.tsdb.retention.time=7d'
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    networks:
+      - simulator-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # Grafana - Visualization dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: simulator-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=redis-datasource
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/datasources:/etc/grafana/provisioning/datasources:ro
+    networks:
+      - simulator-network
+    depends_on:
+      prometheus:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  # ============================================================================
+  # APPLICATION SERVICES (E-commerce Microservices)
+  # ============================================================================
+
+  # Auth Service - Authentication and token management
+  auth-service:
+    build:
+      context: ...
+      dockerfile: docker/Dockerfile
+    container_name: auth-service
+    command: python -m simulator.services.ecommerce.auth_service
+    environment:
+      - SERVICE_NAME=auth-service
+      - SERVICE_PORT=8002
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "8002:8002"
+    networks:
+      - simulator-network
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+
+  # User Service - User management
+  user-service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: user-service
+    command: python -m simulator.services.ecommerce.user_service
+    environment:
+      - SERVICE_NAME=user-service
+      - SERVICE_PORT=8001
+      - REDIS_URL=redis://redis:6379
+      - AUTH_SERVICE_URL=http://auth-service:8002
+    ports:
+      - "8001:8001"
+    networks:
+      - simulator-network
+    depends_on:
+      redis:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  # Inventory Service - Stock management
+  inventory-service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: inventory-service
+    command: python -m simulator.services.ecommerce.inventory_service
+    environment:
+      - SERVICE_NAME=inventory-service
+      - SERVICE_PORT=8007
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "8007:8007"
+    networks:
+      - simulator-network
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8007/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  # Product Service - Product catalog
+  product-service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: product-service
+    command: python -m simulator.services.ecommerce.product_service
+    environment:
+      - SERVICE_NAME=product-service
+      - SERVICE_PORT=8003
+      - REDIS_URL=redis://redis:6379
+      - INVENTORY_SERVICE_URL=http://inventory-service:8007
+    ports:
+      - "8003:8003"
+    networks:
+      - simulator-network
+    depends_on:
+      redis:
+        condition: service_healthy
+      inventory-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  # Cart Service - Shopping cart
+  cart-service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: cart-service
+    command: python -m simulator.services.ecommerce.cart_service
+    environment:
+      - SERVICE_NAME=cart-service
+      - SERVICE_PORT=8004
+      - REDIS_URL=redis://redis:6379
+      - PRODUCT_SERVICE_URL=http://product-service:8003
+      - USER_SERVICE_URL=http://user-service:8001
+    ports:
+      - "8004:8004"
+    networks:
+      - simulator-network
+    depends_on:
+      redis:
+        condition: service_healthy
+      product-service:
+        condition: service_healthy
+      user-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8004/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  # Payment Service - Payment processing
+  payment-service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: payment-service
+    command: python -m simulator.services.ecommerce.payment_service
+    environment:
+      - SERVICE_NAME=payment-service
+      - SERVICE_PORT=8006
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "8006:8006"
+    networks:
+      - simulator-network
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8006/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  # Order Service - Order management
+  order-service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: order-service
+    command: python -m simulator.services.ecommerce.order_service
+    environment:
+      - SERVICE_NAME=order-service
+      - SERVICE_PORT=8005
+      - REDIS_URL=redis://redis:6379
+      - CART_SERVICE_URL=http://cart-service:8004
+      - PAYMENT_SERVICE_URL=http://payment-service:8006
+      - INVENTORY_SERVICE_URL=http://inventory-service:8007
+    ports:
+      - "8005:8005"
+    networks:
+      - simulator-network
+    depends_on:
+      redis:
+        condition: service_healthy
+      cart-service:
+        condition: service_healthy
+      payment-service:
+        condition: service_healthy
+      inventory-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8005/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  # ============================================================================
+  # TRAFFIC GENERATION (Started on demand)
+  # ============================================================================
+
+  # Traffic Generator - Simulates realistic user traffic
+  traffic-generator:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: traffic-generator
+    command: python -m simulator.traffic.run_generator
+    environment:
+      - TRAFFIC_PROFILE=${TRAFFIC_PROFILE:-normal}
+      - USER_SERVICE_URL=http://user-service:8001
+      - AUTH_SERVICE_URL=http://auth-service:8002
+      - PRODUCT_SERVICE_URL=http://product-service:8003
+      - CART_SERVICE_URL=http://cart-service:8004
+      - ORDER_SERVICE_URL=http://order-service:8005
+      - PAYMENT_SERVICE_URL=http://payment-service:8006
+      - INVENTORY_SERVICE_URL=http://inventory-service:8007
+    networks:
+      - simulator-network
+    depends_on:
+      user-service:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+      product-service:
+        condition: service_healthy
+      cart-service:
+        condition: service_healthy
+      order-service:
+        condition: service_healthy
+      payment-service:
+        condition: service_healthy
+      inventory-service:
+        condition: service_healthy
+    restart: "no"  # Don't auto-restart, run on demand
+    profiles:
+      - traffic  # Use profile to start on demand
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+
