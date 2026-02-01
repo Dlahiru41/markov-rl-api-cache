@@ -1,0 +1,333 @@
+# Scalability Test Experiments
+#
+# Test how the system scales with different workload characteristics.
+# Important for understanding practical deployment scenarios.
+
+experiment_set:
+  name: "scalability_test"
+  description: "Evaluate scalability across different dimensions"
+  base_config:
+    num_training_episodes: 1000
+    num_eval_episodes: 100
+    baselines_to_compare:
+      - lru
+      - static_markov
+    seeds:
+      - 42
+      - 123
+      - 456
+    tags:
+      - scalability
+      - performance
+
+# Scalability Dimensions
+
+# 1. Number of API Endpoints
+api_scale:
+  name: "api_scalability"
+  description: "Test with varying numbers of API endpoints"
+  hypothesis: "RL should scale better than heuristics as API count increases"
+
+  configurations:
+    small:
+      num_apis: 10
+      description: "Small microservice (10 APIs)"
+      expected: "All methods should perform well"
+
+    medium:
+      num_apis: 20
+      description: "Medium microservice (20 APIs)"
+      expected: "RL advantage becomes clear"
+
+    large:
+      num_apis: 50
+      description: "Large microservice (50 APIs)"
+      expected: "RL should significantly outperform heuristics"
+
+    very_large:
+      num_apis: 100
+      description: "Very large microservice (100 APIs)"
+      expected: "Heuristics struggle, RL maintains performance"
+
+    massive:
+      num_apis: 200
+      description: "Massive microservice (200 APIs)"
+      expected: "Only RL remains effective"
+
+# 2. Traffic Load
+traffic_scale:
+  name: "traffic_scalability"
+  description: "Test with varying traffic loads"
+  hypothesis: "RL should handle high load better through better cascade prevention"
+
+  configurations:
+    low_load:
+      request_rate: 10
+      concurrent_users: 10
+      description: "Low traffic (10 req/s)"
+      expected: "All methods perform adequately"
+
+    medium_load:
+      request_rate: 50
+      concurrent_users: 50
+      description: "Medium traffic (50 req/s)"
+      expected: "RL starts showing advantages"
+
+    high_load:
+      request_rate: 100
+      concurrent_users: 100
+      description: "High traffic (100 req/s)"
+      expected: "RL's cascade prevention becomes critical"
+
+    peak_load:
+      request_rate: 200
+      concurrent_users: 200
+      description: "Peak traffic (200 req/s)"
+      expected: "Only RL prevents cascades effectively"
+
+    extreme_load:
+      request_rate: 500
+      concurrent_users: 500
+      description: "Extreme traffic (500 req/s)"
+      expected: "Cascade risk very high, RL essential"
+
+# 3. Session Length
+session_scale:
+  name: "session_scalability"
+  description: "Test with varying session lengths"
+  hypothesis: "RL should adapt to both short and long sessions"
+
+  configurations:
+    very_short:
+      session_length_range: [5, 10]
+      description: "Very short sessions (mobile, quick tasks)"
+      expected: "Limited prediction horizon challenges all methods"
+
+    short:
+      session_length_range: [10, 30]
+      description: "Short sessions (typical mobile)"
+      expected: "RL should exploit patterns"
+
+    medium:
+      session_length_range: [30, 70]
+      description: "Medium sessions (typical desktop)"
+      expected: "RL excels with longer patterns"
+
+    long:
+      session_length_range: [70, 150]
+      description: "Long sessions (power users)"
+      expected: "RL's long-term planning shines"
+
+    very_long:
+      session_length_range: [150, 300]
+      description: "Very long sessions (enterprise users)"
+      expected: "Maximum benefit from RL planning"
+
+# 4. Cache Size
+cache_scale:
+  name: "cache_scalability"
+  description: "Test with varying cache capacities"
+  hypothesis: "RL should optimize cache usage better than heuristics"
+
+  configurations:
+    tiny_cache:
+      cache_capacity_mb: 10
+      description: "Tiny cache (10 MB)"
+      expected: "Eviction decisions critical, RL should excel"
+
+    small_cache:
+      cache_capacity_mb: 50
+      description: "Small cache (50 MB)"
+      expected: "RL manages limited space better"
+
+    medium_cache:
+      cache_capacity_mb: 200
+      description: "Medium cache (200 MB)"
+      expected: "RL advantages moderate"
+
+    large_cache:
+      cache_capacity_mb: 500
+      description: "Large cache (500 MB)"
+      expected: "Less eviction pressure, all methods work"
+
+    huge_cache:
+      cache_capacity_mb: 1000
+      description: "Huge cache (1 GB)"
+      expected: "Cache rarely full, differences smaller"
+
+# 5. User Diversity
+user_scale:
+  name: "user_diversity_scalability"
+  description: "Test with varying user type distributions"
+  hypothesis: "RL should adapt to diverse user populations"
+
+  configurations:
+    homogeneous:
+      user_distribution:
+        guest: 1.0
+      description: "All guest users (homogeneous)"
+      expected: "Simpler patterns, all methods OK"
+
+    mostly_guests:
+      user_distribution:
+        guest: 0.7
+        free: 0.2
+        premium: 0.1
+      description: "Mostly guests (typical public site)"
+      expected: "RL should identify guest patterns"
+
+    balanced:
+      user_distribution:
+        guest: 0.33
+        free: 0.33
+        premium: 0.34
+      description: "Balanced user types"
+      expected: "RL excels with diverse patterns"
+
+    mostly_premium:
+      user_distribution:
+        guest: 0.1
+        free: 0.2
+        premium: 0.7
+      description: "Mostly premium users (SaaS)"
+      expected: "RL optimizes for power users"
+
+    highly_diverse:
+      user_distribution:
+        guest: 0.25
+        free: 0.25
+        premium: 0.25
+        admin: 0.15
+        api_client: 0.10
+      description: "Highly diverse user base"
+      expected: "RL's adaptability most valuable"
+
+# 6. Cascade Threshold
+cascade_scale:
+  name: "cascade_threshold_scalability"
+  description: "Test under different cascade risk levels"
+  hypothesis: "RL should excel in high-risk scenarios"
+
+  configurations:
+    very_stable:
+      cascade_threshold: 0.95
+      description: "Very stable system (low cascade risk)"
+      expected: "Cascade prevention less critical"
+
+    stable:
+      cascade_threshold: 0.85
+      description: "Stable system"
+      expected: "Occasional cascades, RL helps"
+
+    moderate:
+      cascade_threshold: 0.75
+      description: "Moderate stability (default)"
+      expected: "RL's cascade prevention valuable"
+
+    unstable:
+      cascade_threshold: 0.65
+      description: "Unstable system (high cascade risk)"
+      expected: "RL critical for stability"
+
+    very_unstable:
+      cascade_threshold: 0.50
+      description: "Very unstable system"
+      expected: "Only RL prevents frequent cascades"
+
+# Performance Metrics
+metrics:
+  throughput:
+    - requests_per_second
+    - cache_operations_per_second
+    - prefetch_operations_per_second
+
+  resource_usage:
+    - cpu_usage_percent
+    - memory_usage_mb
+    - network_bandwidth_mbps
+    - disk_io_ops
+
+  scalability_indicators:
+    - performance_degradation_rate
+    - resource_efficiency
+    - throughput_per_resource_unit
+
+  quality_of_service:
+    - p50_latency
+    - p95_latency
+    - p99_latency
+    - cascade_frequency
+    - availability_percent
+
+# Analysis Framework
+analysis:
+  scaling_laws:
+    description: "Analyze how performance scales with each dimension"
+    methods:
+      - linear_regression
+      - log_log_plot
+      - efficiency_ratio
+
+  bottleneck_identification:
+    description: "Identify scalability bottlenecks"
+    indicators:
+      - "Sudden performance drop at specific scale"
+      - "Resource saturation"
+      - "Increased cascade rate"
+
+  comparison_across_scales:
+    description: "Compare RL vs baselines at each scale point"
+    metrics:
+      - "Relative performance advantage"
+      - "Resource efficiency gain"
+      - "Stability improvement"
+
+  practical_limits:
+    description: "Determine practical deployment limits"
+    thresholds:
+      - "Maximum APIs before performance degrades >20%"
+      - "Maximum traffic before cascades become frequent"
+      - "Minimum cache size for effective operation"
+
+# Deployment Scenarios
+deployment_scenarios:
+  small_startup:
+    description: "Small startup with limited resources"
+    config:
+      num_apis: 15
+      request_rate: 20
+      cache_capacity_mb: 100
+    recommendation: "RL provides good improvement even at small scale"
+
+  growing_company:
+    description: "Growing company scaling up"
+    config:
+      num_apis: 30
+      request_rate: 100
+      cache_capacity_mb: 300
+    recommendation: "RL becomes increasingly valuable with growth"
+
+  enterprise:
+    description: "Large enterprise deployment"
+    config:
+      num_apis: 100
+      request_rate: 500
+      cache_capacity_mb: 1000
+    recommendation: "RL essential for managing complexity"
+
+  high_traffic_site:
+    description: "High-traffic consumer website"
+    config:
+      num_apis: 50
+      request_rate: 1000
+      cache_capacity_mb: 500
+    recommendation: "RL critical for cascade prevention under load"
+
+# Thesis Integration
+thesis_claims:
+  - "RL scales better than heuristics across all dimensions"
+  - "Performance advantage increases with system complexity"
+  - "RL maintains stability under high load better than baselines"
+  - "Resource efficiency of RL justifies computational cost"
+  - "RL is practical for real-world deployment scenarios"
+

@@ -1,0 +1,228 @@
+# Ablation Study Experiments
+#
+# Test the contribution of each component to overall performance.
+# Systematically disable components to understand their value.
+
+experiment_set:
+  name: "ablation_study"
+  description: "Evaluate contribution of each system component"
+  base_config:
+    num_training_episodes: 1000
+    num_eval_episodes: 100
+    baselines_to_compare:
+      - lru
+      - random
+    seeds:
+      - 42
+      - 123
+      - 456
+    tags:
+      - ablation
+      - thesis
+
+# Component Definitions
+components:
+  # Markov Predictor Components
+  markov_context_aware:
+    path: "controller_config.markov_config.context_aware"
+    default: true
+    description: "Context-aware Markov predictions (user type, time)"
+    hypothesis: "Context awareness should improve predictions by 10-15%"
+    priority: 10
+
+  markov_second_order:
+    path: "controller_config.markov_config.order"
+    default: 2
+    disabled_value: 1
+    description: "Second-order vs first-order Markov chain"
+    hypothesis: "Second-order should capture longer patterns"
+    priority: 9
+
+  # DQN Agent Components
+  dueling_architecture:
+    path: "controller_config.agent_config.dueling"
+    default: true
+    description: "Dueling DQN architecture (separate value and advantage streams)"
+    hypothesis: "Dueling should improve learning stability by 5-10%"
+    priority: 8
+
+  double_dqn:
+    path: "controller_config.agent_config.double_dqn"
+    default: true
+    description: "Double DQN (reduces overestimation)"
+    hypothesis: "Double DQN should reduce value overestimation"
+    priority: 7
+
+  prioritized_replay:
+    path: "controller_config.agent_config.prioritized_replay"
+    default: true
+    description: "Prioritized experience replay"
+    hypothesis: "Prioritization should accelerate learning"
+    priority: 6
+
+  # State Representation Components
+  state_include_predictions:
+    path: "controller_config.state_config.include_probabilities"
+    default: true
+    description: "Include Markov prediction probabilities in state"
+    hypothesis: "Prediction probabilities are critical for decision making"
+    priority: 5
+
+  state_include_system_metrics:
+    path: "controller_config.state_config.include_system_metrics"
+    default: true
+    description: "Include system metrics (CPU, memory, latency) in state"
+    hypothesis: "System metrics help predict cascade failures"
+    priority: 4
+
+  state_include_temporal:
+    path: "controller_config.state_config.include_temporal_context"
+    default: true
+    description: "Include temporal context (time of day, day of week)"
+    hypothesis: "Temporal patterns are important for caching decisions"
+    priority: 3
+
+  # Reward Function Components
+  reward_cascade_prevention:
+    path: "controller_config.reward_config.cascade_prevented_reward"
+    default: 50.0
+    disabled_value: 0.0
+    description: "Reward for preventing cascade failures"
+    hypothesis: "Cascade prevention reward is most important component"
+    priority: 10
+
+  reward_prefetch_efficiency:
+    path: "controller_config.reward_config.prefetch_used_reward"
+    default: 5.0
+    disabled_value: 0.0
+    description: "Reward for efficient prefetching"
+    hypothesis: "Prefetch rewards encourage proactive caching"
+    priority: 2
+
+  reward_latency_optimization:
+    path: "controller_config.reward_config.latency_improvement_weight"
+    default: 0.1
+    disabled_value: 0.0
+    description: "Reward weight for latency improvements"
+    hypothesis: "Latency optimization helps balance speed vs resource usage"
+    priority: 1
+
+# Ablation Experiments
+ablation_tests:
+  # Full Configuration
+  full:
+    name: "ablation_full"
+    description: "Full configuration with all components enabled"
+    tags: [ablation, full, baseline]
+    priority: 10
+
+  # Markov Ablations
+  no_context:
+    name: "ablation_no_context"
+    description: "Without context-aware Markov predictions"
+    disable: [markov_context_aware]
+    tags: [ablation, markov]
+    priority: 9
+
+  no_second_order:
+    name: "ablation_first_order_only"
+    description: "First-order Markov instead of second-order"
+    disable: [markov_second_order]
+    tags: [ablation, markov]
+    priority: 8
+
+  # DQN Ablations
+  no_dueling:
+    name: "ablation_no_dueling"
+    description: "Standard DQN without dueling architecture"
+    disable: [dueling_architecture]
+    tags: [ablation, dqn]
+    priority: 7
+
+  no_double:
+    name: "ablation_no_double"
+    description: "Standard DQN without double Q-learning"
+    disable: [double_dqn]
+    tags: [ablation, dqn]
+    priority: 6
+
+  no_prioritized:
+    name: "ablation_no_prioritized"
+    description: "Uniform experience replay"
+    disable: [prioritized_replay]
+    tags: [ablation, dqn]
+    priority: 5
+
+  vanilla_dqn:
+    name: "ablation_vanilla_dqn"
+    description: "Vanilla DQN without any enhancements"
+    disable: [dueling_architecture, double_dqn, prioritized_replay]
+    tags: [ablation, dqn, minimal]
+    priority: 4
+
+  # State Ablations
+  no_predictions:
+    name: "ablation_no_predictions"
+    description: "State without Markov prediction probabilities"
+    disable: [state_include_predictions]
+    tags: [ablation, state]
+    priority: 3
+
+  no_system_metrics:
+    name: "ablation_no_system_metrics"
+    description: "State without system metrics (CPU, memory, etc.)"
+    disable: [state_include_system_metrics]
+    tags: [ablation, state]
+    priority: 2
+
+  minimal_state:
+    name: "ablation_minimal_state"
+    description: "Minimal state (cache metrics only)"
+    disable: [state_include_predictions, state_include_system_metrics, state_include_temporal]
+    tags: [ablation, state, minimal]
+    priority: 1
+
+  # Reward Ablations
+  no_cascade_reward:
+    name: "ablation_no_cascade_reward"
+    description: "Without cascade prevention rewards"
+    disable: [reward_cascade_prevention]
+    tags: [ablation, reward]
+    priority: 10
+
+  no_prefetch_reward:
+    name: "ablation_no_prefetch_reward"
+    description: "Without prefetch efficiency rewards"
+    disable: [reward_prefetch_efficiency]
+    tags: [ablation, reward]
+    priority: 9
+
+  cache_only_reward:
+    name: "ablation_cache_only"
+    description: "Only cache hit/miss rewards (no cascade, prefetch, latency)"
+    disable: [reward_cascade_prevention, reward_prefetch_efficiency, reward_latency_optimization]
+    tags: [ablation, reward, minimal]
+    priority: 8
+
+# Analysis Guidelines
+analysis:
+  metrics_to_compare:
+    - mean_reward
+    - cache_hit_rate
+    - cascade_prevention_rate
+    - prefetch_efficiency
+    - training_time
+
+  expected_findings:
+    - "Context-aware Markov should improve hit rate by 10-15%"
+    - "Cascade prevention reward is most critical for system stability"
+    - "Dueling + Double DQN provide modest but consistent improvements"
+    - "System metrics are essential for cascade prediction"
+    - "Prediction probabilities are critical for prefetch decisions"
+
+  thesis_claims:
+    - "Each component contributes meaningfully to overall performance"
+    - "No single component is sufficient; synergy is important"
+    - "Cascade prevention is the highest-impact component"
+    - "Markov predictions provide foundation for effective RL"
+

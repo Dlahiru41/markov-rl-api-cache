@@ -1,0 +1,259 @@
+# Baseline Comparison Experiments
+#
+# Comprehensive comparison against all baseline caching strategies.
+# This is the primary experiment set for demonstrating RL superiority.
+
+experiment_set:
+  name: "baseline_comparison"
+  description: "Compare trained RL agent against all baselines"
+  base_config:
+    num_training_episodes: 2000  # More training for best performance
+    num_eval_episodes: 200       # More eval episodes for statistical power
+    seeds:
+      - 42
+      - 123
+      - 456
+      - 789
+      - 1011  # 5 seeds for strong statistical significance
+    tags:
+      - baseline
+      - comparison
+      - thesis_primary
+
+# RL Agent Configuration
+rl_agent:
+  name: "rl_agent_optimal"
+  description: "RL agent with optimal hyperparameters (from hyperparameter search)"
+  hypothesis: "RL should outperform all baselines"
+  controller_config:
+    agent_config:
+      learning_rate: 0.0001
+      gamma: 0.99
+      batch_size: 64
+      hidden_sizes: [128, 128]
+      dueling: true
+      double_dqn: true
+      prioritized_replay: true
+    markov_config:
+      order: 2
+      context_aware: true
+      context_features: ['user_type', 'hour']
+    state_config:
+      include_probabilities: true
+      include_system_metrics: true
+      include_temporal_context: true
+    reward_config:
+      cascade_prevented_reward: 50.0
+      cache_hit_reward: 10.0
+      prefetch_used_reward: 5.0
+  priority: 10
+
+# Baselines to Compare
+baselines:
+  # Random Baseline (Lower Bound)
+  random:
+    name: "baseline_random"
+    description: "Random action selection"
+    hypothesis: "RL should beat random by >100%"
+    expected_improvement: ">100%"
+    priority: 9
+
+  # LRU (Industry Standard)
+  lru:
+    name: "baseline_lru"
+    description: "Least Recently Used caching"
+    hypothesis: "RL should beat LRU by 20-40%"
+    expected_improvement: "20-40%"
+    priority: 9
+
+  # LFU (Frequency-Based)
+  lfu:
+    name: "baseline_lfu"
+    description: "Least Frequently Used caching"
+    hypothesis: "RL should beat LFU by 20-40%"
+    expected_improvement: "20-40%"
+    priority: 9
+
+  # Static Markov (Hand-Crafted Rules)
+  static_markov:
+    name: "baseline_static_markov"
+    description: "Static rules with Markov predictions"
+    hypothesis: "RL should beat Static Markov by 10-30%"
+    expected_improvement: "10-30%"
+    priority: 8
+
+  # Adaptive Heuristic
+  adaptive:
+    name: "baseline_adaptive"
+    description: "Adaptive heuristic policy"
+    hypothesis: "RL should beat Adaptive by 5-20%"
+    expected_improvement: "5-20%"
+    priority: 7
+
+  # Oracle (Upper Bound)
+  oracle:
+    name: "baseline_oracle"
+    description: "Perfect future knowledge (cheating)"
+    hypothesis: "RL should achieve 50-70% of Oracle performance"
+    expected_gap: "30-50%"
+    priority: 6
+
+# Comparison Metrics
+metrics:
+  primary:
+    - mean_reward
+    - cache_hit_rate
+    - cascade_prevention_rate
+
+  secondary:
+    - prefetch_efficiency
+    - average_latency
+    - bandwidth_used
+    - training_time
+
+  statistical:
+    - mean
+    - std
+    - confidence_interval_95
+    - p_value_vs_baselines
+    - effect_size
+
+# Environment Configurations
+environments:
+  # Standard Configuration
+  standard:
+    name: "standard_env"
+    description: "Standard e-commerce environment"
+    config:
+      num_apis: 20
+      session_length: 50
+      user_types: ['guest', 'free', 'premium']
+      cascade_threshold: 0.75
+    priority: 10
+
+  # High Load
+  high_load:
+    name: "high_load_env"
+    description: "High traffic environment (stress test)"
+    config:
+      num_apis: 20
+      session_length: 100
+      user_types: ['guest', 'free', 'premium']
+      cascade_threshold: 0.65  # Lower threshold = more cascade risk
+      request_rate_multiplier: 2.0
+    hypothesis: "RL should excel under high load with better cascade prevention"
+    priority: 9
+
+  # Many APIs
+  many_apis:
+    name: "many_apis_env"
+    description: "Large API space (scalability test)"
+    config:
+      num_apis: 50
+      session_length: 50
+      user_types: ['guest', 'free', 'premium']
+      cascade_threshold: 0.75
+    hypothesis: "RL should scale better than heuristics with more APIs"
+    priority: 8
+
+  # Short Sessions
+  short_sessions:
+    name: "short_sessions_env"
+    description: "Short user sessions (mobile scenario)"
+    config:
+      num_apis: 20
+      session_length: 20
+      user_types: ['guest', 'free', 'premium']
+      cascade_threshold: 0.75
+    hypothesis: "RL should adapt to shorter prediction horizons"
+    priority: 7
+
+# Statistical Tests
+statistical_analysis:
+  significance_level: 0.05
+
+  tests:
+    - name: "t_test"
+      description: "Paired t-test RL vs each baseline"
+      null_hypothesis: "No difference between RL and baseline"
+
+    - name: "anova"
+      description: "One-way ANOVA across all policies"
+      null_hypothesis: "All policies perform equally"
+
+    - name: "effect_size"
+      description: "Cohen's d effect size"
+      interpretation:
+        small: 0.2
+        medium: 0.5
+        large: 0.8
+
+  confidence_intervals:
+    level: 0.95
+    bootstrap_samples: 10000
+
+# Visualization Requirements
+visualizations:
+  - name: "reward_comparison_boxplot"
+    description: "Box plot comparing episode rewards"
+    file: "reward_comparison.png"
+
+  - name: "hitrate_comparison_bar"
+    description: "Bar chart of cache hit rates"
+    file: "hitrate_comparison.png"
+
+  - name: "cascade_comparison_bar"
+    description: "Bar chart of cascade rates"
+    file: "cascade_comparison.png"
+
+  - name: "learning_curve"
+    description: "RL agent learning curve during training"
+    file: "learning_curve.png"
+
+  - name: "radar_chart"
+    description: "Multi-metric radar chart comparing all policies"
+    file: "policy_radar.png"
+
+  - name: "significance_heatmap"
+    description: "Heatmap of pairwise significance tests"
+    file: "significance_heatmap.png"
+
+# Thesis Integration
+thesis:
+  section: "5. Evaluation"
+  subsections:
+    methodology:
+      - "Describe baseline policies"
+      - "Explain evaluation metrics"
+      - "Document statistical methods"
+
+    results:
+      - "Present comparison tables"
+      - "Show statistical significance"
+      - "Display visualizations"
+
+    discussion:
+      - "Why RL beats baselines"
+      - "When RL excels most"
+      - "Limitations and edge cases"
+
+  key_claims:
+    - "RL significantly outperforms all baselines (p < 0.001)"
+    - "RL beats industry standard (LRU) by 20-40%"
+    - "Learning is better than hand-crafted rules"
+    - "RL approaches theoretical upper bound (Oracle)"
+    - "Performance is consistent across environments"
+
+  required_tables:
+    - "Summary statistics for all policies"
+    - "Pairwise significance test results"
+    - "Performance by environment"
+    - "Ablation study results"
+
+  required_figures:
+    - "Figure 5.1: Reward comparison box plot"
+    - "Figure 5.2: Cache hit rate comparison"
+    - "Figure 5.3: Cascade prevention comparison"
+    - "Figure 5.4: RL learning curve"
+    - "Figure 5.5: Multi-metric radar chart"
+

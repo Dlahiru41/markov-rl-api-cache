@@ -1,0 +1,103 @@
+# Hyperparameter Search Experiments
+#
+# Grid search over key hyperparameters to find optimal configuration.
+# Tests learning rate, discount factor, and network architecture.
+
+experiment_set:
+  name: "hyperparameter_search"
+  description: "Systematic search over DQN hyperparameters"
+  base_config:
+    num_training_episodes: 1000
+    num_eval_episodes: 100
+    baselines_to_compare:
+      - lru
+      - lfu
+      - static_markov
+    seeds:
+      - 42
+      - 123
+      - 456
+    tags:
+      - hyperparameter
+      - grid_search
+
+# Learning Rate Search
+learning_rate_search:
+  parameter: "controller_config.agent_config.learning_rate"
+  values:
+    - 0.001   # High learning rate
+    - 0.0005  # Medium-high
+    - 0.0001  # Medium (default)
+    - 0.00005 # Medium-low
+    - 0.00001 # Low learning rate
+  hypothesis: "Moderate learning rate (0.0001) should perform best"
+  priority: 10
+
+# Discount Factor Search
+gamma_search:
+  parameter: "controller_config.agent_config.gamma"
+  values:
+    - 0.90  # Short-term focus
+    - 0.95  # Medium-short
+    - 0.99  # Long-term (default)
+    - 0.995 # Very long-term
+  hypothesis: "Higher gamma (0.99+) should be better for long-term caching decisions"
+  priority: 9
+
+# Network Architecture Search
+network_size_search:
+  parameter: "controller_config.agent_config.hidden_sizes"
+  values:
+    - [64, 64]       # Small network
+    - [128, 128]     # Medium network (default)
+    - [256, 256]     # Large network
+    - [128, 128, 128] # Deeper network
+  hypothesis: "Medium network [128, 128] should provide best tradeoff"
+  priority: 8
+
+# Batch Size Search
+batch_size_search:
+  parameter: "controller_config.agent_config.batch_size"
+  values:
+    - 32   # Small batch
+    - 64   # Medium batch (default)
+    - 128  # Large batch
+    - 256  # Very large batch
+  hypothesis: "Batch size 64-128 should be optimal"
+  priority: 7
+
+# Exploration Strategy
+epsilon_decay_search:
+  parameter: "controller_config.agent_config.epsilon_decay"
+  values:
+    - 0.99   # Slow decay
+    - 0.995  # Medium decay (default)
+    - 0.999  # Very slow decay
+    - 0.9995 # Extremely slow decay
+  hypothesis: "Slower decay (0.999+) allows more exploration"
+  priority: 6
+
+# Target Network Update
+target_update_search:
+  parameter: "controller_config.agent_config.target_update_frequency"
+  values:
+    - 100  # Frequent updates
+    - 500  # Medium updates
+    - 1000 # Infrequent updates (default)
+    - 2000 # Very infrequent
+  hypothesis: "Medium frequency (500-1000) should stabilize training"
+  priority: 5
+
+# Combined Search (Top 2 Parameters)
+combined_search:
+  description: "Joint optimization of learning rate and gamma"
+  parameters:
+    learning_rate:
+      path: "controller_config.agent_config.learning_rate"
+      values: [0.0001, 0.00005, 0.00001]
+    gamma:
+      path: "controller_config.agent_config.gamma"
+      values: [0.95, 0.99, 0.995]
+  hypothesis: "Optimal combination likely lr=0.0001, gamma=0.99"
+  priority: 4
+

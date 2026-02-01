@@ -1,0 +1,17 @@
+{
+  "name": "test",
+  "description": "test",
+  "hypothesis": "test",
+  "controller_config": {},
+  "num_training_episodes": 10,
+  "num_eval_episodes": 5,
+  "baselines_to_compare": [],
+  "seeds": [
+    42
+  ],
+  "tags": [],
+  "priority": 0,
+  "early_stopping_patience": null,
+  "checkpoint_interval": 100,
+  "log_interval": 10
+}
