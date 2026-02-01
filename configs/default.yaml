@@ -1,70 +1,79 @@
-# Default configuration for markov-rl-api-cache
-  failure_rate: 0.01
-  # Probability of service failure per request
-  base_latency_ms: 50
-  # Base latency per request in milliseconds
-  num_services: 5
-  # Number of simulated microservices
-simulator:
+# Example configuration for IntegrationController
+# Save as configs/default.yaml
 
-  checkpoint_frequency: 500
-  # Save checkpoints every N episodes
-  eval_frequency: 100
-  # Evaluate agent every N episodes
-  max_steps_per_episode: 1000
-  max_episodes: 5000
-training:
+# Operating mode: training, evaluation, deployment, or demo
+mode: training
 
-    maxmemory_policy: "allkeys-lru"
-    # Redis eviction policy
-    maxmemory: 536870912
-    # Max memory in bytes (default 512 MB)
-    password: null
-    # If no password, set to null
-    db: 0
-    port: 6379
-    host: "localhost"
-  redis:
-cache:
+# Output directory for results and checkpoints
+output_dir: results/default_run
 
-  target_update_freq: 1000
-  # Frequency (in steps) to update target network
-  batch_size: 64
-  replay_buffer_size: 100000
+# Model paths (optional)
+markov_model_path: null  # Path to pre-trained Markov model
+agent_model_path: null   # Path to pre-trained agent
 
-    decay_steps: 100000
-    # Linear decay over this many steps
-    final_epsilon: 0.01
-    initial_epsilon: 1.0
-  exploration:
+# Enable optional features
+enable_monitoring: true  # Prometheus metrics
+enable_api: true        # REST API
+log_level: INFO         # DEBUG, INFO, WARNING, ERROR
 
-  discount: 0.99
-  # Discount factor (gamma)
+# API configuration
+api_host: 0.0.0.0
+api_port: 8080
+
+# Environment configuration
+env_config:
+  max_steps_per_episode: 200
+  use_real_services: false
+  episode_end_on_cascade: true
+  normalize_rewards: false
+  seed: 42
+
+  # Simulator settings
+  simulator_config:
+    num_apis: 20
+    user_types: [guest, free, premium]
+    session_length_range: [10, 100]
+    cascade_threshold: 0.8
+    base_latency_ms: 50.0
+    cache_hit_latency_ms: 5.0
+
+# Agent configuration
+agent_config:
+  # Architecture
+  hidden_dims: [128, 128]
+  activation: relu
+
+  # Training
   learning_rate: 0.0001
-  # Learning rate for optimizer
+  batch_size: 64
+  buffer_size: 100000
 
-    hidden_sizes: [256, 256]
-    # Hidden layer sizes for the Q-network
-  network:
-  algorithm: "dqn"
-  # Reinforcement learning algorithm (dqn is default)
-rl:
+  # Exploration
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  epsilon_decay: 0.995
 
-  min_count: 5
-  # Minimum count for transitions to be considered
-  smoothing: 1e-6
-  # Additive smoothing to avoid zero probabilities
-  context_aware: true
-  # Whether to use context-aware (conditional) transitions
-  order: 1
-  # Order of the Markov chain (1 = first-order)
-markov:
+  # Target network
+  target_update_frequency: 1000
+  tau: 0.005  # Soft update weight
 
-  logs_dir: "logs"
-  models_dir: "models"
-  data_dir: "data"
-  # Base directories (relative to project root)
-paths:
+  # Training
+  gamma: 0.99  # Discount factor
+  gradient_clip: 10.0
 
-# Edit or override via environment variables prefixed with MARKOV_RL_
+# Training configuration
+training_config:
+  num_episodes: 1000
+  eval_frequency: 50      # Evaluate every N episodes
+  save_frequency: 100     # Save checkpoint every N episodes
+
+  # Early stopping
+  early_stopping: true
+  patience: 100
+  min_improvement: 0.01
+
+  # Logging
+  log_frequency: 10
+  tensorboard: true
+  wandb: false
 

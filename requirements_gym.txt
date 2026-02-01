@@ -1,0 +1,22 @@
+# Requirements for Gymnasium Caching Environment
+
+# Core dependencies
+gymnasium>=0.29.0
+numpy>=1.21.0
+
+# Optional: For RL training
+stable-baselines3>=2.0.0
+tensorboard>=2.11.0
+
+# Optional: For visualization
+matplotlib>=3.5.0
+
+# Optional: For advanced RL (RLlib)
+# ray[rllib]>=2.0.0
+
+# Optional: For performance monitoring
+# wandb>=0.13.0
+
+# Note: The core caching system dependencies should already be installed
+# (see main requirements.txt)
+
