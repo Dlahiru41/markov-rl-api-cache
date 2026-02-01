@@ -1,0 +1,10 @@
+{
+  "learning_curves_mean_reward": "results\\test_visualizer\\plots\\thesis\\learning_curves_mean_reward.pdf",
+  "learning_curves_cache_hit_rate": "results\\test_visualizer\\plots\\thesis\\learning_curves_cache_hit_rate.pdf",
+  "training_comparison": "results\\test_visualizer\\plots\\thesis\\training_comparison.pdf",
+  "bar_comparison_mean_reward": "results\\test_visualizer\\plots\\thesis\\bar_comparison_mean_reward.pdf",
+  "bar_comparison_cache_hit_rate": "results\\test_visualizer\\plots\\thesis\\bar_comparison_cache_hit_rate.pdf",
+  "box_plot_mean_reward": "results\\test_visualizer\\plots\\thesis\\box_plot_mean_reward.pdf",
+  "box_plot_cache_hit_rate": "results\\test_visualizer\\plots\\thesis\\box_plot_cache_hit_rate.pdf",
+  "radar_comparison": "results\\test_visualizer\\plots\\thesis\\radar_comparison.pdf"
+}

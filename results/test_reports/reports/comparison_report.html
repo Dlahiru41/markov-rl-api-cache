@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Experiment Comparison Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+        .container { max-width: 1400px; margin: auto; background: white; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; border-bottom: 3px solid #4CAF50; padding-bottom: 10px; }
+        h2 { color: #555; margin-top: 30px; }
+        h3 { color: #666; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #4CAF50; color: white; }
+        tr:hover { background-color: #f5f5f5; }
+        .best { background-color: #c8e6c9 !important; font-weight: bold; }
+        .plot { margin: 30px 0; text-align: center; }
+        .plot img { max-width: 100%; border: 1px solid #ddd; border-radius: 4px; }
+        .stats-box { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }
+        .significant { color: #f44336; font-weight: bold; }
+        .not-significant { color: #9e9e9e; }
+        ol { line-height: 1.8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Experiment Comparison Report</h1>
+        <p>Generated: 2026-02-01 19:50:42</p>
+        <p>Experiments Compared: 3</p>
+        
+        <h2>Summary Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Experiment</th>
+                    
+                    <th>Mean Reward (mean±std)</th>
+                    
+                    <th>Cache Hit Rate (mean±std)</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>dqn_baseline</td>
+                    
+                    
+                    <td>993.510±18.412</td>
+                    
+                    
+                    
+                    <td>0.755±0.047</td>
+                    
+                    
+                </tr>
+                
+                <tr>
+                    <td>lru_baseline</td>
+                    
+                    
+                    <td>1089.108±38.210</td>
+                    
+                    
+                    
+                    <td>0.725±0.024</td>
+                    
+                    
+                </tr>
+                
+                <tr>
+                    <td>lfu_baseline</td>
+                    
+                    
+                    <td>1196.958±22.396</td>
+                    
+                    
+                    
+                    <td>0.803±0.063</td>
+                    
+                    
+                </tr>
+                
+            </tbody>
+        </table>
+        
+        <h2>Statistical Analysis</h2>
+        
+        <div class="stats-box">
+            <h3>Mean Reward</h3>
+            <p>ANOVA p-value: <strong>0.0003</strong></p>
+            <p>Significant: <span class="significant">
+                Yes
+            </span></p>
+            <p><strong>Rankings:</strong></p>
+            <ol>
+                
+                <li>lfu_baseline_0002: 1196.9577</li>
+                
+                <li>lru_baseline_0001: 1089.1079</li>
+                
+                <li>dqn_baseline_0000: 993.5101</li>
+                
+            </ol>
+        </div>
+        
+        <div class="stats-box">
+            <h3>Cache Hit Rate</h3>
+            <p>ANOVA p-value: <strong>0.2069</strong></p>
+            <p>Significant: <span class="not-significant">
+                No
+            </span></p>
+            <p><strong>Rankings:</strong></p>
+            <ol>
+                
+                <li>lfu_baseline_0002: 0.8034</li>
+                
+                <li>dqn_baseline_0000: 0.7551</li>
+                
+                <li>lru_baseline_0001: 0.7253</li>
+                
+            </ol>
+        </div>
+        
+        
+        
+    </div>
+</body>
+</html>
+        

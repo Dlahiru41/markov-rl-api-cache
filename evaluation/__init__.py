@@ -11,9 +11,21 @@ from .experiment_runner import (
     ExperimentResult
 )
 
+from .analyzer import (
+    ResultsAnalyzer,
+    ResultsVisualizer
+)
+
+from .report_generator import (
+    ReportGenerator
+)
+
 __all__ = [
     'ExperimentRunner',
     'ExperimentConfig',
     'ExperimentResult',
+    'ResultsAnalyzer',
+    'ResultsVisualizer',
+    'ReportGenerator',
 ]
 

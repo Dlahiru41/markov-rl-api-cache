@@ -1,0 +1,1286 @@
+{
+  "dqn_baseline_0000": [
+    {
+      "config": {
+        "name": "dqn_baseline",
+        "description": "Test experiment dqn_baseline",
+        "hypothesis": "Test hypothesis",
+        "controller_config": {
+          "learning_rate": 0.001
+        },
+        "num_training_episodes": 100,
+        "num_eval_episodes": 20,
+        "baselines_to_compare": [],
+        "seeds": [
+          42,
+          123,
+          456
+        ],
+        "tags": [
+          "test",
+          "baseline"
+        ],
+        "priority": 0,
+        "early_stopping_patience": null,
+        "checkpoint_interval": 100,
+        "log_interval": 10
+      },
+      "seed": 42,
+      "training_history": [
+        [
+          0,
+          {
+            "reward": 840.131472897258,
+            "loss": 0.5977412480620775,
+            "epsilon": 1.0,
+            "cache_hit_rate": 0.6879513258789999
+          }
+        ],
+        [
+          10,
+          {
+            "reward": 671.6963095401741,
+            "loss": 0.47052410165843944,
+            "epsilon": 0.9,
+            "cache_hit_rate": 0.659120858204304
+          }
+        ],
+        [
+          20,
+          {
+            "reward": 914.8331122647496,
+            "loss": 0.40850965587435634,
+            "epsilon": 0.8,
+            "cache_hit_rate": 0.7102928428573075
+          }
+        ],
+        [
+          30,
+          {
+            "reward": 812.8926830305211,
+            "loss": 0.3244167088720549,
+            "epsilon": 0.7,
+            "cache_hit_rate": 0.6572661467811096
+          }
+        ],
+        [
+          40,
+          {
+            "reward": 952.0891493542604,
+            "loss": 0.311688304771935,
+            "epsilon": 0.6,
+            "cache_hit_rate": 0.684094712370356
+          }
+        ],
+        [
+          50,
+          {
+            "reward": 806.4655957300562,
+            "loss": 0.2580713889783761,
+            "epsilon": 0.5,
+            "cache_hit_rate": 0.7811022268761145
+          }
+        ],
+        [
+          60,
+          {
+            "reward": 968.2882317545186,
+            "loss": 0.16832017033845087,
+            "epsilon": 0.4,
+            "cache_hit_rate": 0.7310340968249038
+          }
+        ],
+        [
+          70,
+          {
+            "reward": 943.477599503617,
+            "loss": 0.20780326838531948,
+            "epsilon": 0.30000000000000004,
+            "cache_hit_rate": 0.7123662558927941
+          }
+        ],
+        [
+          80,
+          {
+            "reward": 979.6873427980348,
+            "loss": 0.1773240388330285,
+            "epsilon": 0.19999999999999996,
+            "cache_hit_rate": 0.7907069777275398
+          }
+        ],
+        [
+          90,
+          {
+            "reward": 1030.0473524105137,
+            "loss": 0.13906200776352187,
+            "epsilon": 0.09999999999999998,
+            "cache_hit_rate": 0.6886476196567535
+          }
+        ],
+        [
+          100,
+          {
+            "reward": 918.6109013183791,
+            "loss": 0.15650384186915184,
+            "epsilon": 0.01,
+            "cache_hit_rate": 0.7882540758716284
+          }
+        ]
+      ],
+      "final_eval_metrics": {
+        "mean_reward": 1004.9628873132206,
+        "std_reward": 19.10247041183229,
+        "cache_hit_rate": 0.8074802264848797,
+        "cascade_rate": 0.07587527668201563,
+        "latency": 114.53297605528812
+      },
+      "baseline_comparisons": {},
+      "training_time_seconds": 371.8970675668535,
+      "peak_memory_mb": 1524.232886219573,
+      "artifacts": {},
+      "status": "completed",
+      "error_message": null,
+      "timestamp": "2024-01-01T12:00:00"
+    },
+    {
+      "config": {
+        "name": "dqn_baseline",
+        "description": "Test experiment dqn_baseline",
+        "hypothesis": "Test hypothesis",
+        "controller_config": {
+          "learning_rate": 0.001
+        },
+        "num_training_episodes": 100,
+        "num_eval_episodes": 20,
+        "baselines_to_compare": [],
+        "seeds": [
+          42,
+          123,
+          456
+        ],
+        "tags": [
+          "test",
+          "baseline"
+        ],
+        "priority": 0,
+        "early_stopping_patience": null,
+        "checkpoint_interval": 100,
+        "log_interval": 10
+      },
+      "seed": 123,
+      "training_history": [
+        [
+          0,
+          {
+            "reward": 896.11660547753,
+            "loss": 0.511322027447511,
+            "epsilon": 1.0,
+            "cache_hit_rate": 0.6756796724744495
+          }
+        ],
+        [
+          10,
+          {
+            "reward": 836.0423313020773,
+            "loss": 0.43596680872083304,
+            "epsilon": 0.9,
+            "cache_hit_rate": 0.6814352245141365
+          }
+        ],
+        [
+          20,
+          {
+            "reward": 899.6845042913156,
+            "loss": 0.3634075911006905,
+            "epsilon": 0.8,
+            "cache_hit_rate": 0.7620171252191668
+          }
+        ],
+        [
+          30,
+          {
+            "reward": 823.8623398634484,
+            "loss": 0.32843751114265307,
+            "epsilon": 0.7,
+            "cache_hit_rate": 0.7839648300939859
+          }
+        ],
+        [
+          40,
+          {
+            "reward": 896.7365974616021,
+            "loss": 0.2369604386114939,
+            "epsilon": 0.6,
+            "cache_hit_rate": 0.7527504423134325
+          }
+        ],
+        [
+          50,
+          {
+            "reward": 816.5943368346465,
+            "loss": 0.21896494181679663,
+            "epsilon": 0.5,
+            "cache_hit_rate": 0.7973919669874536
+          }
+        ],
+        [
+          60,
+          {
+            "reward": 877.9043826415325,
+            "loss": 0.24974844169177207,
+            "epsilon": 0.4,
+            "cache_hit_rate": 0.6315054824321049
+          }
+        ],
+        [
+          70,
+          {
+            "reward": 920.9650411216439,
+            "loss": 0.1449986355839309,
+            "epsilon": 0.30000000000000004,
+            "cache_hit_rate": 0.6702573861054848
+          }
+        ],
+        [
+          80,
+          {
+            "reward": 982.7903336596677,
+            "loss": 0.13198023197136377,
+            "epsilon": 0.19999999999999996,
+            "cache_hit_rate": 0.7994380122886883
+          }
+        ],
+        [
+          90,
+          {
+            "reward": 967.6344895358072,
+            "loss": 0.1159719674684096,
+            "epsilon": 0.09999999999999998,
+            "cache_hit_rate": 0.6823354355005
+          }
+        ],
+        [
+          100,
+          {
+            "reward": 916.7570992294142,
+            "loss": 0.10852839241499931,
+            "epsilon": 0.01,
+            "cache_hit_rate": 0.6039964868563098
+          }
+        ]
+      ],
+      "final_eval_metrics": {
+        "mean_reward": 1005.9122699210212,
+        "std_reward": 15.362417548409173,
+        "cache_hit_rate": 0.8190361520903942,
+        "cascade_rate": 0.05381895120315215,
+        "latency": 119.0881146968432
+      },
+      "baseline_comparisons": {},
+      "training_time_seconds": 399.364596862704,
+      "peak_memory_mb": 1314.8211629555608,
+      "artifacts": {},
+      "status": "completed",
+      "error_message": null,
+      "timestamp": "2024-01-01T12:00:00"
+    },
+    {
+      "config": {
+        "name": "dqn_baseline",
+        "description": "Test experiment dqn_baseline",
+        "hypothesis": "Test hypothesis",
+        "controller_config": {
+          "learning_rate": 0.001
+        },
+        "num_training_episodes": 100,
+        "num_eval_episodes": 20,
+        "baselines_to_compare": [],
+        "seeds": [
+          42,
+          123,
+          456
+        ],
+        "tags": [
+          "test",
+          "baseline"
+        ],
+        "priority": 0,
+        "early_stopping_patience": null,
+        "checkpoint_interval": 100,
+        "log_interval": 10
+      },
+      "seed": 456,
+      "training_history": [
+        [
+          0,
+          {
+            "reward": 885.6556334461637,
+            "loss": 0.5771071340618716,
+            "epsilon": 1.0,
+            "cache_hit_rate": 0.7818034732085526
+          }
+        ],
+        [
+          10,
+          {
+            "reward": 772.4218152800424,
+            "loss": 0.42122085672263526,
+            "epsilon": 0.9,
+            "cache_hit_rate": 0.7562150842436789
+          }
+        ],
+        [
+          20,
+          {
+            "reward": 860.7005614668396,
+            "loss": 0.3671453099075599,
+            "epsilon": 0.8,
+            "cache_hit_rate": 0.7313539207938178
+          }
+        ],
+        [
+          30,
+          {
+            "reward": 863.9721440354859,
+            "loss": 0.36314705311817597,
+            "epsilon": 0.7,
+            "cache_hit_rate": 0.758074128338002
+          }
+        ],
+        [
+          40,
+          {
+            "reward": 721.9403983313337,
+            "loss": 0.2661120796693542,
+            "epsilon": 0.6,
+            "cache_hit_rate": 0.7747329105132021
+          }
+        ],
+        [
+          50,
+          {
+            "reward": 880.717244942247,
+            "loss": 0.2792479163408685,
+            "epsilon": 0.5,
+            "cache_hit_rate": 0.7753685965261289
+          }
+        ],
+        [
+          60,
+          {
+            "reward": 1001.2685413926337,
+            "loss": 0.2341042196418538,
+            "epsilon": 0.4,
+            "cache_hit_rate": 0.6379171219824818
+          }
+        ],
+        [
+          70,
+          {
+            "reward": 906.7202313438869,
+            "loss": 0.21829967457379373,
+            "epsilon": 0.30000000000000004,
+            "cache_hit_rate": 0.7220609500308928
+          }
+        ],
+        [
+          80,
+          {
+            "reward": 900.8315324958457,
+            "loss": 0.19693960855165343,
+            "epsilon": 0.19999999999999996,
+            "cache_hit_rate": 0.7721703684671266
+          }
+        ],
+        [
+          90,
+          {
+            "reward": 971.7493947088773,
+            "loss": 0.15759030894120846,
+            "epsilon": 0.09999999999999998,
+            "cache_hit_rate": 0.6890073544122733
+          }
+        ],
+        [
+          100,
+          {
+            "reward": 997.8800788144271,
+            "loss": 0.09472217557645717,
+            "epsilon": 0.01,
+            "cache_hit_rate": 0.7810486900896851
+          }
+        ]
+      ],
+      "final_eval_metrics": {
+        "mean_reward": 1019.1988142355941,
+        "std_reward": 19.1257687397624,
+        "cache_hit_rate": 0.7287172396757806,
+        "cascade_rate": 0.07475773083754889,
+        "latency": 105.23548208224109
+      },
+      "baseline_comparisons": {},
+      "training_time_seconds": 392.35348392426675,
+      "peak_memory_mb": 1102.5207878854605,
+      "artifacts": {},
+      "status": "completed",
+      "error_message": null,
+      "timestamp": "2024-01-01T12:00:00"
+    }
+  ],
+  "lru_baseline_0001": [
+    {
+      "config": {
+        "name": "lru_baseline",
+        "description": "Test experiment lru_baseline",
+        "hypothesis": "Test hypothesis",
+        "controller_config": {
+          "learning_rate": 0.002
+        },
+        "num_training_episodes": 100,
+        "num_eval_episodes": 20,
+        "baselines_to_compare": [],
+        "seeds": [
+          42,
+          123,
+          456
+        ],
+        "tags": [
+          "test",
+          "baseline"
+        ],
+        "priority": 0,
+        "early_stopping_patience": null,
+        "checkpoint_interval": 100,
+        "log_interval": 10
+      },
+      "seed": 42,
+      "training_history": [
+        [
+          0,
+          {
+            "reward": 941.725200672491,
+            "loss": 0.5691659801587488,
+            "epsilon": 1.0,
+            "cache_hit_rate": 0.70282580819693
+          }
+        ],
+        [
+          10,
+          {
+            "reward": 931.824929426674,
+            "loss": 0.4945539086104227,
+            "epsilon": 0.9,
+            "cache_hit_rate": 0.65783089769038
+          }
+        ],
+        [
+          20,
+          {
+            "reward": 935.2777186459052,
+            "loss": 0.4089618485824019,
+            "epsilon": 0.8,
+            "cache_hit_rate": 0.6127797488311985
+          }
+        ],
+        [
+          30,
+          {
+            "reward": 1071.269032164254,
+            "loss": 0.3460063011164589,
+            "epsilon": 0.7,
+            "cache_hit_rate": 0.7104101628304996
+          }
+        ],
+        [
+          40,
+          {
+            "reward": 1005.9016455392775,
+            "loss": 0.2513424715548311,
+            "epsilon": 0.6,
+            "cache_hit_rate": 0.6123490307664229
+          }
+        ],
+        [
+          50,
+          {
+            "reward": 946.4699151495879,
+            "loss": 0.185844223801922,
+            "epsilon": 0.5,
+            "cache_hit_rate": 0.6644223795669598
+          }
+        ],
+        [
+          60,
+          {
+            "reward": 1017.3101759749107,
+            "loss": 0.21828065450325684,
+            "epsilon": 0.4,
+            "cache_hit_rate": 0.749568705772792
+          }
+        ],
+        [
+          70,
+          {
+            "reward": 1059.3944410094646,
+            "loss": 0.1766495385111195,
+            "epsilon": 0.30000000000000004,
+            "cache_hit_rate": 0.6566591586097216
+          }
+        ],
+        [
+          80,
+          {
+            "reward": 1054.3490601646085,
+            "loss": 0.17533493832845426,
+            "epsilon": 0.19999999999999996,
+            "cache_hit_rate": 0.7405470553527178
+          }
+        ],
+        [
+          90,
+          {
+            "reward": 1103.784988185674,
+            "loss": 0.16400303457125023,
+            "epsilon": 0.09999999999999998,
+            "cache_hit_rate": 0.7948375049527988
+          }
+        ],
+        [
+          100,
+          {
+            "reward": 1078.400201989407,
+            "loss": 0.15349157006701653,
+            "epsilon": 0.01,
+            "cache_hit_rate": 0.7425275033359053
+          }
+        ]
+      ],
+      "final_eval_metrics": {
+        "mean_reward": 1112.249103014879,
+        "std_reward": 19.669560358493868,
+        "cache_hit_rate": 0.8454710968696847,
+        "cascade_rate": 0.06076329146000066,
+        "latency": 105.8733484033637
+      },
+      "baseline_comparisons": {},
+      "training_time_seconds": 326.65979612229313,
+      "peak_memory_mb": 1515.072423443771,
+      "artifacts": {},
+      "status": "completed",
+      "error_message": null,
+      "timestamp": "2024-01-01T12:00:00"
+    },
+    {
+      "config": {
+        "name": "lru_baseline",
+        "description": "Test experiment lru_baseline",
+        "hypothesis": "Test hypothesis",
+        "controller_config": {
+          "learning_rate": 0.002
+        },
+        "num_training_episodes": 100,
+        "num_eval_episodes": 20,
+        "baselines_to_compare": [],
+        "seeds": [
+          42,
+          123,
+          456
+        ],
+        "tags": [
+          "test",
+          "baseline"
+        ],
+        "priority": 0,
+        "early_stopping_patience": null,
+        "checkpoint_interval": 100,
+        "log_interval": 10
+      },
+      "seed": 123,
+      "training_history": [
+        [
+          0,
+          {
+            "reward": 910.3943466477087,
+            "loss": 0.5963394674897646,
+            "epsilon": 1.0,
+            "cache_hit_rate": 0.722529464067274
+          }
+        ],
+        [
+          10,
+          {
+            "reward": 955.4123924779808,
+            "loss": 0.4678128341527277,
+            "epsilon": 0.9,
+            "cache_hit_rate": 0.7699446257347579
+          }
+        ],
+        [
+          20,
+          {
+            "reward": 926.587450582147,
+            "loss": 0.35385817861467606,
+            "epsilon": 0.8,
+            "cache_hit_rate": 0.6508649365039306
+          }
+        ],
+        [
+          30,
+          {
+            "reward": 932.8267741206994,
+            "loss": 0.35373289970835886,
+            "epsilon": 0.7,
+            "cache_hit_rate": 0.7713634252232927
+          }
+        ],
+        [
+          40,
+          {
+            "reward": 924.7556566883821,
+            "loss": 0.3135807094123849,
+            "epsilon": 0.6,
+            "cache_hit_rate": 0.7289887167703952
+          }
+        ],
+        [
+          50,
+          {
+            "reward": 967.6861138867209,
+            "loss": 0.25840753078012335,
+            "epsilon": 0.5,
+            "cache_hit_rate": 0.6862163421107745
+          }
+        ],
+        [
+          60,
+          {
+            "reward": 944.9397848206905,
+            "loss": 0.23972940757719316,
+            "epsilon": 0.4,
+            "cache_hit_rate": 0.7712728951022276
+          }
+        ],
+        [
+          70,
+          {
+            "reward": 1001.6219088630104,
+            "loss": 0.1291231138554902,
+            "epsilon": 0.30000000000000004,
+            "cache_hit_rate": 0.7872516233280017
+          }
+        ],
+        [
+          80,
+          {
+            "reward": 1012.411630966201,
+            "loss": 0.19914948208678668,
+            "epsilon": 0.19999999999999996,
+            "cache_hit_rate": 0.6994089043765372
+          }
+        ],
+        [
+          90,
+          {
+            "reward": 1134.1595325427231,
+            "loss": 0.13554680602358832,
+            "epsilon": 0.09999999999999998,
+            "cache_hit_rate": 0.6896820599494132
+          }
+        ],
+        [
+          100,
+          {
+            "reward": 1050.7215098992974,
+            "loss": 0.14706718072105607,
+            "epsilon": 0.01,
+            "cache_hit_rate": 0.665806744783361
+          }
+        ]
+      ],
+      "final_eval_metrics": {
+        "mean_reward": 1091.889656084965,
+        "std_reward": 19.70216357842355,
+        "cache_hit_rate": 0.8491306796809407,
+        "cascade_rate": 0.059572188417769484,
+        "latency": 104.75109497799292
+      },
+      "baseline_comparisons": {},
+      "training_time_seconds": 322.25020267390164,
+      "peak_memory_mb": 1105.7633840128826,
+      "artifacts": {},
+      "status": "completed",
+      "error_message": null,
+      "timestamp": "2024-01-01T12:00:00"
+    },
+    {
+      "config": {
+        "name": "lru_baseline",
+        "description": "Test experiment lru_baseline",
+        "hypothesis": "Test hypothesis",
+        "controller_config": {
+          "learning_rate": 0.002
+        },
+        "num_training_episodes": 100,
+        "num_eval_episodes": 20,
+        "baselines_to_compare": [],
+        "seeds": [
+          42,
+          123,
+          456
+        ],
+        "tags": [
+          "test",
+          "baseline"
+        ],
+        "priority": 0,
+        "early_stopping_patience": null,
+        "checkpoint_interval": 100,
+        "log_interval": 10
+      },
+      "seed": 456,
+      "training_history": [
+        [
+          0,
+          {
+            "reward": 887.7657077375892,
+            "loss": 0.5163439326006992,
+            "epsilon": 1.0,
+            "cache_hit_rate": 0.6754070689362037
+          }
+        ],
+        [
+          10,
+          {
+            "reward": 958.9263884280429,
+            "loss": 0.4375836658432693,
+            "epsilon": 0.9,
+            "cache_hit_rate": 0.6924621699706135
+          }
+        ],
+        [
+          20,
+          {
+            "reward": 951.3639104448334,
+            "loss": 0.35000374096568276,
+            "epsilon": 0.8,
+            "cache_hit_rate": 0.6966954764201794
+          }
+        ],
+        [
+          30,
+          {
+            "reward": 1022.7931460196597,
+            "loss": 0.27625907630383917,
+            "epsilon": 0.7,
+            "cache_hit_rate": 0.7509825380276006
+          }
+        ],
+        [
+          40,
+          {
+            "reward": 963.7206813960549,
+            "loss": 0.29886313000989684,
+            "epsilon": 0.6,
+            "cache_hit_rate": 0.6290359438216985
+          }
+        ],
+        [
+          50,
+          {
+            "reward": 944.7011384323696,
+            "loss": 0.23964721522180862,
+            "epsilon": 0.5,
+            "cache_hit_rate": 0.6274035980294989
+          }
+        ],
+        [
+          60,
+          {
+            "reward": 1041.0206518975792,
+            "loss": 0.2012433840509912,
+            "epsilon": 0.4,
+            "cache_hit_rate": 0.7974493754800873
+          }
+        ],
+        [
+          70,
+          {
+            "reward": 1035.4765994059887,
+            "loss": 0.13827777776105984,
+            "epsilon": 0.30000000000000004,
+            "cache_hit_rate": 0.6920322031332267
+          }
+        ],
+        [
+          80,
+          {
+            "reward": 1041.1609101326685,
+            "loss": 0.1256336927648907,
+            "epsilon": 0.19999999999999996,
+            "cache_hit_rate": 0.7287640993746047
+          }
+        ],
+        [
+          90,
+          {
+            "reward": 1046.4982449356676,
+            "loss": 0.10280842351339817,
+            "epsilon": 0.09999999999999998,
+            "cache_hit_rate": 0.6625006461027327
+          }
+        ],
+        [
+          100,
+          {
+            "reward": 1216.1388357493106,
+            "loss": 0.09341839162479992,
+            "epsilon": 0.01,
+            "cache_hit_rate": 0.741917612387506
+          }
+        ]
+      ],
+      "final_eval_metrics": {
+        "mean_reward": 1090.6781684931962,
+        "std_reward": 19.56545385095324,
+        "cache_hit_rate": 0.710552576621602,
+        "cascade_rate": 0.06682330097410741,
+        "latency": 118.77975890538455
+      },
+      "baseline_comparisons": {},
+      "training_time_seconds": 341.95341395124905,
+      "peak_memory_mb": 1074.8628261185534,
+      "artifacts": {},
+      "status": "completed",
+      "error_message": null,
+      "timestamp": "2024-01-01T12:00:00"
+    }
+  ],
+  "lfu_baseline_0002": [
+    {
+      "config": {
+        "name": "lfu_baseline",
+        "description": "Test experiment lfu_baseline",
+        "hypothesis": "Test hypothesis",
+        "controller_config": {
+          "learning_rate": 0.003
+        },
+        "num_training_episodes": 100,
+        "num_eval_episodes": 20,
+        "baselines_to_compare": [],
+        "seeds": [
+          42,
+          123,
+          456
+        ],
+        "tags": [
+          "test",
+          "baseline"
+        ],
+        "priority": 0,
+        "early_stopping_patience": null,
+        "checkpoint_interval": 100,
+        "log_interval": 10
+      },
+      "seed": 42,
+      "training_history": [
+        [
+          0,
+          {
+            "reward": 953.6063760529811,
+            "loss": 0.550118960702231,
+            "epsilon": 1.0,
+            "cache_hit_rate": 0.7001391173873268
+          }
+        ],
+        [
+          10,
+          {
+            "reward": 976.8443165187597,
+            "loss": 0.48329419033984594,
+            "epsilon": 0.9,
+            "cache_hit_rate": 0.725412956838626
+          }
+        ],
+        [
+          20,
+          {
+            "reward": 1067.6732410136494,
+            "loss": 0.43256999578817523,
+            "epsilon": 0.8,
+            "cache_hit_rate": 0.7772037544884635
+          }
+        ],
+        [
+          30,
+          {
+            "reward": 1061.9356633642365,
+            "loss": 0.3565290625567459,
+            "epsilon": 0.7,
+            "cache_hit_rate": 0.6018811729539999
+          }
+        ],
+        [
+          40,
+          {
+            "reward": 1099.8714529971166,
+            "loss": 0.24562508430539748,
+            "epsilon": 0.6,
+            "cache_hit_rate": 0.6919185534566078
+          }
+        ],
+        [
+          50,
+          {
+            "reward": 1034.918865343677,
+            "loss": 0.2674877661039769,
+            "epsilon": 0.5,
+            "cache_hit_rate": 0.7592654233169176
+          }
+        ],
+        [
+          60,
+          {
+            "reward": 1156.7402710233098,
+            "loss": 0.16400015969897025,
+            "epsilon": 0.4,
+            "cache_hit_rate": 0.7250305629794078
+          }
+        ],
+        [
+          70,
+          {
+            "reward": 1194.092228884736,
+            "loss": 0.20393171393292203,
+            "epsilon": 0.30000000000000004,
+            "cache_hit_rate": 0.6125013827089557
+          }
+        ],
+        [
+          80,
+          {
+            "reward": 1177.0865513012309,
+            "loss": 0.13396444796456464,
+            "epsilon": 0.19999999999999996,
+            "cache_hit_rate": 0.7758787717403223
+          }
+        ],
+        [
+          90,
+          {
+            "reward": 1215.569177474641,
+            "loss": 0.1753473168060799,
+            "epsilon": 0.09999999999999998,
+            "cache_hit_rate": 0.7587734429614603
+          }
+        ],
+        [
+          100,
+          {
+            "reward": 1243.7512390239472,
+            "loss": 0.1183968675658297,
+            "epsilon": 0.01,
+            "cache_hit_rate": 0.7325124264840233
+          }
+        ]
+      ],
+      "final_eval_metrics": {
+        "mean_reward": 1190.9439126270563,
+        "std_reward": 15.554321641481861,
+        "cache_hit_rate": 0.717681639001269,
+        "cascade_rate": 0.0732177351012305,
+        "latency": 106.47839589427728
+      },
+      "baseline_comparisons": {},
+      "training_time_seconds": 336.9579936984362,
+      "peak_memory_mb": 1340.9162880134104,
+      "artifacts": {},
+      "status": "completed",
+      "error_message": null,
+      "timestamp": "2024-01-01T12:00:00"
+    },
+    {
+      "config": {
+        "name": "lfu_baseline",
+        "description": "Test experiment lfu_baseline",
+        "hypothesis": "Test hypothesis",
+        "controller_config": {
+          "learning_rate": 0.003
+        },
+        "num_training_episodes": 100,
+        "num_eval_episodes": 20,
+        "baselines_to_compare": [],
+        "seeds": [
+          42,
+          123,
+          456
+        ],
+        "tags": [
+          "test",
+          "baseline"
+        ],
+        "priority": 0,
+        "early_stopping_patience": null,
+        "checkpoint_interval": 100,
+        "log_interval": 10
+      },
+      "seed": 123,
+      "training_history": [
+        [
+          0,
+          {
+            "reward": 1041.548861328464,
+            "loss": 0.5205172009949455,
+            "epsilon": 1.0,
+            "cache_hit_rate": 0.714150203508607
+          }
+        ],
+        [
+          10,
+          {
+            "reward": 943.8165062913679,
+            "loss": 0.42546736291531273,
+            "epsilon": 0.9,
+            "cache_hit_rate": 0.6836711127103329
+          }
+        ],
+        [
+          20,
+          {
+            "reward": 1021.4883458340194,
+            "loss": 0.38444693945503094,
+            "epsilon": 0.8,
+            "cache_hit_rate": 0.685729879181862
+          }
+        ],
+        [
+          30,
+          {
+            "reward": 1082.643619929855,
+            "loss": 0.3719999581722836,
+            "epsilon": 0.7,
+            "cache_hit_rate": 0.7842133675221536
+          }
+        ],
+        [
+          40,
+          {
+            "reward": 1143.804138244361,
+            "loss": 0.22511753711987828,
+            "epsilon": 0.6,
+            "cache_hit_rate": 0.7791554173318671
+          }
+        ],
+        [
+          50,
+          {
+            "reward": 1070.4929400555538,
+            "loss": 0.2292463278180959,
+            "epsilon": 0.5,
+            "cache_hit_rate": 0.778495844548287
+          }
+        ],
+        [
+          60,
+          {
+            "reward": 1071.4939021005289,
+            "loss": 0.22268401216506473,
+            "epsilon": 0.4,
+            "cache_hit_rate": 0.6439628854263842
+          }
+        ],
+        [
+          70,
+          {
+            "reward": 1185.5581098840698,
+            "loss": 0.20484702162429963,
+            "epsilon": 0.30000000000000004,
+            "cache_hit_rate": 0.6226418228253296
+          }
+        ],
+        [
+          80,
+          {
+            "reward": 1112.609980811505,
+            "loss": 0.1137713484569926,
+            "epsilon": 0.19999999999999996,
+            "cache_hit_rate": 0.6842517425517067
+          }
+        ],
+        [
+          90,
+          {
+            "reward": 1233.2640150341372,
+            "loss": 0.14621114415149336,
+            "epsilon": 0.09999999999999998,
+            "cache_hit_rate": 0.6491978878969425
+          }
+        ],
+        [
+          100,
+          {
+            "reward": 1296.678592186444,
+            "loss": 0.1340325196299412,
+            "epsilon": 0.01,
+            "cache_hit_rate": 0.6166062184637499
+          }
+        ]
+      ],
+      "final_eval_metrics": {
+        "mean_reward": 1229.4576501818885,
+        "std_reward": 15.419286699890266,
+        "cache_hit_rate": 0.7855337802093465,
+        "cascade_rate": 0.07212775367961648,
+        "latency": 117.54762615990707
+      },
+      "baseline_comparisons": {},
+      "training_time_seconds": 391.82483931430613,
+      "peak_memory_mb": 1300.2018499260707,
+      "artifacts": {},
+      "status": "completed",
+      "error_message": null,
+      "timestamp": "2024-01-01T12:00:00"
+    },
+    {
+      "config": {
+        "name": "lfu_baseline",
+        "description": "Test experiment lfu_baseline",
+        "hypothesis": "Test hypothesis",
+        "controller_config": {
+          "learning_rate": 0.003
+        },
+        "num_training_episodes": 100,
+        "num_eval_episodes": 20,
+        "baselines_to_compare": [],
+        "seeds": [
+          42,
+          123,
+          456
+        ],
+        "tags": [
+          "test",
+          "baseline"
+        ],
+        "priority": 0,
+        "early_stopping_patience": null,
+        "checkpoint_interval": 100,
+        "log_interval": 10
+      },
+      "seed": 456,
+      "training_history": [
+        [
+          0,
+          {
+            "reward": 1007.5549869616905,
+            "loss": 0.5996996922484591,
+            "epsilon": 1.0,
+            "cache_hit_rate": 0.7640075559177433
+          }
+        ],
+        [
+          10,
+          {
+            "reward": 1031.7247226862899,
+            "loss": 0.4183064017670951,
+            "epsilon": 0.9,
+            "cache_hit_rate": 0.763365748362368
+          }
+        ],
+        [
+          20,
+          {
+            "reward": 1048.0984301168476,
+            "loss": 0.35757715697007036,
+            "epsilon": 0.8,
+            "cache_hit_rate": 0.6083097150547868
+          }
+        ],
+        [
+          30,
+          {
+            "reward": 1055.391852258732,
+            "loss": 0.2978250307184178,
+            "epsilon": 0.7,
+            "cache_hit_rate": 0.7963124203020161
+          }
+        ],
+        [
+          40,
+          {
+            "reward": 1009.9076751813491,
+            "loss": 0.3019927401507217,
+            "epsilon": 0.6,
+            "cache_hit_rate": 0.6794232978360992
+          }
+        ],
+        [
+          50,
+          {
+            "reward": 1107.4985780034435,
+            "loss": 0.2363813627638239,
+            "epsilon": 0.5,
+            "cache_hit_rate": 0.7042108210484069
+          }
+        ],
+        [
+          60,
+          {
+            "reward": 1208.79460640842,
+            "loss": 0.21727634011888353,
+            "epsilon": 0.4,
+            "cache_hit_rate": 0.7228781871607367
+          }
+        ],
+        [
+          70,
+          {
+            "reward": 1098.6624284862519,
+            "loss": 0.21804450569265715,
+            "epsilon": 0.30000000000000004,
+            "cache_hit_rate": 0.6853878711640135
+          }
+        ],
+        [
+          80,
+          {
+            "reward": 1223.671939452278,
+            "loss": 0.17709124564724865,
+            "epsilon": 0.19999999999999996,
+            "cache_hit_rate": 0.7593466951269658
+          }
+        ],
+        [
+          90,
+          {
+            "reward": 1229.6437711000167,
+            "loss": 0.0943107411380862,
+            "epsilon": 0.09999999999999998,
+            "cache_hit_rate": 0.6060180016847114
+          }
+        ],
+        [
+          100,
+          {
+            "reward": 1160.0922177383666,
+            "loss": 0.07646400401251116,
+            "epsilon": 0.01,
+            "cache_hit_rate": 0.7544176237764945
+          }
+        ]
+      ],
+      "final_eval_metrics": {
+        "mean_reward": 1168.3339271338575,
+        "std_reward": 16.88990311961557,
+        "cache_hit_rate": 0.7932891330171331,
+        "cascade_rate": 0.0748339316924997,
+        "latency": 113.99943589750264
+      },
+      "baseline_comparisons": {},
+      "training_time_seconds": 323.20355439286806,
+      "peak_memory_mb": 1422.6157500484796,
+      "artifacts": {},
+      "status": "completed",
+      "error_message": null,
+      "timestamp": "2024-01-01T12:00:00"
+    }
+  ]
+}
