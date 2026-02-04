@@ -87,7 +87,7 @@ class OraclePolicy(CachingPolicy):
         Returns:
             Optimal action based on future knowledge
         """
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
 
         self._step_count += 1
 
@@ -202,7 +202,7 @@ class PartialOraclePolicy(CachingPolicy):
 
     def select_action(self, state: np.ndarray, predictions: List[Tuple[str, float]]) -> int:
         """Select action with partial knowledge."""
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
 
         self._step_count += 1
 
@@ -302,7 +302,7 @@ class NoisyOraclePolicy(CachingPolicy):
 
     def select_action(self, state: np.ndarray, predictions: List[Tuple[str, float]]) -> int:
         """Select action with noisy future knowledge."""
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
 
         self._step_count += 1
 
@@ -339,4 +339,3 @@ class NoisyOraclePolicy(CachingPolicy):
             'step_count': self._step_count,
             'noise_rate': self.noise_rate
         }
-

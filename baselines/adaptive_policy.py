@@ -141,7 +141,7 @@ class AdaptivePolicy(CachingPolicy):
         Returns:
             Action based on adaptive thresholds
         """
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
 
         self._step_count += 1
 
@@ -293,7 +293,7 @@ class MultiObjectiveAdaptivePolicy(CachingPolicy):
 
     def select_action(self, state: np.ndarray, predictions: List[Tuple[str, float]]) -> int:
         """Select action based on multi-objective score."""
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
 
         self._step_count += 1
 

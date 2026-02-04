@@ -153,12 +153,11 @@ class TorchAgentAdapter(CachingPolicy):
         """Select action using PyTorch agent."""
         self._step_count += 1
 
-        # Convert to torch tensor
-        state_tensor = self.torch.FloatTensor(state).to(self.device)
+        # Ensure numpy array input for agent
+        state_np = np.asarray(state, dtype=np.float32)
 
-        # Get action (no gradient computation needed)
-        with self.torch.no_grad():
-            action = self.agent.select_action(state_tensor, epsilon=0.0)  # Greedy
+        # Greedy action selection; most agents respect evaluate flag
+        action = self.agent.select_action(state_np, evaluate=True)
 
         return int(action)
 

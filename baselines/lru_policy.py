@@ -153,7 +153,7 @@ class AdaptiveLRUPolicy(CachingPolicy):
 
     def select_action(self, state: np.ndarray, predictions: List[Tuple[str, float]]) -> int:
         """Select action using adaptive LRU logic."""
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
 
         self._step_count += 1
 
@@ -207,4 +207,3 @@ class AdaptiveLRUPolicy(CachingPolicy):
             'step_count': self._step_count,
             'recent_avg_hit_rate': np.mean(self._recent_hit_rates) if self._recent_hit_rates else 0.0
         }
-

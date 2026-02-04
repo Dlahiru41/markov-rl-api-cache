@@ -84,7 +84,7 @@ class StaticMarkovPolicy(CachingPolicy):
         Returns:
             Action index based on confidence thresholds
         """
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
 
         self._step_count += 1
 
@@ -192,7 +192,7 @@ class InverseStaticMarkovPolicy(CachingPolicy):
 
     def select_action(self, state: np.ndarray, predictions: List[Tuple[str, float]]) -> int:
         """Select action with inverse confidence logic."""
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
 
         self._step_count += 1
 
@@ -273,7 +273,7 @@ class BalancedStaticMarkovPolicy(CachingPolicy):
 
     def select_action(self, state: np.ndarray, predictions: List[Tuple[str, float]]) -> int:
         """Select action based on confidence AND cache state."""
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
 
         self._step_count += 1
 

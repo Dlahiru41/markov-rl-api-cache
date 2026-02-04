@@ -411,6 +411,27 @@ Improvement over LRU: +32% reward, +21% hit rate ✓
 
 ---
 
+##  7-Minute Code Walkthrough Script
+
+### Flow at a Glance (6:45 total)
+- **0:000:40 Quick Overview:** Hit the pain points (LRU waste, no foresight, cascade costs) and pitch the hybrid solution. Keep `README.md` open for the one-line value prop.
+- **0:402:00 Architecture Story:** Stand on the ASCII diagram plus the directory tree. Show how `src/markov`, `src/rl`, `src/cache`, and `src/integration` pass data in sequence.
+- **2:003:00 Markov Predictor Spotlight:** With `src/markov/predictor.py` pre-scrolled to `class MarkovPredictor`, explain `order`, `context_aware`, `fit`, `predict`, and narrate the /cart  /checkout example.
+- **3:004:30 DQN Agent Mechanics:** Jump to `src/rl/agents/dqn_agent.py`. Cover online vs. target nets, replay buffer, `select_action`, and the seven discrete actions tied to cache behaviors.
+- **4:305:15 Cache Manager Ops:** In `src/cache/cache_manager.py`, outline serialization/compression, TTL enforcement, and how metrics flow back to the RL state vector.
+- **5:156:05 Gym + Reward Loop:** Point at `src/integration/gym_environment.py` and `src/rl/reward.py` to show how `reset/step` and the multi-objective reward glue training together.
+- **6:056:45 Demo Bridge:** Narrate what the upcoming demo highlights (Markov predictions, training curve, benchmark table) while the script transitions to `python ENTERPRISE_INTERACTIVE_DEMO.py`.
+- **6:457:00 Buffer:** Re-emphasize "novel + production-ready + business impact" or field one quick question while loading the demo.
+
+### Pacing Tips
+- Pre-scroll files so you can point immediately; avoid silent scrolling.
+- If behind schedule, compress the Cache Manager segment to 20s and skip deep reward math.
+- If ahead, elaborate on ROI while the demo screens animate.
+- Keep fallback lines handy (e.g., "If the demo hiccups, the benchmark table still shows the 21% lift").
+- Record practice runs to ensure the narration fits inside 6:45; reserve the final 15s strictly for transitions.
+
+---
+
 ## 🎯 Key Talking Points Summary
 
 ### Technical Excellence:

@@ -232,7 +232,7 @@ class BiasedRandomPolicy(CachingPolicy):
 
     def get_name(self) -> str:
         """Return policy name."""
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
         excluded_names = [CacheAction.get_name(a) for a in self.excluded_actions]
         return f"Biased Random (exclude: {', '.join(excluded_names)})"
 
