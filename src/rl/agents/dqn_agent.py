@@ -109,6 +109,23 @@ class DQNAgent:
         self.online_net.train()
         return action
 
+    def get_q_values(self, state: np.ndarray) -> np.ndarray:
+        """
+        Get Q-values for all actions for a given state.
+
+        Args:
+            state: State observation
+
+        Returns:
+            Array of Q-values for each action
+        """
+        self.online_net.eval()
+        state_tensor = torch.FloatTensor(state).unsqueeze(0).to(self.device)
+        with torch.no_grad():
+            q_values = self.online_net(state_tensor).cpu().numpy().squeeze()
+        self.online_net.train()
+        return q_values
+
     def store_transition(self, state: np.ndarray, action: int, reward: float, next_state: np.ndarray, done: bool):
         """Add experience to replay buffer."""
         self.buffer.push(state, action, reward, next_state, done)

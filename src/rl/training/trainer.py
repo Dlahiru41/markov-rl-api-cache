@@ -15,6 +15,8 @@ import json
 import time
 import numpy as np
 import torch
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend to avoid Tkinter issues
 import matplotlib.pyplot as plt
 from pathlib import Path
 from dataclasses import dataclass, field, asdict
@@ -144,6 +146,16 @@ class Trainer:
 
         logger.info(f"Trainer initialized with output dir: {self.output_dir}")
         logger.info(f"Config: {config}")
+
+    @property
+    def episode_rewards(self) -> List[float]:
+        """Backward compatibility alias for train_rewards."""
+        return self.train_rewards
+
+    @property
+    def episode_lengths(self) -> List[int]:
+        """Backward compatibility alias for train_lengths."""
+        return self.train_lengths
 
     def _setup_logging(self):
         """Setup file logging."""
@@ -591,8 +603,10 @@ class Trainer:
 
         stats = {
             'total_episodes': self.current_episode,
+            'episodes_trained': self.current_episode,  # Alias for backward compatibility
             'best_eval_reward': self.best_eval_reward,
             'total_time': total_time,
+            'training_time': total_time,  # Alias for backward compatibility
             'avg_episode_time': np.mean(self.episode_times) if self.episode_times else 0,
             'final_epsilon': self.agent.epsilon,
         }
