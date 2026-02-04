@@ -47,10 +47,10 @@ sys.path.insert(0, str(src_path))
 from src.integration.gym_environment import CachingEnv, CacheEnvConfig, SimulatorConfig
 from src.markov.transition_matrix import TransitionMatrix
 from src.markov.predictor import MarkovPredictor
-from src.cache.manager import CacheManager, CacheConfig
+from src.cache.cache_manager import CacheManager, CacheManagerConfig
 from src.rl.state import StateBuilder, StateConfig
 from src.rl.reward import RewardCalculator, RewardConfig
-from src.rl.actions import ActionSpace, CacheAction
+from src.rl.actions import ActionSpace
 from src.rl.agents.dqn_agent import DQNAgent, DQNConfig
 
 # Try importing stable-baselines3 (optional for comparison)
