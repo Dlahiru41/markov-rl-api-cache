@@ -20,8 +20,8 @@ import numpy as np
 from .gym_environment import CachingEnv, CacheEnvConfig
 from ..markov.predictor import MarkovPredictor
 from ..cache.cache_manager import CacheManager, CacheManagerConfig
-from ..rl.dqn_agent import DQNAgent, DQNConfig
-from ..rl.trainer import Trainer, TrainingConfig
+from ..rl.agents.dqn_agent import DQNAgent, DQNConfig
+from ..rl.training.trainer import Trainer, TrainingConfig
 
 # Set up logging
 logging.basicConfig(

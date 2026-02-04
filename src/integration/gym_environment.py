@@ -335,6 +335,7 @@ class CachingEnv(gym.Env):
         # Info dict
         info = {
             'episode_number': self.episode_number,
+            'session_id': self.session_context.get('session_id'),  # Add at top level for test compatibility
             'session_context': self.session_context.copy(),
             'initial_api': self.current_api,
             'cache_state': self._get_cache_state()

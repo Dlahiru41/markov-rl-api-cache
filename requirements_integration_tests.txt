@@ -1,0 +1,23 @@
+# Requirements for Integration Tests
+
+# Core testing framework
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+pytest-xdist>=3.3.0  # For parallel test execution
+
+# Main dependencies (should be installed from main requirements)
+gymnasium>=0.29.0
+torch>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Optional: For full compatibility testing
+stable-baselines3>=2.0.0
+
+# Note: Install main dependencies first:
+# pip install -r requirements.txt
+# pip install -r requirements_gym.txt
+# Then install test dependencies:
+# pip install -r requirements_integration_tests.txt
+

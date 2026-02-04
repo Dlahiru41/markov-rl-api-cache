@@ -1,0 +1,60 @@
+Integration Tests Validation - 2026-02-02 21:43:59.850101
+======================================================================
+
+INTEGRATION TESTS VALIDATION
+======================================================================
+
+1. Python Version
+   Version: 3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)]
+   Executable: C:\Program Files\Python312\python.exe
+
+2. Checking pytest...
+   ✅ pytest version: 8.3.3
+
+3. Checking required packages...
+   ✅ numpy: 2.4.1
+   ✅ torch: 2.9.1+cpu
+   ✅ gymnasium: 1.2.3
+   ✅ scipy: 1.17.0
+
+4. Checking source module imports...
+   ✅ CachingEnv from src.integration.gym_environment
+   ✅ DQNAgent from src.rl.agents.dqn_agent
+   ✅ CacheManager from src.cache.cache_manager
+   ✅ MarkovPredictor from src.markov.predictor
+   ✅ Trainer from src.rl.training.trainer
+
+5. Checking test files...
+   ✅ tests/integration/conftest.py (12868 bytes)
+   ✅ tests/integration/test_environment.py (13539 bytes)
+   ✅ tests/integration/test_training_loop.py (15461 bytes)
+   ✅ tests/integration/test_cache_system.py (13236 bytes)
+   ✅ tests/integration/test_simulator.py (14699 bytes)
+   ✅ tests/integration/test_full_pipeline.py (17230 bytes)
+
+6. Checking Python syntax of test files...
+   ✅ tests/integration/conftest.py
+   ✅ tests/integration/test_environment.py
+   ✅ tests/integration/test_training_loop.py
+   ✅ tests/integration/test_cache_system.py
+   ✅ tests/integration/test_simulator.py
+   ✅ tests/integration/test_full_pipeline.py
+
+7. Testing pytest collection...
+   ⚠️  Pytest collection had issues
+   Error: C:\Users\dlahi\AppData\Roaming\Python\Python312\site-packages\pytest_asyncio\plugin.py:247: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event 
+
+======================================================================
+VALIDATION SUMMARY
+======================================================================
+✅ ALL CHECKS PASSED!
+
+Your integration test environment is ready!
+
+To run tests:
+  python -m pytest tests/integration/ -v
+  python run_integration_tests.py
+
+Results written to: C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\test_validation_results.txt
+======================================================================

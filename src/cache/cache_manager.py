@@ -473,6 +473,48 @@ class CacheManager:
             logger.error(f"Error evicting low-probability entries: {e}")
             return 0
 
+    def evict_by_probability(
+        self,
+        predictions: Dict[str, float] = None,
+        count: int = 10
+    ) -> int:
+        """
+        Evict entries by probability (alias for evict_low_probability).
+
+        Args:
+            predictions: Dict mapping cache keys to access probabilities.
+                        If None, will try to extract from cache metadata.
+            count: Number of entries to evict
+
+        Returns:
+            Number of entries evicted
+        """
+        # If no predictions provided, build from cache entry metadata
+        if predictions is None:
+            predictions = {}
+            try:
+                # For InMemoryBackend, access internal cache directly
+                if hasattr(self._backend, '_cache'):
+                    for key, entry in self._backend._cache.items():
+                        if entry.metadata and 'probability' in entry.metadata:
+                            predictions[key] = entry.metadata['probability']
+                        else:
+                            # Default probability for entries without metadata
+                            predictions[key] = 0.5
+                else:
+                    # For other backends, get all keys with default probability
+                    keys = self._backend.keys()
+                    for key in keys:
+                        predictions[key] = 0.5
+
+            except Exception as e:
+                logger.warning(f"Could not build predictions from cache: {e}")
+                # If we can't build predictions, just return 0
+                if not predictions:
+                    return 0
+
+        return self.evict_low_probability(predictions, count)
+
     def get_metrics(self) -> Dict[str, Any]:
         """
         Get comprehensive cache metrics.
@@ -497,6 +539,7 @@ class CacheManager:
                     'deletes': backend_stats.deletes,
                     'hit_rate': backend_stats.hit_rate,
                     'current_entries': backend_stats.current_entries,
+                    'entries': backend_stats.current_entries,  # Alias for backwards compatibility
                     'current_size_bytes': backend_stats.current_size_bytes,
 
                     # Manager stats
@@ -528,6 +571,43 @@ class CacheManager:
         except Exception as e:
             logger.error(f"Error getting metrics: {e}")
             return {}
+
+    def get_stats(self) -> Dict[str, Any]:
+        """
+        Get comprehensive cache statistics (alias for get_metrics).
+
+        Returns:
+            Dictionary of statistics including backend stats and manager stats
+        """
+        return self.get_metrics()
+
+    def clear(self) -> bool:
+        """
+        Clear all entries from the cache.
+
+        Returns:
+            True if successful, False otherwise
+        """
+        if not self._running:
+            logger.warning("CacheManager not running")
+            return False
+
+        try:
+            # Get all keys and delete them
+            keys = self._backend.keys()
+            for key in keys:
+                self._backend.delete(key)
+
+            # Clear prefetch queue
+            with self._prefetch_lock:
+                self._prefetch_queue.clear()
+
+            logger.info(f"Cache cleared - removed {len(keys)} entries")
+            return True
+
+        except Exception as e:
+            logger.error(f"Error clearing cache: {e}")
+            return False
 
     # Internal helper methods
 

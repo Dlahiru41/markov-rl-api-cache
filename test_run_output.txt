@@ -1,0 +1,1688 @@
+STDOUT:
+============================= test session starts =============================
+platform win32 -- Python 3.12.6, pytest-9.0.2, pluggy-1.6.0
+rootdir: C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache
+configfile: pytest.ini
+plugins: anyio-4.12.1, Faker-40.1.2, asyncio-1.3.0, cov-7.0.0, xdist-3.8.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 167 items
+
+tests\integration\test_cache_backend_comparison.py ..................... [ 12%]
+........................                                                 [ 26%]
+tests\integration\test_cache_system.py ..F..FFFFF......                  [ 36%]
+tests\integration\test_environment.py .F.F....F.......F.F                [ 47%]
+tests\integration\test_full_pipeline.py FEEFEEEEFEEEEF.                  [ 56%]
+tests\integration\test_redis_integration.py ............................ [ 73%]
+.........                                                                [ 79%]
+tests\integration\test_simulator.py .............F......                 [ 91%]
+tests\integration\test_training_loop.py FFFFFFFFFFFFFFF                  [100%]
+
+=================================== ERRORS ====================================
+____ ERROR at setup of TestEndToEnd.test_training_improves_over_baselines _____
+ScopeMismatch: You tried to access the function scoped fixture dqn_config with a session scoped request object. Requesting fixture stack:
+tests\integration\conftest.py:170:  def trained_agent(env_config, dqn_config)
+Requested fixture:
+tests\integration\conftest.py:90:  def dqn_config() -> src.rl.agents.dqn_agent.DQNConfig
+____________ ERROR at setup of TestEndToEnd.test_model_deployment _____________
+ScopeMismatch: You tried to access the function scoped fixture dqn_config with a session scoped request object. Requesting fixture stack:
+tests\integration\conftest.py:170:  def trained_agent(env_config, dqn_config)
+Requested fixture:
+tests\integration\conftest.py:90:  def dqn_config() -> src.rl.agents.dqn_agent.DQNConfig
+________ ERROR at setup of TestScenarios.test_normal_traffic_scenario _________
+ScopeMismatch: You tried to access the function scoped fixture dqn_config with a session scoped request object. Requesting fixture stack:
+tests\integration\conftest.py:170:  def trained_agent(env_config, dqn_config)
+Requested fixture:
+tests\integration\conftest.py:90:  def dqn_config() -> src.rl.agents.dqn_agent.DQNConfig
+_________ ERROR at setup of TestScenarios.test_peak_traffic_scenario __________
+ScopeMismatch: You tried to access the function scoped fixture dqn_config with a session scoped request object. Requesting fixture stack:
+tests\integration\conftest.py:170:  def trained_agent(env_config, dqn_config)
+Requested fixture:
+tests\integration\conftest.py:90:  def dqn_config() -> src.rl.agents.dqn_agent.DQNConfig
+______ ERROR at setup of TestScenarios.test_cascade_prevention_scenario _______
+ScopeMismatch: You tried to access the function scoped fixture dqn_config with a session scoped request object. Requesting fixture stack:
+tests\integration\conftest.py:170:  def trained_agent(env_config, dqn_config)
+Requested fixture:
+tests\integration\conftest.py:90:  def dqn_config() -> src.rl.agents.dqn_agent.DQNConfig
+__________ ERROR at setup of TestScenarios.test_cold_start_scenario ___________
+ScopeMismatch: You tried to access the function scoped fixture dqn_config with a session scoped request object. Requesting fixture stack:
+tests\integration\conftest.py:170:  def trained_agent(env_config, dqn_config)
+Requested fixture:
+tests\integration\conftest.py:90:  def dqn_config() -> src.rl.agents.dqn_agent.DQNConfig
+___ ERROR at setup of TestMultiAgentComparison.test_statistical_comparison ____
+ScopeMismatch: You tried to access the function scoped fixture dqn_config with a session scoped request object. Requesting fixture stack:
+tests\integration\conftest.py:170:  def trained_agent(env_config, dqn_config)
+Requested fixture:
+tests\integration\conftest.py:90:  def dqn_config() -> src.rl.agents.dqn_agent.DQNConfig
+_____ ERROR at setup of TestSystemReliability.test_handles_invalid_states _____
+ScopeMismatch: You tried to access the function scoped fixture dqn_config with a session scoped request object. Requesting fixture stack:
+tests\integration\conftest.py:170:  def trained_agent(env_config, dqn_config)
+Requested fixture:
+tests\integration\conftest.py:90:  def dqn_config() -> src.rl.agents.dqn_agent.DQNConfig
+______ ERROR at setup of TestSystemReliability.test_recovers_from_errors ______
+ScopeMismatch: You tried to access the function scoped fixture dqn_config with a session scoped request object. Requesting fixture stack:
+tests\integration\conftest.py:170:  def trained_agent(env_config, dqn_config)
+Requested fixture:
+tests\integration\conftest.py:90:  def dqn_config() -> src.rl.agents.dqn_agent.DQNConfig
+_____ ERROR at setup of TestSystemReliability.test_long_running_stability _____
+ScopeMismatch: You tried to access the function scoped fixture dqn_config with a session scoped request object. Requesting fixture stack:
+tests\integration\conftest.py:170:  def trained_agent(env_config, dqn_config)
+Requested fixture:
+tests\integration\conftest.py:90:  def dqn_config() -> src.rl.agents.dqn_agent.DQNConfig
+================================== FAILURES ===================================
+_______________ TestCacheOperations.test_eviction_policy_works ________________
+tests\integration\test_cache_system.py:61: in test_eviction_policy_works
+    stats = cache_manager.get_stats()
+            ^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'CacheManager' object has no attribute 'get_stats'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:49,242 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:49,242 - src.cache.cache_manager - INFO - CacheManager started successfully
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:49,575 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+___________ TestCacheWithMarkov.test_low_probability_items_evicted ____________
+tests\integration\test_cache_system.py:144: in test_low_probability_items_evicted
+    evicted = cache_manager.evict_by_probability(count=1)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'CacheManager' object has no attribute 'evict_by_probability'. Did you mean: 'evict_low_probability'?
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:51,094 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,094 - src.cache.cache_manager - INFO - CacheManager started successfully
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:51,113 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+_______ TestCacheWithMarkov.test_cache_hit_rate_improves_with_prefetch ________
+tests\integration\test_cache_system.py:170: in test_cache_hit_rate_improves_with_prefetch
+    cache_manager.clear()  # Clear cache
+    ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'CacheManager' object has no attribute 'clear'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:51,117 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,117 - src.cache.cache_manager - INFO - CacheManager started successfully
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:51,130 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+_________________ TestCacheMetrics.test_hit_rate_calculation __________________
+tests\integration\test_cache_system.py:216: in test_hit_rate_calculation
+    stats = cache_manager.get_stats()
+            ^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'CacheManager' object has no attribute 'get_stats'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:51,133 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,133 - src.cache.cache_manager - INFO - CacheManager started successfully
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:51,141 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+_______________ TestCacheMetrics.test_metrics_reset_on_episode ________________
+tests\integration\test_cache_system.py:229: in test_metrics_reset_on_episode
+    stats_before = cache_manager.get_stats()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'CacheManager' object has no attribute 'get_stats'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:51,143 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,143 - src.cache.cache_manager - INFO - CacheManager started successfully
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:51,150 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+____________________ TestCacheMetrics.test_metrics_export _____________________
+tests\integration\test_cache_system.py:245: in test_metrics_export
+    stats = cache_manager.get_stats()
+            ^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'CacheManager' object has no attribute 'get_stats'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:51,153 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,153 - src.cache.cache_manager - INFO - CacheManager started successfully
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:51,160 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+_____________ TestEnvironmentBasics.test_observation_space_shape ______________
+tests\integration\test_environment.py:42: in test_observation_space_shape
+    assert np.all(obs >= 0.0) and np.all(obs <= 1.0)
+E   assert (np.False_)
+E    +  where np.False_ = <function all at 0x00000151C4930670>(array([ 0.0000000e+00,  0.0000000e+00,  0.0000000e+00,  0.0000000e+00,\n        0.0000000e+00,  0.0000000e+00,  0.00000...52093e-01,  0.0000000e+00,\n        1.0000000e+00,  0.0000000e+00,  2.9193029e-07,  0.0000000e+00],\n      dtype=float32) >= 0.0)
+E    +    where <function all at 0x00000151C4930670> = np.all
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:51,190 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,190 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:13:51,190 - src.integration.gym_environment - INFO - API vocabulary built with 20 endpoints
+2026-02-02 22:13:51,190 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:13:51,190 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 20 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:13:51,192 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:51,201 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:13:51,201 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+_________ TestEnvironmentBasics.test_reset_returns_valid_observation __________
+tests\integration\test_environment.py:65: in test_reset_returns_valid_observation
+    assert 'episode' in info or 'session_id' in info
+E   AssertionError: assert ('episode' in {'cache_state': {'entries': 0, 'hit_rate': 0.0, 'hits': 0, 'misses': 0, ...}, 'episode_number': 1, 'initial_api': np.s...'), 'session_context': {'day': 2, 'hour': 14, 'session_id': 'session_1_1770050631.2117736', 'session_length': 38, ...}} or 'session_id' in {'cache_state': {'entries': 0, 'hit_rate': 0.0, 'hits': 0, 'misses': 0, ...}, 'episode_number': 1, 'initial_api': np.s...'), 'session_context': {'day': 2, 'hour': 14, 'session_id': 'session_1_1770050631.2117736', 'session_length': 38, ...}})
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:51,209 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,209 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:13:51,210 - src.integration.gym_environment - INFO - API vocabulary built with 20 endpoints
+2026-02-02 22:13:51,210 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:13:51,210 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 20 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:13:51,211 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:51,223 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:13:51,223 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+______________ TestEnvironmentDynamics.test_cache_eviction_works ______________
+tests\integration\test_environment.py:165: in test_cache_eviction_works
+    cache_stats = training_env.cache_manager.get_stats()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'CacheManager' object has no attribute 'get_stats'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:51,253 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,254 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:13:51,254 - src.integration.gym_environment - INFO - API vocabulary built with 20 endpoints
+2026-02-02 22:13:51,254 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:13:51,254 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 20 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:13:51,255 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:51,267 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:13:51,267 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+______ TestEnvironmentCompatibility.test_stable_baselines_compatibility _______
+tests\integration\test_environment.py:325: in test_stable_baselines_compatibility
+    sb3_check_env(fast_env, warn=False)
+.venv\Lib\site-packages\stable_baselines3\common\env_checker.py:527: in check_env
+    _check_returned_values(env, observation_space, action_space)
+.venv\Lib\site-packages\stable_baselines3\common\env_checker.py:353: in _check_returned_values
+    _check_obs(obs, observation_space, "reset")
+.venv\Lib\site-packages\stable_baselines3\common\env_checker.py:295: in _check_obs
+    raise AssertionError(message)
+E   AssertionError: The observation returned by the `reset()` method does not match the bounds of the given observation space Box(0.0, 1.0, (36,), float32). 
+E   1 invalid indices: 
+E   Expected: 0.0 <= obs[29] <= 1.0, actual value: -0.7818315029144287
+
+During handling of the above exception, another exception occurred:
+tests\integration\test_environment.py:331: in test_stable_baselines_compatibility
+    pytest.fail(f"Environment failed SB3 compatibility check: {e}")
+E   Failed: Environment failed SB3 compatibility check: The observation returned by the `reset()` method does not match the bounds of the given observation space Box(0.0, 1.0, (36,), float32). 
+E   1 invalid indices: 
+E   Expected: 0.0 <= obs[29] <= 1.0, actual value: -0.7818315029144287
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:51,316 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,316 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:13:51,316 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:13:51,316 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:13:51,316 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:13:51,727 - src.integration.gym_environment - INFO - Episode 1 started - User: guest
+2026-02-02 22:13:51,727 - src.integration.gym_environment - INFO - Episode 2 started - User: guest
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: guest
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 2 started - User: guest
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:51,816 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:13:51,816 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+__________ TestEnvironmentCompatibility.test_vectorized_environment ___________
+tests\integration\test_environment.py:368: in test_vectorized_environment
+    assert obs[0].shape == (2, 60)  # 2 environments, 60-dim state
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   assert (2, 36) == (2, 60)
+E     
+E     At index 1 diff: 36 != 60
+E     Use -v to get more diff
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:13:51,831 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,831 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:13:51,831 - src.integration.gym_environment - INFO - API vocabulary built with 20 endpoints
+2026-02-02 22:13:51,831 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:13:51,831 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+2026-02-02 22:13:51,833 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,833 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:13:51,833 - src.integration.gym_environment - INFO - API vocabulary built with 20 endpoints
+2026-02-02 22:13:51,834 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:13:51,834 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+2026-02-02 22:13:51,837 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:13:51,838 - src.integration.gym_environment - INFO - Episode 1 started - User: guest
+------------------------------ Captured log call ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 20 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 20 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: guest
+__________________ TestEndToEnd.test_full_training_pipeline ___________________
+tests\integration\test_full_pipeline.py:35: in test_full_training_pipeline
+    training_result = trainer.train()
+                      ^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:193: in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:291: in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: too many values to unpack (expected 4)
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:51,850 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:51,851 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:13:51,851 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:13:51,851 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:13:51,851 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:13:53,978 - src.rl.training.trainer - INFO - Random seed set to 42
+2026-02-02 22:13:53,979 - src.rl.training.trainer - INFO - Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_full_training_pipeline0\test_output
+2026-02-02 22:13:53,979 - src.rl.training.trainer - INFO - Config: TrainingConfig(max_episodes=20, max_steps_per_episode=50, eval_frequency=10, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_full_training_pipeline0\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+2026-02-02 22:13:53,980 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:13:53,980 - src.rl.training.trainer - INFO - STARTING TRAINING
+2026-02-02 22:13:53,981 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:13:53,981 - src.rl.training.trainer - INFO - Max episodes: 20
+2026-02-02 22:13:53,981 - src.rl.training.trainer - INFO - Max steps per episode: 50
+2026-02-02 22:13:53,981 - src.rl.training.trainer - INFO - Evaluation frequency: 10
+2026-02-02 22:13:53,981 - src.rl.training.trainer - INFO - Checkpoint frequency: 50
+2026-02-02 22:13:53,982 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:13:53,983 - src.rl.training.trainer - ERROR - Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+2026-02-02 22:13:53,985 - src.rl.training.trainer - WARNING - Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_full_training_pipeline0\checkpoints\emergency_ep0.pt
+2026-02-02 22:13:54,008 - src.rl.training.trainer - INFO - Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_full_training_pipeline0\checkpoints\emergency_ep0.pt
+2026-02-02 22:13:54,008 - src.rl.training.trainer - WARNING - No training data to plot
+2026-02-02 22:13:54,010 - src.rl.training.trainer - INFO - Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_full_training_pipeline0\test_output\metrics.json
+------------------------------ Captured log call ------------------------------
+INFO     src.rl.training.trainer:trainer.py:164 Random seed set to 42
+INFO     src.rl.training.trainer:trainer.py:145 Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_full_training_pipeline0\test_output
+INFO     src.rl.training.trainer:trainer.py:146 Config: TrainingConfig(max_episodes=20, max_steps_per_episode=50, eval_frequency=10, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_full_training_pipeline0\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+INFO     src.rl.training.trainer:trainer.py:173 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:174 STARTING TRAINING
+INFO     src.rl.training.trainer:trainer.py:175 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:176 Max episodes: 20
+INFO     src.rl.training.trainer:trainer.py:177 Max steps per episode: 50
+INFO     src.rl.training.trainer:trainer.py:178 Evaluation frequency: 10
+INFO     src.rl.training.trainer:trainer.py:179 Checkpoint frequency: 50
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+ERROR    src.rl.training.trainer:trainer.py:248 Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+WARNING  src.rl.training.trainer:trainer.py:410 Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_full_training_pipeline0\checkpoints\emergency_ep0.pt
+INFO     src.rl.training.trainer:trainer.py:437 Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_full_training_pipeline0\checkpoints\emergency_ep0.pt
+WARNING  src.rl.training.trainer:trainer.py:643 No training data to plot
+INFO     src.rl.training.trainer:trainer.py:633 Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_full_training_pipeline0\test_output\metrics.json
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:54,036 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:13:54,036 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+____________________ TestEndToEnd.test_metrics_collection _____________________
+tests\integration\test_full_pipeline.py:143: in test_metrics_collection
+    result = trainer.train()
+             ^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:193: in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:291: in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: too many values to unpack (expected 4)
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:54,050 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:54,050 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:13:54,050 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:13:54,050 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:13:54,050 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:13:54,063 - src.rl.training.trainer - INFO - Random seed set to 42
+2026-02-02 22:13:54,063 - src.rl.training.trainer - INFO - Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_collection0\test_output
+2026-02-02 22:13:54,063 - src.rl.training.trainer - INFO - Config: TrainingConfig(max_episodes=15, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_metrics_collection0\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+2026-02-02 22:13:54,064 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:13:54,064 - src.rl.training.trainer - INFO - STARTING TRAINING
+2026-02-02 22:13:54,064 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:13:54,064 - src.rl.training.trainer - INFO - Max episodes: 15
+2026-02-02 22:13:54,064 - src.rl.training.trainer - INFO - Max steps per episode: 50
+2026-02-02 22:13:54,064 - src.rl.training.trainer - INFO - Evaluation frequency: 5
+2026-02-02 22:13:54,065 - src.rl.training.trainer - INFO - Checkpoint frequency: 50
+2026-02-02 22:13:54,065 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:13:54,065 - src.rl.training.trainer - ERROR - Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+2026-02-02 22:13:54,066 - src.rl.training.trainer - WARNING - Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_collection0\checkpoints\emergency_ep0.pt
+2026-02-02 22:13:54,072 - src.rl.training.trainer - INFO - Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_collection0\checkpoints\emergency_ep0.pt
+2026-02-02 22:13:54,072 - src.rl.training.trainer - WARNING - No training data to plot
+2026-02-02 22:13:54,073 - src.rl.training.trainer - INFO - Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_collection0\test_output\metrics.json
+------------------------------ Captured log call ------------------------------
+INFO     src.rl.training.trainer:trainer.py:164 Random seed set to 42
+INFO     src.rl.training.trainer:trainer.py:145 Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_collection0\test_output
+INFO     src.rl.training.trainer:trainer.py:146 Config: TrainingConfig(max_episodes=15, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_metrics_collection0\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+INFO     src.rl.training.trainer:trainer.py:173 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:174 STARTING TRAINING
+INFO     src.rl.training.trainer:trainer.py:175 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:176 Max episodes: 15
+INFO     src.rl.training.trainer:trainer.py:177 Max steps per episode: 50
+INFO     src.rl.training.trainer:trainer.py:178 Evaluation frequency: 5
+INFO     src.rl.training.trainer:trainer.py:179 Checkpoint frequency: 50
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+ERROR    src.rl.training.trainer:trainer.py:248 Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+WARNING  src.rl.training.trainer:trainer.py:410 Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_collection0\checkpoints\emergency_ep0.pt
+INFO     src.rl.training.trainer:trainer.py:437 Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_collection0\checkpoints\emergency_ep0.pt
+WARNING  src.rl.training.trainer:trainer.py:643 No training data to plot
+INFO     src.rl.training.trainer:trainer.py:633 Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_collection0\test_output\metrics.json
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:54,100 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:13:54,100 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+___________ TestMultiAgentComparison.test_compare_multiple_policies ___________
+tests\integration\test_full_pipeline.py:294: in test_compare_multiple_policies
+    action = policy.select_action(state, [])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+baselines\lru_policy.py:69: in select_action
+    from ..src.rl.actions import CacheAction
+E   ImportError: attempted relative import beyond top-level package
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:54,130 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:54,130 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:13:54,130 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:13:54,131 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:13:54,131 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:13:54,132 - src.integration.gym_environment - INFO - Episode 1 started - User: guest
+2026-02-02 22:13:54,132 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:13:54,133 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:13:54,133 - src.cache.cache_manager - INFO - Evicted 4 LRU entries
+2026-02-02 22:13:54,133 - src.integration.gym_environment - INFO - Episode 2 started - User: free
+2026-02-02 22:13:54,133 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:13:54,134 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:13:54,134 - src.cache.cache_manager - INFO - Evicted 4 LRU entries
+2026-02-02 22:13:54,135 - src.cache.cache_manager - INFO - Evicted 4 LRU entries
+2026-02-02 22:13:54,135 - src.integration.gym_environment - INFO - Episode 3 started - User: free
+2026-02-02 22:13:54,135 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:13:54,136 - src.cache.cache_manager - INFO - Evicted 4 LRU entries
+2026-02-02 22:13:54,136 - src.integration.gym_environment - INFO - Episode 4 started - User: guest
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: guest
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 4 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 2 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 4 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 4 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 3 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 4 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 4 started - User: guest
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:54,150 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:13:54,151 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+_________________ TestResourceManagement.test_memory_cleanup __________________
+tests\integration\test_full_pipeline.py:461: in test_memory_cleanup
+    agent.update()
+    ^^^^^^^^^^^^
+E   AttributeError: 'DQNAgent' object has no attribute 'update'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:13:54,180 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:13:54,180 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:13:54,180 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:13:54,181 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:13:54,181 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:13:54,186 - src.integration.gym_environment - INFO - Episode 1 started - User: guest
+2026-02-02 22:13:54,186 - src.cache.cache_manager - INFO - Evicted 0 LRU entries
+2026-02-02 22:13:54,187 - src.cache.cache_manager - INFO - Evicted 3 LRU entries
+2026-02-02 22:13:54,187 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:13:54,187 - src.integration.gym_environment - INFO - Episode 2 started - User: free
+2026-02-02 22:13:54,188 - src.cache.cache_manager - INFO - Evicted 6 LRU entries
+2026-02-02 22:13:54,189 - src.cache.cache_manager - INFO - Evicted 2 LRU entries
+2026-02-02 22:13:54,189 - src.cache.cache_manager - INFO - Evicted 2 LRU entries
+2026-02-02 22:13:54,189 - src.integration.gym_environment - INFO - Episode 3 started - User: free
+2026-02-02 22:13:54,190 - src.cache.cache_manager - INFO - Evicted 4 LRU entries
+2026-02-02 22:13:54,190 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: guest
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 0 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 3 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 2 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 6 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 2 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 2 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 3 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 4 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:13:54,199 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:13:54,199 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+_______________ TestRealisticScenarios.test_cold_start_scenario _______________
+tests\integration\test_simulator.py:267: in test_cold_start_scenario
+    cache_manager.clear()
+    ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'CacheManager' object has no attribute 'clear'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:09,633 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:09,634 - src.cache.cache_manager - INFO - CacheManager started successfully
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:09,648 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+___________________ TestTrainingBasics.test_agent_can_train ___________________
+tests\integration\test_training_loop.py:50: in test_agent_can_train
+    agent.decay_epsilon()
+    ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'DQNAgent' object has no attribute 'decay_epsilon'. Did you mean: '_decay_epsilon'?
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,277 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,278 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,279 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,279 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,279 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:10,303 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,306 - src.cache.cache_manager - INFO - Evicted 2 LRU entries
+2026-02-02 22:14:10,308 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 2 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:10,351 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:10,351 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+___________________ TestTrainingBasics.test_loss_decreases ____________________
+tests\integration\test_training_loop.py:73: in test_loss_decreases
+    loss = agent.update()
+           ^^^^^^^^^^^^
+E   AttributeError: 'DQNAgent' object has no attribute 'update'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,360 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,360 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,361 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,361 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,361 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:10,371 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,372 - src.cache.cache_manager - INFO - Evicted 2 LRU entries
+2026-02-02 22:14:10,373 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,375 - src.integration.gym_environment - INFO - Episode 2 started - User: premium
+2026-02-02 22:14:10,376 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,380 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,381 - src.integration.gym_environment - INFO - Episode 3 started - User: free
+2026-02-02 22:14:10,382 - src.cache.cache_manager - INFO - Evicted 8 LRU entries
+2026-02-02 22:14:10,385 - src.integration.gym_environment - INFO - Episode 4 started - User: free
+2026-02-02 22:14:10,386 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,387 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,388 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,390 - src.cache.cache_manager - INFO - Evicted 6 LRU entries
+2026-02-02 22:14:10,392 - src.integration.gym_environment - INFO - Episode 5 started - User: premium
+2026-02-02 22:14:10,393 - src.cache.cache_manager - INFO - Evicted 4 LRU entries
+2026-02-02 22:14:10,394 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,396 - src.integration.gym_environment - INFO - Episode 6 started - User: premium
+2026-02-02 22:14:10,398 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,398 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,400 - src.integration.gym_environment - INFO - Episode 7 started - User: premium
+2026-02-02 22:14:10,402 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,403 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,404 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,407 - src.integration.gym_environment - INFO - Episode 8 started - User: guest
+2026-02-02 22:14:10,408 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,410 - src.cache.cache_manager - INFO - Evicted 7 LRU entries
+2026-02-02 22:14:10,412 - src.integration.gym_environment - INFO - Episode 9 started - User: free
+2026-02-02 22:14:10,412 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,414 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,417 - src.integration.gym_environment - INFO - Episode 10 started - User: guest
+2026-02-02 22:14:10,418 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,419 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,420 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,422 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,422 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,424 - src.integration.gym_environment - INFO - Episode 11 started - User: free
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 2 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 2 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 3 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 8 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 4 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 6 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 5 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 4 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 6 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 7 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 8 started - User: guest
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 7 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 9 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 10 started - User: guest
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 11 started - User: free
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:10,446 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:10,448 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+___________________ TestTrainingBasics.test_reward_improves ___________________
+tests\integration\test_training_loop.py:111: in test_reward_improves
+    agent.decay_epsilon()
+    ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'DQNAgent' object has no attribute 'decay_epsilon'. Did you mean: '_decay_epsilon'?
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,456 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,457 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,457 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,457 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,457 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:10,466 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,466 - src.cache.cache_manager - INFO - Evicted 2 LRU entries
+2026-02-02 22:14:10,466 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 2 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:10,483 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:10,483 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+___________________ TestTrainingBasics.test_epsilon_decays ____________________
+tests\integration\test_training_loop.py:130: in test_epsilon_decays
+    agent.decay_epsilon()
+    ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'DQNAgent' object has no attribute 'decay_epsilon'. Did you mean: '_decay_epsilon'?
+_______________ TestTrainingBasics.test_target_network_updates ________________
+tests\integration\test_training_loop.py:160: in test_target_network_updates
+    agent.update()
+    ^^^^^^^^^^^^
+E   AttributeError: 'DQNAgent' object has no attribute 'update'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,522 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,522 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,522 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,522 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,522 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:10,529 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,530 - src.cache.cache_manager - INFO - Evicted 2 LRU entries
+2026-02-02 22:14:10,530 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,532 - src.integration.gym_environment - INFO - Episode 2 started - User: premium
+2026-02-02 22:14:10,532 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,535 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,535 - src.integration.gym_environment - INFO - Episode 3 started - User: free
+2026-02-02 22:14:10,535 - src.cache.cache_manager - INFO - Evicted 8 LRU entries
+2026-02-02 22:14:10,537 - src.integration.gym_environment - INFO - Episode 4 started - User: free
+2026-02-02 22:14:10,537 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,537 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,538 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,538 - src.cache.cache_manager - INFO - Evicted 6 LRU entries
+2026-02-02 22:14:10,539 - src.integration.gym_environment - INFO - Episode 5 started - User: premium
+2026-02-02 22:14:10,539 - src.cache.cache_manager - INFO - Evicted 4 LRU entries
+2026-02-02 22:14:10,540 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,541 - src.integration.gym_environment - INFO - Episode 6 started - User: premium
+2026-02-02 22:14:10,541 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,542 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,542 - src.integration.gym_environment - INFO - Episode 7 started - User: premium
+2026-02-02 22:14:10,544 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,544 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,544 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,545 - src.integration.gym_environment - INFO - Episode 8 started - User: guest
+2026-02-02 22:14:10,546 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,546 - src.cache.cache_manager - INFO - Evicted 7 LRU entries
+2026-02-02 22:14:10,547 - src.integration.gym_environment - INFO - Episode 9 started - User: free
+2026-02-02 22:14:10,547 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,549 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,550 - src.integration.gym_environment - INFO - Episode 10 started - User: guest
+2026-02-02 22:14:10,551 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,552 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,552 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,553 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,553 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,555 - src.integration.gym_environment - INFO - Episode 11 started - User: free
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 2 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 2 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 3 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 8 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 4 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 6 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 5 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 4 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 6 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 7 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 8 started - User: guest
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 7 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 9 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 10 started - User: guest
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 11 started - User: free
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:10,574 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:10,574 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+___________________ TestCheckpointing.test_checkpoint_saves ___________________
+tests\integration\test_training_loop.py:190: in test_checkpoint_saves
+    trainer.train()
+src\rl\training\trainer.py:193: in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:291: in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: too many values to unpack (expected 4)
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,583 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,583 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,584 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,584 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,584 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:10,602 - src.rl.training.trainer - INFO - Random seed set to 42
+2026-02-02 22:14:10,602 - src.rl.training.trainer - INFO - Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_checkpoint_saves0\test_output
+2026-02-02 22:14:10,603 - src.rl.training.trainer - INFO - Config: TrainingConfig(max_episodes=10, max_steps_per_episode=50, eval_frequency=20, eval_episodes=3, checkpoint_frequency=5, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_checkpoint_saves0\\test_output\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+2026-02-02 22:14:10,603 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:10,604 - src.rl.training.trainer - INFO - STARTING TRAINING
+2026-02-02 22:14:10,604 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:10,604 - src.rl.training.trainer - INFO - Max episodes: 10
+2026-02-02 22:14:10,604 - src.rl.training.trainer - INFO - Max steps per episode: 50
+2026-02-02 22:14:10,604 - src.rl.training.trainer - INFO - Evaluation frequency: 20
+2026-02-02 22:14:10,604 - src.rl.training.trainer - INFO - Checkpoint frequency: 5
+2026-02-02 22:14:10,605 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,606 - src.rl.training.trainer - ERROR - Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+2026-02-02 22:14:10,607 - src.rl.training.trainer - WARNING - Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_checkpoint_saves0\test_output\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:10,616 - src.rl.training.trainer - INFO - Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_checkpoint_saves0\test_output\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:10,616 - src.rl.training.trainer - WARNING - No training data to plot
+2026-02-02 22:14:10,618 - src.rl.training.trainer - INFO - Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_checkpoint_saves0\test_output\metrics.json
+------------------------------ Captured log call ------------------------------
+INFO     src.rl.training.trainer:trainer.py:164 Random seed set to 42
+INFO     src.rl.training.trainer:trainer.py:145 Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_checkpoint_saves0\test_output
+INFO     src.rl.training.trainer:trainer.py:146 Config: TrainingConfig(max_episodes=10, max_steps_per_episode=50, eval_frequency=20, eval_episodes=3, checkpoint_frequency=5, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_checkpoint_saves0\\test_output\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+INFO     src.rl.training.trainer:trainer.py:173 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:174 STARTING TRAINING
+INFO     src.rl.training.trainer:trainer.py:175 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:176 Max episodes: 10
+INFO     src.rl.training.trainer:trainer.py:177 Max steps per episode: 50
+INFO     src.rl.training.trainer:trainer.py:178 Evaluation frequency: 20
+INFO     src.rl.training.trainer:trainer.py:179 Checkpoint frequency: 5
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+ERROR    src.rl.training.trainer:trainer.py:248 Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+WARNING  src.rl.training.trainer:trainer.py:410 Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_checkpoint_saves0\test_output\checkpoints\emergency_ep0.pt
+INFO     src.rl.training.trainer:trainer.py:437 Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_checkpoint_saves0\test_output\checkpoints\emergency_ep0.pt
+WARNING  src.rl.training.trainer:trainer.py:643 No training data to plot
+INFO     src.rl.training.trainer:trainer.py:633 Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_checkpoint_saves0\test_output\metrics.json
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:10,672 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:10,673 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+___________________ TestCheckpointing.test_checkpoint_loads ___________________
+tests\integration\test_training_loop.py:211: in test_checkpoint_loads
+    agent.update()
+    ^^^^^^^^^^^^
+E   AttributeError: 'DQNAgent' object has no attribute 'update'
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,678 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,679 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,679 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,679 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,679 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:10,689 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,689 - src.cache.cache_manager - INFO - Evicted 2 LRU entries
+2026-02-02 22:14:10,690 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,691 - src.integration.gym_environment - INFO - Episode 2 started - User: premium
+2026-02-02 22:14:10,691 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,692 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,693 - src.integration.gym_environment - INFO - Episode 3 started - User: free
+2026-02-02 22:14:10,693 - src.cache.cache_manager - INFO - Evicted 8 LRU entries
+2026-02-02 22:14:10,695 - src.integration.gym_environment - INFO - Episode 4 started - User: free
+2026-02-02 22:14:10,695 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,695 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,695 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 2 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 2 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 3 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 8 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 4 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:10,709 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:10,709 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+______________ TestCheckpointing.test_resumed_training_continues ______________
+tests\integration\test_training_loop.py:248: in test_resumed_training_continues
+    agent.decay_epsilon()
+    ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'DQNAgent' object has no attribute 'decay_epsilon'. Did you mean: '_decay_epsilon'?
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,714 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,715 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,715 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,715 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,716 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:10,729 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,731 - src.cache.cache_manager - INFO - Evicted 2 LRU entries
+2026-02-02 22:14:10,731 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+------------------------------ Captured log call ------------------------------
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 2 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:10,748 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:10,748 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+___________________ TestCheckpointing.test_best_model_saved ___________________
+tests\integration\test_training_loop.py:288: in test_best_model_saved
+    trainer.train()
+src\rl\training\trainer.py:193: in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:291: in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: too many values to unpack (expected 4)
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,754 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,754 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,755 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,755 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,755 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:10,769 - src.rl.training.trainer - INFO - Random seed set to 42
+2026-02-02 22:14:10,770 - src.rl.training.trainer - INFO - Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_best_model_saved0\test_output
+2026-02-02 22:14:10,770 - src.rl.training.trainer - INFO - Config: TrainingConfig(max_episodes=15, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_best_model_saved0\\test_output\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+2026-02-02 22:14:10,770 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:10,771 - src.rl.training.trainer - INFO - STARTING TRAINING
+2026-02-02 22:14:10,771 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:10,771 - src.rl.training.trainer - INFO - Max episodes: 15
+2026-02-02 22:14:10,771 - src.rl.training.trainer - INFO - Max steps per episode: 50
+2026-02-02 22:14:10,771 - src.rl.training.trainer - INFO - Evaluation frequency: 5
+2026-02-02 22:14:10,771 - src.rl.training.trainer - INFO - Checkpoint frequency: 50
+2026-02-02 22:14:10,772 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,772 - src.rl.training.trainer - ERROR - Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+2026-02-02 22:14:10,773 - src.rl.training.trainer - WARNING - Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_best_model_saved0\test_output\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:10,783 - src.rl.training.trainer - INFO - Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_best_model_saved0\test_output\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:10,784 - src.rl.training.trainer - WARNING - No training data to plot
+2026-02-02 22:14:10,785 - src.rl.training.trainer - INFO - Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_best_model_saved0\test_output\metrics.json
+------------------------------ Captured log call ------------------------------
+INFO     src.rl.training.trainer:trainer.py:164 Random seed set to 42
+INFO     src.rl.training.trainer:trainer.py:145 Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_best_model_saved0\test_output
+INFO     src.rl.training.trainer:trainer.py:146 Config: TrainingConfig(max_episodes=15, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_best_model_saved0\\test_output\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+INFO     src.rl.training.trainer:trainer.py:173 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:174 STARTING TRAINING
+INFO     src.rl.training.trainer:trainer.py:175 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:176 Max episodes: 15
+INFO     src.rl.training.trainer:trainer.py:177 Max steps per episode: 50
+INFO     src.rl.training.trainer:trainer.py:178 Evaluation frequency: 5
+INFO     src.rl.training.trainer:trainer.py:179 Checkpoint frequency: 50
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+ERROR    src.rl.training.trainer:trainer.py:248 Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+WARNING  src.rl.training.trainer:trainer.py:410 Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_best_model_saved0\test_output\checkpoints\emergency_ep0.pt
+INFO     src.rl.training.trainer:trainer.py:437 Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_best_model_saved0\test_output\checkpoints\emergency_ep0.pt
+WARNING  src.rl.training.trainer:trainer.py:643 No training data to plot
+INFO     src.rl.training.trainer:trainer.py:633 Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_best_model_saved0\test_output\metrics.json
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:10,816 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:10,816 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+________ TestEarlyStoppingAndConvergence.test_early_stopping_triggers _________
+tests\integration\test_training_loop.py:314: in test_early_stopping_triggers
+    result = trainer.train()
+             ^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:193: in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:291: in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: too many values to unpack (expected 4)
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,820 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,821 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,821 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,821 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,821 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:10,835 - src.rl.training.trainer - INFO - Random seed set to 42
+2026-02-02 22:14:10,835 - src.rl.training.trainer - INFO - Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_early_stopping_triggers0\test_output
+2026-02-02 22:14:10,835 - src.rl.training.trainer - INFO - Config: TrainingConfig(max_episodes=100, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_early_stopping_triggers0\\checkpoints', early_stopping=True, patience=5, min_episodes=5, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+2026-02-02 22:14:10,837 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:10,837 - src.rl.training.trainer - INFO - STARTING TRAINING
+2026-02-02 22:14:10,837 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:10,838 - src.rl.training.trainer - INFO - Max episodes: 100
+2026-02-02 22:14:10,838 - src.rl.training.trainer - INFO - Max steps per episode: 50
+2026-02-02 22:14:10,839 - src.rl.training.trainer - INFO - Evaluation frequency: 5
+2026-02-02 22:14:10,839 - src.rl.training.trainer - INFO - Checkpoint frequency: 50
+2026-02-02 22:14:10,839 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,840 - src.rl.training.trainer - ERROR - Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+2026-02-02 22:14:10,841 - src.rl.training.trainer - WARNING - Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_early_stopping_triggers0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:10,846 - src.rl.training.trainer - INFO - Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_early_stopping_triggers0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:10,846 - src.rl.training.trainer - WARNING - No training data to plot
+2026-02-02 22:14:10,847 - src.rl.training.trainer - INFO - Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_early_stopping_triggers0\test_output\metrics.json
+------------------------------ Captured log call ------------------------------
+INFO     src.rl.training.trainer:trainer.py:164 Random seed set to 42
+INFO     src.rl.training.trainer:trainer.py:145 Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_early_stopping_triggers0\test_output
+INFO     src.rl.training.trainer:trainer.py:146 Config: TrainingConfig(max_episodes=100, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_early_stopping_triggers0\\checkpoints', early_stopping=True, patience=5, min_episodes=5, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+INFO     src.rl.training.trainer:trainer.py:173 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:174 STARTING TRAINING
+INFO     src.rl.training.trainer:trainer.py:175 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:176 Max episodes: 100
+INFO     src.rl.training.trainer:trainer.py:177 Max steps per episode: 50
+INFO     src.rl.training.trainer:trainer.py:178 Evaluation frequency: 5
+INFO     src.rl.training.trainer:trainer.py:179 Checkpoint frequency: 50
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+ERROR    src.rl.training.trainer:trainer.py:248 Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+WARNING  src.rl.training.trainer:trainer.py:410 Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_early_stopping_triggers0\checkpoints\emergency_ep0.pt
+INFO     src.rl.training.trainer:trainer.py:437 Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_early_stopping_triggers0\checkpoints\emergency_ep0.pt
+WARNING  src.rl.training.trainer:trainer.py:643 No training data to plot
+INFO     src.rl.training.trainer:trainer.py:633 Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_early_stopping_triggers0\test_output\metrics.json
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:10,882 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:10,883 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+_______ TestEarlyStoppingAndConvergence.test_minimum_episodes_respected _______
+tests\integration\test_training_loop.py:329: in test_minimum_episodes_respected
+    result = trainer.train()
+             ^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:193: in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:291: in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: too many values to unpack (expected 4)
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,887 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,888 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,888 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,888 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,888 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:10,899 - src.rl.training.trainer - INFO - Random seed set to 42
+2026-02-02 22:14:10,900 - src.rl.training.trainer - INFO - Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_minimum_episodes_respecte0\test_output
+2026-02-02 22:14:10,900 - src.rl.training.trainer - INFO - Config: TrainingConfig(max_episodes=50, max_steps_per_episode=50, eval_frequency=20, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_minimum_episodes_respecte0\\checkpoints', early_stopping=True, patience=2, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+2026-02-02 22:14:10,901 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:10,901 - src.rl.training.trainer - INFO - STARTING TRAINING
+2026-02-02 22:14:10,901 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:10,901 - src.rl.training.trainer - INFO - Max episodes: 50
+2026-02-02 22:14:10,902 - src.rl.training.trainer - INFO - Max steps per episode: 50
+2026-02-02 22:14:10,902 - src.rl.training.trainer - INFO - Evaluation frequency: 20
+2026-02-02 22:14:10,902 - src.rl.training.trainer - INFO - Checkpoint frequency: 50
+2026-02-02 22:14:10,902 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,903 - src.rl.training.trainer - ERROR - Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+2026-02-02 22:14:10,903 - src.rl.training.trainer - WARNING - Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_minimum_episodes_respecte0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:10,912 - src.rl.training.trainer - INFO - Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_minimum_episodes_respecte0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:10,912 - src.rl.training.trainer - WARNING - No training data to plot
+2026-02-02 22:14:10,914 - src.rl.training.trainer - INFO - Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_minimum_episodes_respecte0\test_output\metrics.json
+------------------------------ Captured log call ------------------------------
+INFO     src.rl.training.trainer:trainer.py:164 Random seed set to 42
+INFO     src.rl.training.trainer:trainer.py:145 Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_minimum_episodes_respecte0\test_output
+INFO     src.rl.training.trainer:trainer.py:146 Config: TrainingConfig(max_episodes=50, max_steps_per_episode=50, eval_frequency=20, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_minimum_episodes_respecte0\\checkpoints', early_stopping=True, patience=2, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+INFO     src.rl.training.trainer:trainer.py:173 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:174 STARTING TRAINING
+INFO     src.rl.training.trainer:trainer.py:175 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:176 Max episodes: 50
+INFO     src.rl.training.trainer:trainer.py:177 Max steps per episode: 50
+INFO     src.rl.training.trainer:trainer.py:178 Evaluation frequency: 20
+INFO     src.rl.training.trainer:trainer.py:179 Checkpoint frequency: 50
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+ERROR    src.rl.training.trainer:trainer.py:248 Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+WARNING  src.rl.training.trainer:trainer.py:410 Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_minimum_episodes_respecte0\checkpoints\emergency_ep0.pt
+INFO     src.rl.training.trainer:trainer.py:437 Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_minimum_episodes_respecte0\checkpoints\emergency_ep0.pt
+WARNING  src.rl.training.trainer:trainer.py:643 No training data to plot
+INFO     src.rl.training.trainer:trainer.py:633 Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_minimum_episodes_respecte0\test_output\metrics.json
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:10,953 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:10,953 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+_________ TestEarlyStoppingAndConvergence.test_convergence_detection __________
+tests\integration\test_training_loop.py:346: in test_convergence_detection
+    result = trainer.train()
+             ^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:193: in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:291: in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: too many values to unpack (expected 4)
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:10,969 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:10,969 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:10,970 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:10,970 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:10,970 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+2026-02-02 22:14:10,984 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:10,986 - src.cache.cache_manager - INFO - Evicted 2 LRU entries
+2026-02-02 22:14:10,986 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:10,989 - src.integration.gym_environment - INFO - Episode 2 started - User: premium
+2026-02-02 22:14:10,989 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:10,996 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:10,997 - src.integration.gym_environment - INFO - Episode 3 started - User: free
+2026-02-02 22:14:10,998 - src.cache.cache_manager - INFO - Evicted 8 LRU entries
+2026-02-02 22:14:11,001 - src.integration.gym_environment - INFO - Episode 4 started - User: free
+2026-02-02 22:14:11,001 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:11,002 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:11,003 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,004 - src.cache.cache_manager - INFO - Evicted 6 LRU entries
+2026-02-02 22:14:11,006 - src.integration.gym_environment - INFO - Episode 5 started - User: premium
+2026-02-02 22:14:11,007 - src.cache.cache_manager - INFO - Evicted 4 LRU entries
+2026-02-02 22:14:11,007 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,008 - src.integration.gym_environment - INFO - Episode 6 started - User: premium
+2026-02-02 22:14:11,008 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:11,009 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:11,009 - src.integration.gym_environment - INFO - Episode 7 started - User: premium
+2026-02-02 22:14:11,010 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,011 - src.cache.cache_manager - INFO - Evicted 5 LRU entries
+2026-02-02 22:14:11,012 - src.cache.cache_manager - INFO - Evicted 1 LRU entries
+2026-02-02 22:14:11,013 - src.integration.gym_environment - INFO - Episode 8 started - User: guest
+2026-02-02 22:14:11,014 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,015 - src.cache.cache_manager - INFO - Evicted 7 LRU entries
+2026-02-02 22:14:11,015 - src.integration.gym_environment - INFO - Episode 9 started - User: free
+2026-02-02 22:14:11,016 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,016 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,017 - src.integration.gym_environment - INFO - Episode 10 started - User: guest
+2026-02-02 22:14:11,017 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,018 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,018 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,019 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,019 - src.cache.cache_manager - INFO - Evicted 0 low-probability entries
+2026-02-02 22:14:11,019 - src.integration.gym_environment - INFO - Episode 11 started - User: free
+2026-02-02 22:14:11,020 - src.cache.cache_manager - INFO - Evicted 9 LRU entries
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 2 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 2 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 3 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 8 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 4 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 6 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 5 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 4 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 6 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 7 started - User: premium
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 5 LRU entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 1 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 8 started - User: guest
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 7 LRU entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 9 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 10 started - User: guest
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.cache.cache_manager:cache_manager.py:469 Evicted 0 low-probability entries
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 11 started - User: free
+INFO     src.cache.cache_manager:cache_manager.py:432 Evicted 9 LRU entries
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:11,029 - src.rl.training.trainer - INFO - Random seed set to 42
+2026-02-02 22:14:11,030 - src.rl.training.trainer - INFO - Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_convergence_detection0\test_output
+2026-02-02 22:14:11,030 - src.rl.training.trainer - INFO - Config: TrainingConfig(max_episodes=30, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_convergence_detection0\\checkpoints', early_stopping=True, patience=10, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+2026-02-02 22:14:11,032 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:11,032 - src.rl.training.trainer - INFO - STARTING TRAINING
+2026-02-02 22:14:11,033 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:11,034 - src.rl.training.trainer - INFO - Max episodes: 30
+2026-02-02 22:14:11,035 - src.rl.training.trainer - INFO - Max steps per episode: 50
+2026-02-02 22:14:11,035 - src.rl.training.trainer - INFO - Evaluation frequency: 5
+2026-02-02 22:14:11,036 - src.rl.training.trainer - INFO - Checkpoint frequency: 50
+2026-02-02 22:14:11,037 - src.integration.gym_environment - INFO - Episode 12 started - User: guest
+2026-02-02 22:14:11,037 - src.rl.training.trainer - ERROR - Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+2026-02-02 22:14:11,040 - src.rl.training.trainer - WARNING - Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_convergence_detection0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:11,054 - src.rl.training.trainer - INFO - Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_convergence_detection0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:11,055 - src.rl.training.trainer - WARNING - No training data to plot
+2026-02-02 22:14:11,058 - src.rl.training.trainer - INFO - Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_convergence_detection0\test_output\metrics.json
+------------------------------ Captured log call ------------------------------
+INFO     src.rl.training.trainer:trainer.py:164 Random seed set to 42
+INFO     src.rl.training.trainer:trainer.py:145 Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_convergence_detection0\test_output
+INFO     src.rl.training.trainer:trainer.py:146 Config: TrainingConfig(max_episodes=30, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_convergence_detection0\\checkpoints', early_stopping=True, patience=10, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+INFO     src.rl.training.trainer:trainer.py:173 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:174 STARTING TRAINING
+INFO     src.rl.training.trainer:trainer.py:175 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:176 Max episodes: 30
+INFO     src.rl.training.trainer:trainer.py:177 Max steps per episode: 50
+INFO     src.rl.training.trainer:trainer.py:178 Evaluation frequency: 5
+INFO     src.rl.training.trainer:trainer.py:179 Checkpoint frequency: 50
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 12 started - User: guest
+ERROR    src.rl.training.trainer:trainer.py:248 Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+WARNING  src.rl.training.trainer:trainer.py:410 Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_convergence_detection0\checkpoints\emergency_ep0.pt
+INFO     src.rl.training.trainer:trainer.py:437 Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_convergence_detection0\checkpoints\emergency_ep0.pt
+WARNING  src.rl.training.trainer:trainer.py:643 No training data to plot
+INFO     src.rl.training.trainer:trainer.py:633 Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_convergence_detection0\test_output\metrics.json
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:11,093 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:11,094 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+__________________ TestTrainingMetrics.test_metrics_tracked ___________________
+tests\integration\test_training_loop.py:367: in test_metrics_tracked
+    result = trainer.train()
+             ^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:193: in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:291: in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: too many values to unpack (expected 4)
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:11,101 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:11,101 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:11,103 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:11,103 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:11,103 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:11,128 - src.rl.training.trainer - INFO - Random seed set to 42
+2026-02-02 22:14:11,129 - src.rl.training.trainer - INFO - Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_tracked0\test_output
+2026-02-02 22:14:11,130 - src.rl.training.trainer - INFO - Config: TrainingConfig(max_episodes=10, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_metrics_tracked0\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+2026-02-02 22:14:11,133 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:11,136 - src.rl.training.trainer - INFO - STARTING TRAINING
+2026-02-02 22:14:11,138 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:11,138 - src.rl.training.trainer - INFO - Max episodes: 10
+2026-02-02 22:14:11,139 - src.rl.training.trainer - INFO - Max steps per episode: 50
+2026-02-02 22:14:11,139 - src.rl.training.trainer - INFO - Evaluation frequency: 5
+2026-02-02 22:14:11,140 - src.rl.training.trainer - INFO - Checkpoint frequency: 50
+2026-02-02 22:14:11,143 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:11,144 - src.rl.training.trainer - ERROR - Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+2026-02-02 22:14:11,147 - src.rl.training.trainer - WARNING - Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_tracked0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:11,164 - src.rl.training.trainer - INFO - Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_tracked0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:11,167 - src.rl.training.trainer - WARNING - No training data to plot
+2026-02-02 22:14:11,173 - src.rl.training.trainer - INFO - Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_tracked0\test_output\metrics.json
+------------------------------ Captured log call ------------------------------
+INFO     src.rl.training.trainer:trainer.py:164 Random seed set to 42
+INFO     src.rl.training.trainer:trainer.py:145 Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_tracked0\test_output
+INFO     src.rl.training.trainer:trainer.py:146 Config: TrainingConfig(max_episodes=10, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_metrics_tracked0\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+INFO     src.rl.training.trainer:trainer.py:173 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:174 STARTING TRAINING
+INFO     src.rl.training.trainer:trainer.py:175 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:176 Max episodes: 10
+INFO     src.rl.training.trainer:trainer.py:177 Max steps per episode: 50
+INFO     src.rl.training.trainer:trainer.py:178 Evaluation frequency: 5
+INFO     src.rl.training.trainer:trainer.py:179 Checkpoint frequency: 50
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+ERROR    src.rl.training.trainer:trainer.py:248 Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+WARNING  src.rl.training.trainer:trainer.py:410 Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_tracked0\checkpoints\emergency_ep0.pt
+INFO     src.rl.training.trainer:trainer.py:437 Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_tracked0\checkpoints\emergency_ep0.pt
+WARNING  src.rl.training.trainer:trainer.py:643 No training data to plot
+INFO     src.rl.training.trainer:trainer.py:633 Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_metrics_tracked0\test_output\metrics.json
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:11,236 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:11,237 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+_______________ TestTrainingMetrics.test_episode_rewards_logged _______________
+tests\integration\test_training_loop.py:382: in test_episode_rewards_logged
+    trainer.train()
+src\rl\training\trainer.py:193: in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:291: in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: too many values to unpack (expected 4)
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:11,246 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:11,247 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:11,247 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:11,247 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:11,247 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:11,281 - src.rl.training.trainer - INFO - Random seed set to 42
+2026-02-02 22:14:11,283 - src.rl.training.trainer - INFO - Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_episode_rewards_logged0\test_output
+2026-02-02 22:14:11,284 - src.rl.training.trainer - INFO - Config: TrainingConfig(max_episodes=10, max_steps_per_episode=50, eval_frequency=20, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_episode_rewards_logged0\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=5, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+2026-02-02 22:14:11,286 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:11,287 - src.rl.training.trainer - INFO - STARTING TRAINING
+2026-02-02 22:14:11,288 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:11,289 - src.rl.training.trainer - INFO - Max episodes: 10
+2026-02-02 22:14:11,290 - src.rl.training.trainer - INFO - Max steps per episode: 50
+2026-02-02 22:14:11,290 - src.rl.training.trainer - INFO - Evaluation frequency: 20
+2026-02-02 22:14:11,291 - src.rl.training.trainer - INFO - Checkpoint frequency: 50
+2026-02-02 22:14:11,293 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:11,294 - src.rl.training.trainer - ERROR - Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+2026-02-02 22:14:11,297 - src.rl.training.trainer - WARNING - Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_episode_rewards_logged0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:11,312 - src.rl.training.trainer - INFO - Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_episode_rewards_logged0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:11,314 - src.rl.training.trainer - WARNING - No training data to plot
+2026-02-02 22:14:11,317 - src.rl.training.trainer - INFO - Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_episode_rewards_logged0\test_output\metrics.json
+------------------------------ Captured log call ------------------------------
+INFO     src.rl.training.trainer:trainer.py:164 Random seed set to 42
+INFO     src.rl.training.trainer:trainer.py:145 Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_episode_rewards_logged0\test_output
+INFO     src.rl.training.trainer:trainer.py:146 Config: TrainingConfig(max_episodes=10, max_steps_per_episode=50, eval_frequency=20, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_episode_rewards_logged0\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=5, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+INFO     src.rl.training.trainer:trainer.py:173 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:174 STARTING TRAINING
+INFO     src.rl.training.trainer:trainer.py:175 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:176 Max episodes: 10
+INFO     src.rl.training.trainer:trainer.py:177 Max steps per episode: 50
+INFO     src.rl.training.trainer:trainer.py:178 Evaluation frequency: 20
+INFO     src.rl.training.trainer:trainer.py:179 Checkpoint frequency: 50
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+ERROR    src.rl.training.trainer:trainer.py:248 Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+WARNING  src.rl.training.trainer:trainer.py:410 Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_episode_rewards_logged0\checkpoints\emergency_ep0.pt
+INFO     src.rl.training.trainer:trainer.py:437 Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_episode_rewards_logged0\checkpoints\emergency_ep0.pt
+WARNING  src.rl.training.trainer:trainer.py:643 No training data to plot
+INFO     src.rl.training.trainer:trainer.py:633 Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_episode_rewards_logged0\test_output\metrics.json
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:11,387 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:11,387 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+_____________ TestTrainingMetrics.test_evaluation_results_stored ______________
+tests\integration\test_training_loop.py:397: in test_evaluation_results_stored
+    trainer.train()
+src\rl\training\trainer.py:193: in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rl\training\trainer.py:291: in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: too many values to unpack (expected 4)
+---------------------------- Captured stderr setup ----------------------------
+2026-02-02 22:14:11,393 - src.cache.cache_manager - INFO - CacheManager initialized with backend_type=memory
+2026-02-02 22:14:11,394 - src.cache.cache_manager - INFO - CacheManager started successfully
+2026-02-02 22:14:11,394 - src.integration.gym_environment - INFO - API vocabulary built with 10 endpoints
+2026-02-02 22:14:11,394 - src.integration.gym_environment - INFO - All environment components initialized
+2026-02-02 22:14:11,394 - src.integration.gym_environment - INFO - CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+----------------------------- Captured log setup ------------------------------
+INFO     src.cache.cache_manager:cache_manager.py:101 CacheManager initialized with backend_type=memory
+INFO     src.cache.cache_manager:cache_manager.py:126 CacheManager started successfully
+INFO     src.integration.gym_environment:gym_environment.py:261 API vocabulary built with 10 endpoints
+INFO     src.integration.gym_environment:gym_environment.py:225 All environment components initialized
+INFO     src.integration.gym_environment:gym_environment.py:198 CachingEnv initialized with state_dim=36, action_space=Discrete(7)
+---------------------------- Captured stderr call -----------------------------
+2026-02-02 22:14:11,414 - src.rl.training.trainer - INFO - Random seed set to 42
+2026-02-02 22:14:11,415 - src.rl.training.trainer - INFO - Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_evaluation_results_stored0\test_output
+2026-02-02 22:14:11,415 - src.rl.training.trainer - INFO - Config: TrainingConfig(max_episodes=15, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_evaluation_results_stored0\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+2026-02-02 22:14:11,418 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:11,418 - src.rl.training.trainer - INFO - STARTING TRAINING
+2026-02-02 22:14:11,419 - src.rl.training.trainer - INFO - ================================================================================
+2026-02-02 22:14:11,419 - src.rl.training.trainer - INFO - Max episodes: 15
+2026-02-02 22:14:11,419 - src.rl.training.trainer - INFO - Max steps per episode: 50
+2026-02-02 22:14:11,420 - src.rl.training.trainer - INFO - Evaluation frequency: 5
+2026-02-02 22:14:11,420 - src.rl.training.trainer - INFO - Checkpoint frequency: 50
+2026-02-02 22:14:11,421 - src.integration.gym_environment - INFO - Episode 1 started - User: premium
+2026-02-02 22:14:11,421 - src.rl.training.trainer - ERROR - Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+2026-02-02 22:14:11,423 - src.rl.training.trainer - WARNING - Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_evaluation_results_stored0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:11,433 - src.rl.training.trainer - INFO - Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_evaluation_results_stored0\checkpoints\emergency_ep0.pt
+2026-02-02 22:14:11,434 - src.rl.training.trainer - WARNING - No training data to plot
+2026-02-02 22:14:11,436 - src.rl.training.trainer - INFO - Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_evaluation_results_stored0\test_output\metrics.json
+------------------------------ Captured log call ------------------------------
+INFO     src.rl.training.trainer:trainer.py:164 Random seed set to 42
+INFO     src.rl.training.trainer:trainer.py:145 Trainer initialized with output dir: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_evaluation_results_stored0\test_output
+INFO     src.rl.training.trainer:trainer.py:146 Config: TrainingConfig(max_episodes=15, max_steps_per_episode=50, eval_frequency=5, eval_episodes=3, checkpoint_frequency=50, checkpoint_dir='C:\\Users\\dlahi\\AppData\\Local\\Temp\\pytest-of-dlahi\\pytest-7\\test_evaluation_results_stored0\\checkpoints', early_stopping=True, patience=20, min_episodes=10, seed=42, log_frequency=10, use_wandb=False, save_best_only=True, verbose=False, plot_frequency=1000)
+INFO     src.rl.training.trainer:trainer.py:173 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:174 STARTING TRAINING
+INFO     src.rl.training.trainer:trainer.py:175 ================================================================================
+INFO     src.rl.training.trainer:trainer.py:176 Max episodes: 15
+INFO     src.rl.training.trainer:trainer.py:177 Max steps per episode: 50
+INFO     src.rl.training.trainer:trainer.py:178 Evaluation frequency: 5
+INFO     src.rl.training.trainer:trainer.py:179 Checkpoint frequency: 50
+INFO     src.integration.gym_environment:gym_environment.py:343 Episode 1 started - User: premium
+ERROR    src.rl.training.trainer:trainer.py:248 Training failed with error: too many values to unpack (expected 4)
+Traceback (most recent call last):
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 193, in train
+    episode_metrics = self._run_episode(evaluate=False)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dlahi\OneDrive\Desktop\4th YEAR\FYP\code\markov-rl-api-cache\src\rl\training\trainer.py", line 291, in _run_episode
+    next_state, reward, done, info = self.env.step(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+WARNING  src.rl.training.trainer:trainer.py:410 Saving emergency checkpoint: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_evaluation_results_stored0\checkpoints\emergency_ep0.pt
+INFO     src.rl.training.trainer:trainer.py:437 Checkpoint saved: C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_evaluation_results_stored0\checkpoints\emergency_ep0.pt
+WARNING  src.rl.training.trainer:trainer.py:643 No training data to plot
+INFO     src.rl.training.trainer:trainer.py:633 Metrics saved to C:\Users\dlahi\AppData\Local\Temp\pytest-of-dlahi\pytest-7\test_evaluation_results_stored0\test_output\metrics.json
+-------------------------- Captured stderr teardown ---------------------------
+2026-02-02 22:14:11,472 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:11,473 - src.integration.gym_environment - INFO - CachingEnv closed
+---------------------------- Captured log teardown ----------------------------
+INFO     src.cache.cache_manager:cache_manager.py:150 CacheManager stopped successfully
+INFO     src.integration.gym_environment:gym_environment.py:909 CachingEnv closed
+=========================== short test summary info ===========================
+ERROR tests/integration/test_full_pipeline.py::TestEndToEnd::test_training_improves_over_baselines
+ERROR tests/integration/test_full_pipeline.py::TestEndToEnd::test_model_deployment
+ERROR tests/integration/test_full_pipeline.py::TestScenarios::test_normal_traffic_scenario
+ERROR tests/integration/test_full_pipeline.py::TestScenarios::test_peak_traffic_scenario
+ERROR tests/integration/test_full_pipeline.py::TestScenarios::test_cascade_prevention_scenario
+ERROR tests/integration/test_full_pipeline.py::TestScenarios::test_cold_start_scenario
+ERROR tests/integration/test_full_pipeline.py::TestMultiAgentComparison::test_statistical_comparison
+ERROR tests/integration/test_full_pipeline.py::TestSystemReliability::test_handles_invalid_states
+ERROR tests/integration/test_full_pipeline.py::TestSystemReliability::test_recovers_from_errors
+ERROR tests/integration/test_full_pipeline.py::TestSystemReliability::test_long_running_stability
+FAILED tests/integration/test_cache_system.py::TestCacheOperations::test_eviction_policy_works
+FAILED tests/integration/test_cache_system.py::TestCacheWithMarkov::test_low_probability_items_evicted
+FAILED tests/integration/test_cache_system.py::TestCacheWithMarkov::test_cache_hit_rate_improves_with_prefetch
+FAILED tests/integration/test_cache_system.py::TestCacheMetrics::test_hit_rate_calculation
+FAILED tests/integration/test_cache_system.py::TestCacheMetrics::test_metrics_reset_on_episode
+FAILED tests/integration/test_cache_system.py::TestCacheMetrics::test_metrics_export
+FAILED tests/integration/test_environment.py::TestEnvironmentBasics::test_observation_space_shape
+FAILED tests/integration/test_environment.py::TestEnvironmentBasics::test_reset_returns_valid_observation
+FAILED tests/integration/test_environment.py::TestEnvironmentDynamics::test_cache_eviction_works
+FAILED tests/integration/test_environment.py::TestEnvironmentCompatibility::test_stable_baselines_compatibility
+FAILED tests/integration/test_environment.py::TestEnvironmentCompatibility::test_vectorized_environment
+FAILED tests/integration/test_full_pipeline.py::TestEndToEnd::test_full_training_pipeline
+FAILED tests/integration/test_full_pipeline.py::TestEndToEnd::test_metrics_collection
+FAILED tests/integration/test_full_pipeline.py::TestMultiAgentComparison::test_compare_multiple_policies
+FAILED tests/integration/test_full_pipeline.py::TestResourceManagement::test_memory_cleanup
+FAILED tests/integration/test_simulator.py::TestRealisticScenarios::test_cold_start_scenario
+FAILED tests/integration/test_training_loop.py::TestTrainingBasics::test_agent_can_train
+FAILED tests/integration/test_training_loop.py::TestTrainingBasics::test_loss_decreases
+FAILED tests/integration/test_training_loop.py::TestTrainingBasics::test_reward_improves
+FAILED tests/integration/test_training_loop.py::TestTrainingBasics::test_epsilon_decays
+FAILED tests/integration/test_training_loop.py::TestTrainingBasics::test_target_network_updates
+FAILED tests/integration/test_training_loop.py::TestCheckpointing::test_checkpoint_saves
+FAILED tests/integration/test_training_loop.py::TestCheckpointing::test_checkpoint_loads
+FAILED tests/integration/test_training_loop.py::TestCheckpointing::test_resumed_training_continues
+FAILED tests/integration/test_training_loop.py::TestCheckpointing::test_best_model_saved
+FAILED tests/integration/test_training_loop.py::TestEarlyStoppingAndConvergence::test_early_stopping_triggers
+FAILED tests/integration/test_training_loop.py::TestEarlyStoppingAndConvergence::test_minimum_episodes_respected
+FAILED tests/integration/test_training_loop.py::TestEarlyStoppingAndConvergence::test_convergence_detection
+FAILED tests/integration/test_training_loop.py::TestTrainingMetrics::test_metrics_tracked
+FAILED tests/integration/test_training_loop.py::TestTrainingMetrics::test_episode_rewards_logged
+FAILED tests/integration/test_training_loop.py::TestTrainingMetrics::test_evaluation_results_stored
+================= 31 failed, 126 passed, 10 errors in 29.11s ==================
+
+
+STDERR:
+2026-02-02 22:14:11,694 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:11,694 - src.integration.gym_environment - INFO - CachingEnv closed
+2026-02-02 22:14:11,694 - src.cache.cache_manager - INFO - CacheManager stopped successfully
+2026-02-02 22:14:11,694 - src.integration.gym_environment - INFO - CachingEnv closed
+
+
+Return code: 1

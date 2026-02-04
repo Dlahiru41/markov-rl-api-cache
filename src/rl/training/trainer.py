@@ -275,7 +275,7 @@ class Trainer:
         Returns:
             Dictionary with episode metrics
         """
-        state = self.env.reset()
+        state, info = self.env.reset()  # Gymnasium returns (observation, info)
         total_reward = 0.0
         episode_length = 0
         done = False
@@ -287,8 +287,9 @@ class Trainer:
             # Select action
             action = self.agent.select_action(state, evaluate=evaluate)
 
-            # Execute action
-            next_state, reward, done, info = self.env.step(action)
+            # Execute action (Gymnasium returns 5 values: observation, reward, terminated, truncated, info)
+            next_state, reward, terminated, truncated, info = self.env.step(action)
+            done = terminated or truncated
 
             total_reward += reward
             episode_length += 1

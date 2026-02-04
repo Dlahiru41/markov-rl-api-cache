@@ -150,12 +150,12 @@ class StateBuilder:
             hour = context.get('hour', 0)
             day = context.get('day', 0) # 0-6
             
-            # Cyclical encoding
-            state.append(np.sin(2 * np.pi * hour / 24))
-            state.append(np.cos(2 * np.pi * hour / 24))
-            state.append(np.sin(2 * np.pi * day / 7))
-            state.append(np.cos(2 * np.pi * day / 7))
-            
+            # Cyclical encoding - normalize from [-1, 1] to [0, 1]
+            state.append((np.sin(2 * np.pi * hour / 24) + 1) / 2)
+            state.append((np.cos(2 * np.pi * hour / 24) + 1) / 2)
+            state.append((np.sin(2 * np.pi * day / 7) + 1) / 2)
+            state.append((np.cos(2 * np.pi * day / 7) + 1) / 2)
+
             # Binary flags
             state.append(1.0 if day >= 5 else 0.0) # weekend
             state.append(1.0 if 9 <= hour <= 17 else 0.0) # peak hour (business hours)

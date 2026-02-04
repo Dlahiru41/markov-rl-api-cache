@@ -112,7 +112,23 @@ class DQNAgent:
     def store_transition(self, state: np.ndarray, action: int, reward: float, next_state: np.ndarray, done: bool):
         """Add experience to replay buffer."""
         self.buffer.push(state, action, reward, next_state, done)
-        
+
+    def update(self) -> Optional[float]:
+        """
+        Perform one gradient descent step (public method for compatibility).
+
+        Returns:
+            Loss value if update performed, None if not enough samples
+        """
+        result = self.train_step()
+        return result['loss'] if result else None
+
+    def decay_epsilon(self):
+        """
+        Decay epsilon (public method for compatibility).
+        """
+        self._decay_epsilon()
+
     def train_step(self) -> Optional[Dict[str, float]]:
         """Perform one gradient descent step."""
         if not self.buffer.is_ready(self.config.batch_size):

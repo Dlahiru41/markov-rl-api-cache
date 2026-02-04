@@ -66,7 +66,7 @@ class LRUPolicy(CachingPolicy):
         Returns:
             1 (CACHE_CURRENT) normally, 5 (EVICT_LRU) when cache is full
         """
-        from ..src.rl.actions import CacheAction
+        from src.rl.actions import CacheAction
 
         self._step_count += 1
 
