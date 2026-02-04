@@ -190,7 +190,12 @@ BUSINESS VALUE
 
 ### Dependencies
 ```bash
-pip install gymnasium numpy pandas matplotlib torch scikit-learn
+pip install gymnasium numpy pandas matplotlib seaborn torch scikit-learn
+```
+
+Or use the automated setup script:
+```bash
+python setup_demo_dependencies.py
 ```
 
 ### Python Version

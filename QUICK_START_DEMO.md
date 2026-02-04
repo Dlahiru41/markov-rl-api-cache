@@ -1,21 +1,66 @@
 # 🚀 Quick Start: Enterprise Demo
 
-## Run the Complete Demo in 3 Steps
+## ⚠️ IMPORTANT: Install Dependencies First!
 
-### Step 1: Install Dependencies (2 minutes)
+Before running the demo, you **must** install the required Python packages.
+
+### Option 1: Automated Setup (Recommended)
 ```bash
-pip install gymnasium numpy pandas matplotlib torch scikit-learn
+python setup_demo_dependencies.py
+```
+This interactive script will check and install all required dependencies.
+
+### Option 2: Manual Installation
+```bash
+pip install gymnasium numpy pandas matplotlib seaborn torch scikit-learn
 ```
 
-### Step 2: Run the Demo (5-10 minutes)
+---
+
+## Run the Complete Demo
+
+Once dependencies are installed:
+
 ```bash
 python ENTERPRISE_LIVE_DEMO.py
 ```
 
-### Step 3: Present!
+**Features:**
 - Press **ENTER** to advance through sections
 - Total: **9 sections** covering business, tech, and vision
 - Interactive and engaging for stakeholders
+- Runtime: 5-10 minutes
+
+---
+
+## Troubleshooting
+
+### Error: "ModuleNotFoundError: No module named 'X'"
+
+**Solution:** Install missing dependencies
+```bash
+# Install all required packages
+pip install gymnasium numpy pandas matplotlib seaborn torch scikit-learn
+
+# Or use the setup script
+python setup_demo_dependencies.py
+```
+
+### Error: "ImportError: cannot import name 'CachingEnv'"
+
+**Solution:** Run from the project root directory
+```bash
+# Make sure you're in the project root
+cd /path/to/markov-rl-api-cache
+python ENTERPRISE_LIVE_DEMO.py
+```
+
+### Error: torch installation fails
+
+**Solution:** Use CPU-only version
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+```
 
 ---
 

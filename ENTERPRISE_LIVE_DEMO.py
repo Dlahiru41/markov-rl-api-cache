@@ -33,25 +33,99 @@ Date: 2026
 import sys
 from pathlib import Path
 import time
-import numpy as np
 from datetime import datetime
 from typing import Dict, List, Tuple
 import warnings
 warnings.filterwarnings('ignore')
+
+# ═══════════════════════════════════════════════════════════════════════════
+# DEPENDENCY CHECKING
+# ═══════════════════════════════════════════════════════════════════════════
+
+def check_dependencies():
+    """Check if all required dependencies are installed."""
+    missing = []
+    
+    try:
+        import numpy
+    except ImportError:
+        missing.append('numpy')
+    
+    try:
+        import gymnasium
+    except ImportError:
+        missing.append('gymnasium')
+    
+    try:
+        import pandas
+    except ImportError:
+        missing.append('pandas')
+    
+    try:
+        import matplotlib
+    except ImportError:
+        missing.append('matplotlib')
+    
+    try:
+        import torch
+    except ImportError:
+        missing.append('torch')
+    
+    try:
+        import sklearn
+    except ImportError:
+        missing.append('scikit-learn')
+    
+    try:
+        import seaborn
+    except ImportError:
+        missing.append('seaborn')
+    
+    if missing:
+        print("\n" + "=" * 80)
+        print("❌ MISSING DEPENDENCIES")
+        print("=" * 80)
+        print("\nThe following required packages are not installed:")
+        for pkg in missing:
+            print(f"  • {pkg}")
+        print("\n📦 INSTALL COMMAND:")
+        print(f"\n  pip install {' '.join(missing)}")
+        print("\n💡 OR install all at once:")
+        print("\n  pip install gymnasium numpy pandas matplotlib seaborn torch scikit-learn")
+        print("\n" + "=" * 80)
+        sys.exit(1)
+
+# Check dependencies before importing anything else
+check_dependencies()
+
+import numpy as np
 
 # Add src to path
 src_path = Path(__file__).parent / 'src'
 sys.path.insert(0, str(src_path))
 
 # Core imports
-from src.integration.gym_environment import CachingEnv, CacheEnvConfig, SimulatorConfig
-from src.markov.transition_matrix import TransitionMatrix
-from src.markov.predictor import MarkovPredictor
-from src.cache.cache_manager import CacheManager, CacheManagerConfig
-from src.rl.state import StateBuilder, StateConfig
-from src.rl.reward import RewardCalculator, RewardConfig
-from src.rl.actions import ActionSpace
-from src.rl.agents.dqn_agent import DQNAgent, DQNConfig
+try:
+    from src.integration.gym_environment import CachingEnv, CacheEnvConfig, SimulatorConfig
+    from src.markov.transition_matrix import TransitionMatrix
+    from src.markov.predictor import MarkovPredictor
+    from src.cache.cache_manager import CacheManager, CacheManagerConfig
+    from src.rl.state import StateBuilder, StateConfig
+    from src.rl.reward import RewardCalculator, RewardConfig
+    from src.rl.actions import ActionSpace
+    from src.rl.agents.dqn_agent import DQNAgent, DQNConfig
+except ImportError as e:
+    print("\n" + "=" * 80)
+    print("❌ IMPORT ERROR")
+    print("=" * 80)
+    print(f"\nFailed to import required modules: {e}")
+    print("\n💡 TROUBLESHOOTING:")
+    print("\n  1. Ensure you're running from the project root directory")
+    print("  2. Verify the 'src' directory exists with all modules")
+    print("  3. Check that all dependencies are installed:")
+    print("     pip install gymnasium numpy pandas matplotlib seaborn torch scikit-learn")
+    print("\n" + "=" * 80)
+    sys.exit(1)
 
 # Try importing stable-baselines3 (optional for comparison)
 try:
@@ -272,8 +346,7 @@ def demo_markov_prediction():
     ]
     
     # Build transition matrix from sample sequences
-    matrix = TransitionMatrix()
-    predictor = MarkovPredictor(matrix, api_vocabulary=apis)
+    predictor = MarkovPredictor(order=1, smoothing=0.001)
     
     # Simulate realistic e-commerce user behavior
     print("  Training on realistic user session patterns:")
@@ -297,11 +370,13 @@ def demo_markov_prediction():
     ]
     
     for seq in sequences:
-        predictor.observe_sequence(seq)
         print(f"    • Learned: {' → '.join([s.split('/')[-1] for s in seq])}")
     
+    # Train the predictor
+    predictor.fit(sequences)
+    
     print(f"\n  ✓ Trained on {len(sequences)} user sessions")
-    print(f"  ✓ Learned {len(apis)} API endpoints")
+    print(f"  ✓ Learned {predictor.vocab_size} API endpoints")
     
     # Demonstrate predictions
     print_subheader("LIVE PREDICTIONS")
@@ -316,8 +391,16 @@ def demo_markov_prediction():
         print(f"\n  📍 Current API: {current_api}")
         print(f"     Context: {context}\n")
         
-        predictions = predictor.predict(current_api, top_k=5)
+        # Observe the current API to set history
+        predictor.reset_history()
+        predictor.observe(current_api)
+        
+        predictions = predictor.predict(k=5)
         print("     PREDICTED NEXT ENDPOINTS:")
+        
+        if not predictions:
+            print("       No predictions available")
+            continue
         
         total_prob = sum(prob for _, prob in predictions)
         for i, (next_api, prob) in enumerate(predictions, 1):
@@ -375,14 +458,14 @@ def demo_dqn_training():
         buffer_size=10000,
         batch_size=64,
         target_update_freq=200,
-        hidden_sizes=[128, 64]
+        hidden_dims=[128, 64]
     )
     
     agent = DQNAgent(dqn_config)
     
     print("\n  🧠 DQN Network Architecture:")
     print(f"     • Input: {dqn_config.state_dim} state features")
-    print(f"     • Hidden: {dqn_config.hidden_sizes}")
+    print(f"     • Hidden: {dqn_config.hidden_dims}")
     print(f"     • Output: {dqn_config.action_dim} Q-values")
     print(f"     • Total parameters: ~{(dqn_config.state_dim * 128 + 128 * 64 + 64 * dqn_config.action_dim):,}")
     
@@ -411,11 +494,12 @@ def demo_dqn_training():
             done = terminated or truncated
             
             # Store experience
-            agent.remember(obs, action, reward, next_obs, done)
+            agent.store_transition(obs, action, reward, next_obs, done)
             
             # Train agent
-            if len(agent.memory) > dqn_config.batch_size:
-                agent.train()
+            if agent.buffer.is_ready(dqn_config.batch_size):
+                agent.train_step()
+                agent.decay_epsilon()
             
             episode_reward += reward
             obs = next_obs
