@@ -1,0 +1,15 @@
+apiVersion: 1
+
+providers:
+  - name: markov-rl-dashboards
+    orgId: 1
+    folder: "Markov-RL Cache"
+    folderUid: markov-rl
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    allowUiUpdates: true
+    options:
+      path: /etc/grafana/provisioning/dashboards
+      foldersFromFilesStructure: false
+

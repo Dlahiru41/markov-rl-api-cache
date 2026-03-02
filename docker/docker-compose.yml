@@ -67,10 +67,12 @@ services:
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
       - '--storage.tsdb.retention.time=7d'
+      - '--web.enable-lifecycle'
     ports:
       - "9090:9090"
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro
       - prometheus-data:/prometheus
     networks:
       - simulator-network
@@ -90,6 +92,67 @@ services:
           cpus: '0.5'
           memory: 512M
 
+  # Redis Exporter - Expose Redis metrics to Prometheus
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: simulator-redis-exporter
+    environment:
+      - REDIS_ADDR=redis://redis:6379
+    ports:
+      - "9121:9121"
+    networks:
+      - simulator-network
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 64M
+
+  # Markov-RL Metrics Exporter
+  # Runs the IntegrationController in demo/training mode and exposes
+  # all RL + cache + Markov metrics on :9200/metrics for Prometheus.
+  markov-rl-cache:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: markov-rl-cache
+    command: >
+      python -m src.monitoring.exporter
+      --port 9200
+      --api-port 8080
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - METRICS_PORT=9200
+      - API_PORT=8080
+      - LOG_LEVEL=INFO
+    ports:
+      - "9200:9200"   # Prometheus metrics
+      - "8080:8080"   # REST control API
+    networks:
+      - simulator-network
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+
   # Grafana - Visualization dashboards
   grafana:
     image: grafana/grafana:latest
@@ -99,6 +162,9 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_INSTALL_PLUGINS=redis-datasource
+      # Enable unified alerting
+      - GF_UNIFIED_ALERTING_ENABLED=true
+      - GF_ALERTING_ENABLED=false
     ports:
       - "3000:3000"
     volumes:

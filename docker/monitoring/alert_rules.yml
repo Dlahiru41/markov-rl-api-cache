@@ -1,0 +1,325 @@
+# =============================================================================
+# Prometheus alert rules – Markov-RL API Cache
+# =============================================================================
+# Groups:
+#   cache_performance  – hit-rate and utilisation alerts
+#   cascade_prevention – cascade risk and event alerts
+#   rl_agent           – training health alerts
+#   markov_predictor   – Markov accuracy alerts
+#   infrastructure     – latency, error-rate, system resource alerts
+# =============================================================================
+
+groups:
+
+  # ── Cache Performance ───────────────────────────────────────────────────────
+  - name: cache_performance
+    interval: 30s
+    rules:
+
+      - alert: CacheHitRateLow
+        expr: |
+          markov_rl_cache_hit_rate{service="api-cache"} < 0.50
+        for: 5m
+        labels:
+          severity: warning
+          component: cache
+        annotations:
+          summary: "Cache hit rate below 50 %"
+          description: >
+            Cache hit rate for {{ $labels.service }} has been below 50 % for
+            the last 5 minutes (current: {{ $value | humanizePercentage }}).
+            Expected ≥ 70 %. Check if the Markov predictor is trained or if
+            traffic patterns have changed significantly.
+
+      - alert: CacheHitRateCritical
+        expr: |
+          markov_rl_cache_hit_rate{service="api-cache"} < 0.30
+        for: 3m
+        labels:
+          severity: critical
+          component: cache
+        annotations:
+          summary: "Cache hit rate critically low (< 30 %)"
+          description: >
+            Hit rate for {{ $labels.service }} has collapsed to
+            {{ $value | humanizePercentage }}. Cascading backend overload
+            is imminent. Investigate immediately.
+
+      - alert: CacheUtilisationHigh
+        expr: |
+          markov_rl_cache_utilization{service="api-cache"} > 0.90
+        for: 5m
+        labels:
+          severity: warning
+          component: cache
+        annotations:
+          summary: "Cache utilisation above 90 %"
+          description: >
+            Cache for {{ $labels.service }} is {{ $value | humanizePercentage }}
+            full. Eviction pressure will increase, potentially degrading hit rate.
+
+      - alert: CacheEvictionRateHigh
+        expr: |
+          rate(markov_rl_cache_evictions_total[5m]) > 50
+        for: 3m
+        labels:
+          severity: warning
+          component: cache
+        annotations:
+          summary: "High cache eviction rate (> 50/min)"
+          description: >
+            {{ $labels.service }} is evicting {{ $value | humanize }} entries/s.
+            Cache may be undersized for the current working set.
+
+  # ── Cascade Prevention ──────────────────────────────────────────────────────
+  - name: cascade_prevention
+    interval: 15s
+    rules:
+
+      - alert: CascadeRiskElevated
+        expr: |
+          markov_rl_cascade_risk_score{service="api-cache"} > 0.60
+        for: 1m
+        labels:
+          severity: warning
+          component: cascade
+        annotations:
+          summary: "Cascade risk score elevated (> 0.60)"
+          description: >
+            The cascade risk score for {{ $labels.service }} has been above 0.60
+            for 1 minute (current: {{ $value | humanize }}).
+            The RL agent should increase eviction / reduce prefetching.
+
+      - alert: CascadeRiskCritical
+        expr: |
+          markov_rl_cascade_risk_score{service="api-cache"} > 0.85
+        for: 30s
+        labels:
+          severity: critical
+          component: cascade
+        annotations:
+          summary: "CRITICAL – cascade risk > 0.85"
+          description: >
+            Cascade failure is imminent for {{ $labels.service }}
+            (risk={{ $value | humanize }}). Manual intervention may be required.
+
+      - alert: CascadeEventDetected
+        expr: |
+          increase(markov_rl_cascade_events_total[5m]) > 0
+        for: 0s
+        labels:
+          severity: critical
+          component: cascade
+        annotations:
+          summary: "Cascade failure event detected"
+          description: >
+            A cascade failure occurred in {{ $labels.service }}.
+            This triggered the maximum penalty in the RL reward function.
+
+      - alert: CascadePreventionRateDropped
+        expr: |
+          markov_rl_cascade_prevention_rate{service="api-cache"} < 0.80
+          and on(service) markov_rl_cascade_events_total > 5
+        for: 10m
+        labels:
+          severity: warning
+          component: cascade
+        annotations:
+          summary: "Cascade prevention rate below 80 %"
+          description: >
+            Only {{ $value | humanizePercentage }} of cascade threats are
+            being prevented (target ≥ 80 %). Retrain the RL agent or
+            check system load thresholds.
+
+  # ── RL Agent Health ─────────────────────────────────────────────────────────
+  - name: rl_agent
+    interval: 30s
+    rules:
+
+      - alert: RLTrainingLossSpike
+        expr: |
+          markov_rl_rl_loss{service="api-cache"} > 10.0
+        for: 5m
+        labels:
+          severity: warning
+          component: rl_agent
+        annotations:
+          summary: "RL training loss abnormally high (> 10)"
+          description: >
+            DQN training loss for {{ $labels.service }} is {{ $value | humanize }}.
+            This may indicate a diverging Q-network. Consider reducing the
+            learning rate or checking replay buffer content.
+
+      - alert: RLEpisodeRewardDeclining
+        expr: |
+          deriv(markov_rl_rl_episode_reward_mean{service="api-cache"}[30m]) < -1.0
+        for: 15m
+        labels:
+          severity: warning
+          component: rl_agent
+        annotations:
+          summary: "RL episode reward declining over 30 min"
+          description: >
+            Mean episode reward is decreasing at
+            {{ $value | humanize }} reward/min for {{ $labels.service }}.
+            The policy may be degenerating – check for distribution shift.
+
+      - alert: RLExplorationStuck
+        expr: |
+          markov_rl_rl_epsilon{service="api-cache"} > 0.50
+          and on(service) markov_rl_rl_episodes_total > 500
+        for: 10m
+        labels:
+          severity: warning
+          component: rl_agent
+        annotations:
+          summary: "Exploration rate (epsilon) still high after 500 episodes"
+          description: >
+            Epsilon is {{ $value | humanize }} after 500+ episodes.
+            Training may be stuck or epsilon decay is too slow.
+
+      - alert: RLReplayBufferLow
+        expr: |
+          markov_rl_rl_replay_buffer_size{service="api-cache"} < 500
+          and on(service) markov_rl_rl_episodes_total > 10
+        for: 5m
+        labels:
+          severity: warning
+          component: rl_agent
+        annotations:
+          summary: "Replay buffer nearly empty"
+          description: >
+            Replay buffer for {{ $labels.service }} contains only
+            {{ $value | humanize }} transitions. Training quality will be poor
+            until the buffer fills up.
+
+      - alert: RLNoTrainingProgress
+        expr: |
+          increase(markov_rl_rl_training_steps_total{service="api-cache"}[10m]) == 0
+          and on(service) markov_rl_rl_episodes_total > 0
+        for: 5m
+        labels:
+          severity: warning
+          component: rl_agent
+        annotations:
+          summary: "RL agent not performing training steps"
+          description: >
+            No gradient updates have been recorded for 10 minutes in
+            {{ $labels.service }}. The training loop may be stalled.
+
+  # ── Markov Predictor ────────────────────────────────────────────────────────
+  - name: markov_predictor
+    interval: 60s
+    rules:
+
+      - alert: MarkovAccuracyLow
+        expr: |
+          markov_rl_markov_accuracy_topk{service="api-cache", k="1"} < 0.25
+          and on(service) markov_rl_markov_predictions_total > 100
+        for: 10m
+        labels:
+          severity: warning
+          component: markov
+        annotations:
+          summary: "Markov top-1 accuracy below 25 %"
+          description: >
+            Top-1 prediction accuracy for {{ $labels.service }} is only
+            {{ $value | humanizePercentage }}.
+            Accuracy < 25 % provides little useful signal for the RL agent's
+            prefetch strategy. Retrain the Markov chain on fresh data.
+
+      - alert: MarkovPredictionStopped
+        expr: |
+          increase(markov_rl_markov_predictions_total{service="api-cache"}[5m]) == 0
+          and on(service) markov_rl_rl_episodes_total > 5
+        for: 5m
+        labels:
+          severity: critical
+          component: markov
+        annotations:
+          summary: "Markov predictor not making predictions"
+          description: >
+            No Markov predictions recorded for 5 minutes in
+            {{ $labels.service }} despite active training. The predictor
+            may have crashed or lost its vocabulary.
+
+  # ── Infrastructure ──────────────────────────────────────────────────────────
+  - name: infrastructure
+    interval: 30s
+    rules:
+
+      - alert: APILatencyHigh
+        expr: |
+          histogram_quantile(0.99,
+            rate(markov_rl_request_latency_seconds_bucket{service="api-cache"}[5m])
+          ) > 0.200
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+        annotations:
+          summary: "API P99 latency > 200 ms"
+          description: >
+            P99 request latency for {{ $labels.service }} is
+            {{ $value | humanizeDuration }}. Cache miss rate may be elevated,
+            causing more backend calls.
+
+      - alert: BackendLatencyHigh
+        expr: |
+          histogram_quantile(0.95,
+            rate(markov_rl_backend_call_latency_seconds_bucket[5m])
+          ) > 0.500
+        for: 5m
+        labels:
+          severity: warning
+          component: backend
+        annotations:
+          summary: "Backend P95 latency > 500 ms"
+          description: >
+            Backend (cache-miss path) P95 latency is
+            {{ $value | humanizeDuration }}.
+            This directly impacts user-facing latency on cache misses.
+
+      - alert: HighCPUUsage
+        expr: |
+          markov_rl_system_cpu_usage{service="api-cache"} > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "CPU usage above 85 %"
+          description: >
+            CPU utilisation for {{ $labels.service }} is
+            {{ $value | humanizePercentage }}.
+            DQN training and serving may be contending for resources.
+
+      - alert: HighMemoryUsage
+        expr: |
+          markov_rl_system_memory_usage{service="api-cache"} > 0.90
+        for: 5m
+        labels:
+          severity: critical
+          component: system
+        annotations:
+          summary: "Memory usage above 90 %"
+          description: >
+            Memory utilisation for {{ $labels.service }} is
+            {{ $value | humanizePercentage }}.
+            OOM risk is high – reduce replay buffer size or cache capacity.
+
+      - alert: PrefetchEfficiencyLow
+        expr: |
+          markov_rl_prefetch_efficiency{service="api-cache"} < 0.20
+          and on(service) rate(markov_rl_prefetch_requests_total[10m]) > 1
+        for: 10m
+        labels:
+          severity: warning
+          component: prefetch
+        annotations:
+          summary: "Prefetch efficiency below 20 %"
+          description: >
+            Only {{ $value | humanizePercentage }} of prefetched entries are
+            being used in {{ $labels.service }}.
+            The agent is over-prefetching, wasting bandwidth and cache space.
+

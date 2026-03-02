@@ -165,6 +165,7 @@ class IntegrationController:
         # Control API and monitoring
         self.api_server = None
         self.metrics_registry = None
+        self.metrics_collector = None   # MetricsCollector (set in _setup_monitoring)
 
         # State tracking
         self._is_setup = False
@@ -318,31 +319,52 @@ class IntegrationController:
         logger.info("✓ Trainer ready")
 
     def _setup_monitoring(self):
-        """Set up Prometheus metrics monitoring."""
+        """
+        Set up Prometheus metrics monitoring using the full MetricsCollector.
+
+        Creates a MetricsCollector, starts the HTTP /metrics server on
+        port 9200 (configurable via METRICS_PORT env var), and attaches the
+        collector to this controller so downstream code can call
+        ``self.metrics_collector.record_*()``.
+        """
         logger.info("Setting up monitoring...")
 
         try:
-            from prometheus_client import CollectorRegistry, Gauge, Counter
+            import os
+            from src.monitoring.metrics import MetricsCollector, start_metrics_server
+            from prometheus_client import generate_latest
 
-            self.metrics_registry = CollectorRegistry()
+            metrics_port = int(os.environ.get("METRICS_PORT", 9200))
 
-            # Define metrics
+            # Create collector (uses its own private registry)
+            self.metrics_collector = MetricsCollector(service="api-cache")
+            self.metrics_registry = self.metrics_collector.registry
+
+            # Start HTTP server so Prometheus can scrape /metrics
+            start_metrics_server(
+                port=metrics_port,
+                registry=self.metrics_collector.registry,
+            )
+
+            # Legacy dict kept for backward-compat with any existing callers
+            # that access controller.metrics['cache_hit_rate'] etc.
             self.metrics = {
-                'markov_accuracy': Gauge('markov_prediction_accuracy', 'Markov predictor accuracy', registry=self.metrics_registry),
-                'cache_hit_rate': Gauge('cache_hit_rate', 'Cache hit rate', registry=self.metrics_registry),
-                'cache_utilization': Gauge('cache_utilization', 'Cache utilization', registry=self.metrics_registry),
-                'episode_reward': Gauge('rl_episode_reward', 'RL episode reward', registry=self.metrics_registry),
-                'epsilon': Gauge('rl_epsilon', 'RL exploration epsilon', registry=self.metrics_registry),
-                'latency_p99': Gauge('system_latency_p99', 'System P99 latency', registry=self.metrics_registry),
-                'cascade_risk': Gauge('cascade_risk_score', 'Cascade failure risk score', registry=self.metrics_registry),
-                'total_episodes': Counter('total_episodes', 'Total episodes completed', registry=self.metrics_registry),
+                'collector': self.metrics_collector,
             }
 
-            logger.info("✓ Monitoring ready")
+            logger.info(
+                f"✓ Monitoring ready – Prometheus scrape endpoint: "
+                f"http://0.0.0.0:{metrics_port}/metrics"
+            )
 
-        except ImportError:
-            logger.warning("prometheus_client not installed, monitoring disabled")
+        except ImportError as exc:
+            logger.warning(
+                f"prometheus_client not installed ({exc}), monitoring disabled. "
+                "Install with: pip install prometheus-client"
+            )
             self.config.enable_monitoring = False
+        except Exception as exc:
+            logger.warning(f"Monitoring setup failed ({exc}), continuing without metrics")
 
     def _setup_api(self):
         """Set up FastAPI control API."""
@@ -572,6 +594,34 @@ class IntegrationController:
             'best_eval_reward': self.best_eval_reward if self.best_eval_reward > -float('inf') else None,
         }
 
+        # ── Push training history to Prometheus metrics ───────────────────
+        if self.metrics_collector is not None:
+            rewards = training_history.get('episode_rewards', [])
+            lengths = training_history.get('episode_lengths', [])
+            hit_rates = training_history.get('cache_hit_rates', [])
+            cascades = training_history.get('cascade_events', [])
+
+            for i, r in enumerate(rewards):
+                length = lengths[i] if i < len(lengths) else 0
+                hit_rate = hit_rates[i] if i < len(hit_rates) else 0.0
+                cascade = cascades[i] if i < len(cascades) else False
+                self.metrics_collector.record_episode(
+                    reward=r,
+                    length=length,
+                    hit_rate=hit_rate,
+                    cascade_occurred=bool(cascade),
+                )
+
+            # Final epsilon + loss
+            self.metrics_collector.update_epsilon(self.agent.epsilon)
+            if training_history.get('losses'):
+                last_loss = training_history['losses'][-1]
+                if last_loss is not None:
+                    self.metrics_collector.record_training_step(
+                        loss=last_loss,
+                        epsilon=self.agent.epsilon,
+                    )
+
         logger.info(f"Training complete: mean_reward={summary['mean_reward']:.2f}, std={summary['std_reward']:.2f}")
 
         return summary
@@ -626,6 +676,15 @@ class IntegrationController:
             cache_hit_rates.append(metrics['cache_hit_rate'])
             if metrics['cascade_occurred']:
                 cascade_counts += 1
+
+            # Push to Prometheus
+            if self.metrics_collector is not None:
+                self.metrics_collector.record_episode(
+                    reward=episode_reward,
+                    length=steps,
+                    hit_rate=metrics['cache_hit_rate'],
+                    cascade_occurred=metrics['cascade_occurred'],
+                )
 
             logger.info(f"Eval episode {episode + 1}/{num_episodes}: reward={episode_reward:.2f}, steps={steps}")
 

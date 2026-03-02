@@ -1,110 +1,117 @@
-# Prometheus configuration for microservices monitoring
-# Scrapes metrics from all simulator services
+# =============================================================================
+# Prometheus scrape configuration – Markov-RL API Cache
+# =============================================================================
+# Scrape interval: 15 s  |  Evaluation interval: 15 s
+# =============================================================================
 
 global:
-  # How frequently to scrape targets
-  scrape_interval: 15s
-  # How long until a scrape request times out
-  scrape_timeout: 10s
-  # How frequently to evaluate rules
+  scrape_interval:     15s
+  scrape_timeout:      10s
   evaluation_interval: 15s
+  external_labels:
+    project: "markov-rl-api-cache"
+    environment: "simulator"
 
-# Alertmanager configuration (optional)
+# ── Alert rule files ──────────────────────────────────────────────────────────
+rule_files:
+  - "alert_rules.yml"
+
+# ── Alertmanager (optional – uncomment to enable) ────────────────────────────
 # alerting:
 #   alertmanagers:
 #     - static_configs:
-#         - targets: []
+#         - targets: ['alertmanager:9093']
 
-# Rule files (for alerts)
-# rule_files:
-#   - "alerts/*.yml"
-
-# Scrape configurations
+# =============================================================================
+# Scrape configs
+# =============================================================================
 scrape_configs:
-  # Prometheus itself
-  - job_name: 'prometheus'
+
+  # ── Prometheus self-monitoring ──────────────────────────────────────────────
+  - job_name: prometheus
     static_configs:
       - targets: ['localhost:9090']
         labels:
-          service: 'prometheus'
-          environment: 'simulator'
+          service: prometheus
 
-  # Infrastructure services
-  - job_name: 'redis'
+  # ── Markov-RL core metrics exporter ────────────────────────────────────────
+  #    Exposed by MetricsCollector via start_metrics_server(port=9200)
+  - job_name: markov_rl_cache
+    metrics_path: /metrics
+    scrape_interval: 10s          # higher-frequency for RL loop telemetry
+    static_configs:
+      - targets: ['markov-rl-cache:9200']
+        labels:
+          service:    markov-rl-cache
+          tier:       ml
+          component:  rl_agent
+
+  # ── Markov-RL REST API (FastAPI /metrics endpoint) ──────────────────────────
+  - job_name: markov_rl_api
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['markov-rl-cache:8080']
+        labels:
+          service:    markov-rl-api
+          tier:       application
+
+  # ── Redis cache backend ─────────────────────────────────────────────────────
+  - job_name: redis
     static_configs:
       - targets: ['redis:6379']
         labels:
-          service: 'redis'
-          tier: 'infrastructure'
-          environment: 'simulator'
+          service: redis
+          tier:    infrastructure
 
-  # Microservices - Auth
-  - job_name: 'auth-service'
-    metrics_path: '/metrics'
+  # ── Redis Exporter (prometheus community exporter) ──────────────────────────
+  - job_name: redis_exporter
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['redis-exporter:9121']
+        labels:
+          service: redis
+          tier:    infrastructure
+
+  # ── Microservices ───────────────────────────────────────────────────────────
+  - job_name: auth-service
+    metrics_path: /metrics
     static_configs:
       - targets: ['auth-service:8002']
-        labels:
-          service: 'auth-service'
-          tier: 'application'
-          environment: 'simulator'
+        labels: {service: auth-service, tier: application}
 
-  # Microservices - User
-  - job_name: 'user-service'
-    metrics_path: '/metrics'
+  - job_name: user-service
+    metrics_path: /metrics
     static_configs:
       - targets: ['user-service:8001']
-        labels:
-          service: 'user-service'
-          tier: 'application'
-          environment: 'simulator'
+        labels: {service: user-service, tier: application}
 
-  # Microservices - Product
-  - job_name: 'product-service'
-    metrics_path: '/metrics'
+  - job_name: product-service
+    metrics_path: /metrics
     static_configs:
       - targets: ['product-service:8003']
-        labels:
-          service: 'product-service'
-          tier: 'application'
-          environment: 'simulator'
+        labels: {service: product-service, tier: application}
 
-  # Microservices - Cart
-  - job_name: 'cart-service'
-    metrics_path: '/metrics'
+  - job_name: cart-service
+    metrics_path: /metrics
     static_configs:
       - targets: ['cart-service:8004']
-        labels:
-          service: 'cart-service'
-          tier: 'application'
-          environment: 'simulator'
+        labels: {service: cart-service, tier: application}
 
-  # Microservices - Order
-  - job_name: 'order-service'
-    metrics_path: '/metrics'
+  - job_name: order-service
+    metrics_path: /metrics
     static_configs:
       - targets: ['order-service:8005']
-        labels:
-          service: 'order-service'
-          tier: 'application'
-          environment: 'simulator'
+        labels: {service: order-service, tier: application}
 
-  # Microservices - Payment
-  - job_name: 'payment-service'
-    metrics_path: '/metrics'
+  - job_name: payment-service
+    metrics_path: /metrics
     static_configs:
       - targets: ['payment-service:8006']
-        labels:
-          service: 'payment-service'
-          tier: 'application'
-          environment: 'simulator'
+        labels: {service: payment-service, tier: application}
 
-  # Microservices - Inventory
-  - job_name: 'inventory-service'
-    metrics_path: '/metrics'
+  - job_name: inventory-service
+    metrics_path: /metrics
     static_configs:
       - targets: ['inventory-service:8007']
-        labels:
-          service: 'inventory-service'
-          tier: 'application'
-          environment: 'simulator'
+        labels: {service: inventory-service, tier: application}
 

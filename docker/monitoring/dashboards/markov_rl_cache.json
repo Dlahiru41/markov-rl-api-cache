@@ -1,0 +1,893 @@
+{
+  "__inputs": [],
+  "__requires": [
+    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "9.0.0" },
+    { "type": "datasource", "id": "prometheus", "name": "Prometheus", "version": "1.0.0" },
+    { "type": "panel", "id": "timeseries", "name": "Time series", "version": "" },
+    { "type": "panel", "id": "gauge", "name": "Gauge", "version": "" },
+    { "type": "panel", "id": "stat", "name": "Stat", "version": "" },
+    { "type": "panel", "id": "barchart", "name": "Bar chart", "version": "" },
+    { "type": "panel", "id": "heatmap", "name": "Heatmap", "version": "" },
+    { "type": "panel", "id": "table", "name": "Table", "version": "" },
+    { "type": "panel", "id": "text", "name": "Text", "version": "" }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1, "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "enable": true, "hide": true, "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts", "type": "dashboard"
+      },
+      {
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "enable": true, "expr": "increase(markov_rl_cascade_events_total[1m]) > 0",
+        "hide": false, "iconColor": "red", "name": "Cascade Events",
+        "step": "60s", "titleFormat": "Cascade Failure", "textFormat": "service={{ $labels.service }}"
+      }
+    ]
+  },
+  "description": "Comprehensive monitoring for the Markov-RL Intelligent API Caching System. Covers cache performance, RL agent training, Markov chain predictor, cascade prevention, prefetch efficiency and infrastructure health.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+
+    {
+      "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 1, "title": "🎯 Executive Summary", "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "orange", "value": 50 },
+            { "color": "yellow", "value": 65 },
+            { "color": "green", "value": 75 }
+          ]},
+          "unit": "percent",
+          "min": 0, "max": 100
+        }
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "id": 10,
+      "options": { "colorMode": "background", "graphMode": "area", "justifyMode": "center", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+      "pluginVersion": "9.5.0",
+      "targets": [{ "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_cache_hit_rate{service=\"$service\"} * 100", "legendFormat": "Hit Rate", "refId": "A" }],
+      "title": "Cache Hit Rate",
+      "type": "stat"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 0.4 },
+            { "color": "orange", "value": 0.6 },
+            { "color": "red", "value": 0.85 }
+          ]},
+          "unit": "percentunit",
+          "min": 0, "max": 1
+        }
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "id": 11,
+      "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "center", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_cascade_risk_score{service=\"$service\"}", "legendFormat": "Risk", "refId": "A" }],
+      "title": "Cascade Risk",
+      "type": "stat"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "decimals": 0,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "blue", "value": null }
+          ]},
+          "unit": "short"
+        }
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
+      "id": 12,
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_rl_episode_reward_mean{service=\"$service\"}", "legendFormat": "Reward", "refId": "A" }],
+      "title": "Mean Episode Reward (last 100)",
+      "type": "stat"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 0.3 },
+            { "color": "green", "value": 0.6 }
+          ]},
+          "unit": "percentunit", "min": 0, "max": 1
+        }
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
+      "id": 13,
+      "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_markov_accuracy_topk{service=\"$service\",k=\"1\"}", "legendFormat": "Top-1 Acc", "refId": "A" }],
+      "title": "Markov Top-1 Accuracy",
+      "type": "stat"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 0.5 },
+            { "color": "green", "value": 0.8 }
+          ]},
+          "unit": "percentunit", "min": 0, "max": 1
+        }
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
+      "id": 14,
+      "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_cascade_prevention_rate{service=\"$service\"}", "legendFormat": "Prevention Rate", "refId": "A" }],
+      "title": "Cascade Prevention Rate",
+      "type": "stat"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 0.5 },
+            { "color": "orange", "value": 0.75 },
+            { "color": "red", "value": 0.9 }
+          ]},
+          "unit": "percentunit", "min": 0, "max": 1
+        }
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
+      "id": 15,
+      "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_cache_utilization{service=\"$service\"}", "legendFormat": "Utilisation", "refId": "A" }],
+      "title": "Cache Utilisation",
+      "type": "stat"
+    },
+
+
+    {
+      "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "id": 20, "title": "📦 Cache Performance", "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "percentunit", "min": 0, "max": 1,
+          "custom": { "lineWidth": 2, "fillOpacity": 15, "gradientMode": "opacity" }
+        },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Hit Rate" }, "properties": [{ "id": "color", "value": { "fixedColor": "#73BF69", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "Target (70%)" }, "properties": [{ "id": "color", "value": { "fixedColor": "#F2CC0C", "mode": "fixed" } }, { "id": "custom.lineStyle", "value": { "dash": [8, 5], "fill": "dash" } }] }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+      "id": 21,
+      "options": { "tooltip": { "mode": "multi", "sort": "none" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_cache_hit_rate{service=\"$service\"}", "legendFormat": "Hit Rate", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "0.70", "legendFormat": "Target (70%)", "refId": "B" }
+      ],
+      "title": "Cache Hit Rate Over Time",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "reqps",
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
+      "id": 22,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_cache_hits_total{service=\"$service\"}[1m])", "legendFormat": "Hits/s – {{ endpoint }}", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_cache_misses_total{service=\"$service\"}[1m])", "legendFormat": "Misses/s – {{ endpoint }}", "refId": "B" }
+      ],
+      "title": "Cache Hits vs Misses Rate (per endpoint)",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Utilisation" }, "properties": [{ "id": "unit", "value": "percentunit" }, { "id": "max", "value": 1 }] },
+          { "matcher": { "id": "byName", "options": "Entries" }, "properties": [{ "id": "color", "value": { "fixedColor": "#5794F2", "mode": "fixed" } }] }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+      "id": 23,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_cache_entries{service=\"$service\"}", "legendFormat": "Entries", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_cache_utilization{service=\"$service\"}", "legendFormat": "Utilisation", "refId": "B" }
+      ],
+      "title": "Cache Entries & Utilisation",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
+      "id": 24,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_cache_evictions_total{service=\"$service\"}[1m])", "legendFormat": "Evictions/s ({{ strategy }})", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_cache_sets_total{service=\"$service\"}[1m])", "legendFormat": "Sets/s", "refId": "B" }
+      ],
+      "title": "Evictions & Set Operations Rate",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "s",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 22 },
+      "id": 25,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "histogram_quantile(0.50, rate(markov_rl_cache_operation_latency_seconds_bucket{service=\"$service\"}[5m]))", "legendFormat": "p50 – {{ operation }}", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "histogram_quantile(0.95, rate(markov_rl_cache_operation_latency_seconds_bucket{service=\"$service\"}[5m]))", "legendFormat": "p95 – {{ operation }}", "refId": "B" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "histogram_quantile(0.99, rate(markov_rl_cache_operation_latency_seconds_bucket{service=\"$service\"}[5m]))", "legendFormat": "p99 – {{ operation }}", "refId": "C" }
+      ],
+      "title": "Cache Operation Latency (p50 / p95 / p99)",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "bytes",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 22 },
+      "id": 26,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "histogram_quantile(0.50, rate(markov_rl_cache_entry_size_bytes_bucket{service=\"$service\"}[5m]))", "legendFormat": "Median entry size", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "histogram_quantile(0.95, rate(markov_rl_cache_entry_size_bytes_bucket{service=\"$service\"}[5m]))", "legendFormat": "p95 entry size", "refId": "B" }
+      ],
+      "title": "Cache Entry Size Distribution",
+      "type": "timeseries"
+    },
+
+
+    {
+      "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 30 },
+      "id": 30, "title": "⚡ Prefetch Engine", "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "percentunit", "min": 0, "max": 1,
+          "custom": { "lineWidth": 2, "fillOpacity": 15 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 31 },
+      "id": 31,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_prefetch_efficiency{service=\"$service\"}", "legendFormat": "Efficiency (used/requested)", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "0.50", "legendFormat": "Target (50%)", "refId": "B" }
+      ],
+      "title": "Prefetch Efficiency",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 31 },
+      "id": 32,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_prefetch_requests_total{service=\"$service\"}[1m])", "legendFormat": "Requests/s ({{ strategy }})", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_prefetch_hits_total{service=\"$service\"}[1m])", "legendFormat": "Hits/s ({{ strategy }})", "refId": "B" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_prefetch_wasted_total{service=\"$service\"}[1m])", "legendFormat": "Wasted/s ({{ strategy }})", "refId": "C" }
+      ],
+      "title": "Prefetch Rate by Strategy",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "Bps",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 39 },
+      "id": 33,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_prefetch_bandwidth_bytes_total{service=\"$service\"}[1m])", "legendFormat": "Prefetch bandwidth", "refId": "A" }
+      ],
+      "title": "Prefetch Bandwidth Usage",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "thresholds" }, "unit": "percentunit", "min": 0, "max": 1,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null }, { "color": "yellow", "value": 0.30 }, { "color": "green", "value": 0.60 }
+          ]}
+        }
+      },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 39 },
+      "id": 34,
+      "options": { "minVizWidth": 75, "minVizHeight": 75, "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"] }, "showThresholdLabels": true, "showThresholdMarkers": true },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_prefetch_efficiency{service=\"$service\"}", "legendFormat": "Efficiency", "refId": "A" }
+      ],
+      "title": "Prefetch Efficiency Gauge",
+      "type": "gauge"
+    },
+
+
+    {
+      "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 45 },
+      "id": 40, "title": "🔗 Markov Chain Predictor", "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "percentunit", "min": 0, "max": 1,
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 46 },
+      "id": 41,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_markov_accuracy_topk{service=\"$service\",k=\"1\"}", "legendFormat": "Top-1 Accuracy", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_markov_accuracy_topk{service=\"$service\",k=\"3\"}", "legendFormat": "Top-3 Accuracy", "refId": "B" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_markov_accuracy_topk{service=\"$service\",k=\"5\"}", "legendFormat": "Top-5 Accuracy", "refId": "C" }
+      ],
+      "title": "Markov Predictor Accuracy (Top-k)",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 46 },
+      "id": 42,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_markov_predictions_total{service=\"$service\"}[1m])", "legendFormat": "Predictions/s (order={{ order }})", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_markov_vocab_size{service=\"$service\"}", "legendFormat": "Vocab size", "refId": "B" }
+      ],
+      "title": "Prediction Rate & Vocabulary Size",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "none",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 54 },
+      "id": 43,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_markov_transition_entropy{service=\"$service\"}", "legendFormat": "Transition entropy (nats)", "refId": "A" }
+      ],
+      "title": "Markov Transition Entropy",
+      "description": "Shannon entropy of the transition distribution from the current state. High entropy = unpredictable next API. Low entropy = strong predictive signal.",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "percentunit",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 54 },
+      "id": 44,
+      "options": {
+        "fillOpacity": 50,
+        "tooltip": { "mode": "multi" },
+        "yAxis": { "unit": "percentunit" }
+      },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_markov_confidence_bucket{service=\"$service\"}[5m])", "legendFormat": "{{ le }}", "refId": "A", "format": "heatmap" }
+      ],
+      "title": "Prediction Confidence Distribution",
+      "description": "Heatmap of top-1 prediction confidence over time. Ideal: mass concentrated at 0.7–1.0.",
+      "type": "heatmap"
+    },
+
+
+    {
+      "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 62 },
+      "id": 50, "title": "🤖 Reinforcement Learning Agent", "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 63 },
+      "id": 51,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_rl_episode_reward_mean{service=\"$service\"}", "legendFormat": "Rolling mean reward (100 ep)", "refId": "A" }
+      ],
+      "title": "RL Agent – Rolling Mean Episode Reward",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "percentunit", "min": 0, "max": 1,
+          "custom": { "lineWidth": 2, "fillOpacity": 5 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 63 },
+      "id": 52,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_rl_epsilon{service=\"$service\"}", "legendFormat": "Epsilon (exploration rate)", "refId": "A" }
+      ],
+      "title": "Epsilon Decay (Exploration vs Exploitation)",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 71 },
+      "id": 53,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_rl_loss{service=\"$service\"}", "legendFormat": "TD Loss", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_rl_q_value_mean{service=\"$service\"}", "legendFormat": "Mean Q-Value", "refId": "B" }
+      ],
+      "title": "DQN Training Loss & Mean Q-Value",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 71 },
+      "id": 54,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_rl_replay_buffer_size{service=\"$service\"}", "legendFormat": "Buffer size", "refId": "A" }
+      ],
+      "title": "Replay Buffer Size",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 79 },
+      "id": 55,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_rl_action_counts_total{service=\"$service\"}[1m])", "legendFormat": "{{ action }}", "refId": "A" }
+      ],
+      "title": "Action Selection Rate (by Action Type)",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 79 },
+      "id": 56,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_rl_training_steps_total{service=\"$service\"}[1m])", "legendFormat": "Gradient steps/s", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_rl_steps_total{service=\"$service\"}[1m])", "legendFormat": "Env steps/s", "refId": "B" }
+      ],
+      "title": "Training Throughput (gradient steps / env steps per second)",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 87 },
+      "id": 57,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_reward_component{service=\"$service\",component=\"cache\"}", "legendFormat": "Cache hits/misses", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_reward_component{service=\"$service\",component=\"cascade\"}", "legendFormat": "Cascade prevention", "refId": "B" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_reward_component{service=\"$service\",component=\"prefetch\"}", "legendFormat": "Prefetch efficiency", "refId": "C" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_reward_component{service=\"$service\",component=\"latency\"}", "legendFormat": "Latency improvement", "refId": "D" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_reward_component{service=\"$service\",component=\"bandwidth\"}", "legendFormat": "Bandwidth cost", "refId": "E" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_reward_component{service=\"$service\",component=\"shaping\"}", "legendFormat": "Reward shaping", "refId": "F" }
+      ],
+      "title": "Reward Decomposition by Component",
+      "description": "Breakdown of the multi-objective reward. Cascade component dominates by design (1 cascade = -100, cache hit = +10).",
+      "type": "timeseries"
+    },
+
+
+    {
+      "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 95 },
+      "id": 60, "title": "🛡️ Cascade Prevention", "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "percentunit", "min": 0, "max": 1,
+          "custom": { "lineWidth": 2, "fillOpacity": 15 },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null }, { "color": "yellow", "value": 0.4 },
+            { "color": "orange", "value": 0.6 }, { "color": "red", "value": 0.85 }
+          ]}
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 96 },
+      "id": 61,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_cascade_risk_score{service=\"$service\"}", "legendFormat": "Cascade Risk Score", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "0.60", "legendFormat": "Warning threshold", "refId": "B" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "0.85", "legendFormat": "Critical threshold", "refId": "C" }
+      ],
+      "title": "Cascade Risk Score Over Time",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 96 },
+      "id": 62,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "increase(markov_rl_cascade_prevented_total{service=\"$service\"}[5m])", "legendFormat": "Prevented (5m window)", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "increase(markov_rl_cascade_events_total{service=\"$service\"}[5m])", "legendFormat": "Occurred (5m window)", "refId": "B" }
+      ],
+      "title": "Cascade Events: Prevented vs Occurred",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "thresholds" }, "unit": "percentunit", "min": 0, "max": 1,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null }, { "color": "yellow", "value": 0.5 }, { "color": "green", "value": 0.8 }
+          ]}
+        }
+      },
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 104 },
+      "id": 63,
+      "options": { "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"] }, "showThresholdLabels": true, "showThresholdMarkers": true },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_cascade_prevention_rate{service=\"$service\"}", "legendFormat": "Prevention Rate", "refId": "A" }
+      ],
+      "title": "Cascade Prevention Rate (Gauge)",
+      "type": "gauge"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "thresholds" }, "unit": "short",
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null }, { "color": "yellow", "value": 1 }, { "color": "red", "value": 3 }
+          ]}
+        }
+      },
+      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 104 },
+      "id": 64,
+      "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["sum"] } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "increase(markov_rl_cascade_events_total{service=\"$service\"}[$__range])", "legendFormat": "Total Cascades", "refId": "A" }
+      ],
+      "title": "Total Cascade Events (selected range)",
+      "type": "stat"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "thresholds" }, "unit": "short",
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "blue", "value": null }
+          ]}
+        }
+      },
+      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 104 },
+      "id": 65,
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["sum"] } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "increase(markov_rl_cascade_prevented_total{service=\"$service\"}[$__range])", "legendFormat": "Cascades Prevented", "refId": "A" }
+      ],
+      "title": "Cascades Prevented (selected range)",
+      "type": "stat"
+    },
+
+
+    {
+      "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 110 },
+      "id": 70, "title": "🌐 API Request Latency & Throughput", "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "s",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 111 },
+      "id": 71,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "histogram_quantile(0.50, rate(markov_rl_request_latency_seconds_bucket{service=\"$service\"}[5m]))", "legendFormat": "p50", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "histogram_quantile(0.95, rate(markov_rl_request_latency_seconds_bucket{service=\"$service\"}[5m]))", "legendFormat": "p95", "refId": "B" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "histogram_quantile(0.99, rate(markov_rl_request_latency_seconds_bucket{service=\"$service\"}[5m]))", "legendFormat": "p99", "refId": "C" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "0.200", "legendFormat": "SLO: 200ms", "refId": "D" }
+      ],
+      "title": "End-to-End Request Latency (p50 / p95 / p99)",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "reqps",
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 111 },
+      "id": 72,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_requests_per_second{service=\"$service\"}", "legendFormat": "RPS (rolling)", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_active_sessions{service=\"$service\"}", "legendFormat": "Active sessions", "refId": "B" }
+      ],
+      "title": "Requests per Second & Active Sessions",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "s",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 119 },
+      "id": 73,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "histogram_quantile(0.50, rate(markov_rl_backend_call_latency_seconds_bucket{service=\"$service\"}[5m]))", "legendFormat": "Backend p50 – {{ endpoint }}", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "histogram_quantile(0.95, rate(markov_rl_backend_call_latency_seconds_bucket{service=\"$service\"}[5m]))", "legendFormat": "Backend p95 – {{ endpoint }}", "refId": "B" }
+      ],
+      "title": "Backend (Cache-Miss) Call Latency",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 119 },
+      "id": 74,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_request_count_total{service=\"$service\",status=~\"2..\"}[1m])", "legendFormat": "2xx / s", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_request_count_total{service=\"$service\",status=~\"4..\"}[1m])", "legendFormat": "4xx / s", "refId": "B" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "rate(markov_rl_request_count_total{service=\"$service\",status=~\"5..\"}[1m])", "legendFormat": "5xx / s", "refId": "C" }
+      ],
+      "title": "Request Status Codes Rate",
+      "type": "timeseries"
+    },
+
+
+    {
+      "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 127 },
+      "id": 80, "title": "🖥️ System Resources", "type": "row"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "percentunit", "min": 0, "max": 1,
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Warning (85%)" }, "properties": [{ "id": "color", "value": { "fixedColor": "#FF9900", "mode": "fixed" } }, { "id": "custom.lineStyle", "value": { "dash": [8, 5], "fill": "dash" } }] },
+          { "matcher": { "id": "byName", "options": "Critical (90%)" }, "properties": [{ "id": "color", "value": { "fixedColor": "#F2495C", "mode": "fixed" } }, { "id": "custom.lineStyle", "value": { "dash": [8, 5], "fill": "dash" } }] }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 128 },
+      "id": 81,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_system_cpu_usage{service=\"$service\"}", "legendFormat": "CPU Usage", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "0.85", "legendFormat": "Warning (85%)", "refId": "B" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "0.90", "legendFormat": "Critical (90%)", "refId": "C" }
+      ],
+      "title": "CPU Utilisation",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "percentunit", "min": 0, "max": 1,
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Warning (85%)" }, "properties": [{ "id": "color", "value": { "fixedColor": "#FF9900", "mode": "fixed" } }, { "id": "custom.lineStyle", "value": { "dash": [8, 5], "fill": "dash" } }] },
+          { "matcher": { "id": "byName", "options": "Critical (90%)" }, "properties": [{ "id": "color", "value": { "fixedColor": "#F2495C", "mode": "fixed" } }, { "id": "custom.lineStyle", "value": { "dash": [8, 5], "fill": "dash" } }] }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 128 },
+      "id": 82,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_system_memory_usage{service=\"$service\"}", "legendFormat": "Memory Usage", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "0.85", "legendFormat": "Warning (85%)", "refId": "B" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "0.90", "legendFormat": "Critical (90%)", "refId": "C" }
+      ],
+      "title": "Memory Utilisation",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "unit": "short",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 136 },
+      "id": 83,
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_rl_replay_buffer_size{service=\"$service\"}", "legendFormat": "Replay buffer (transitions)", "refId": "A" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_markov_vocab_size{service=\"$service\"}", "legendFormat": "Markov vocab (endpoints)", "refId": "B" },
+        { "datasource": { "type": "prometheus", "uid": "${datasource}" }, "expr": "markov_rl_cache_entries{service=\"$service\"}", "legendFormat": "Cache entries", "refId": "C" }
+      ],
+      "title": "Memory-Consuming Objects (Replay Buffer / Vocab / Cache)",
+      "type": "timeseries"
+    }
+
+  ],
+  "refresh": "30s",
+  "schemaVersion": 38,
+  "tags": ["markov", "rl", "cache", "intelligent-caching", "dqn", "api"],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "hide": 0,
+        "includeAll": false,
+        "label": "Prometheus",
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "type": "datasource"
+      },
+      {
+        "current": { "selected": false, "text": "api-cache", "value": "api-cache" },
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "definition": "label_values(markov_rl_cache_hit_rate, service)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Service",
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": { "query": "label_values(markov_rl_cache_hit_rate, service)", "refId": "StandardVariableQuery" },
+        "refresh": 2,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Markov-RL Intelligent API Cache",
+  "uid": "markov-rl-cache-v1",
+  "version": 1
+}
+
