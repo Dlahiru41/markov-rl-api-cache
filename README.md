@@ -11,3 +11,24 @@ This repository contains components for:
 
 See the `src/`, `simulator/`, and `evaluation/` directories for implementation and experiment code.
 
+## API Simulation Comparison (With vs Without Solution)
+
+Run the A/B simulation and generate comparison reports:
+
+```powershell
+python scripts/api_simulation_compare.py
+```
+
+Use a trained DQN checkpoint (optional):
+
+```powershell
+python scripts/api_simulation_compare.py --agent-model test_agent.pt
+```
+
+Outputs are written to `results/api_simulation_comparison/`:
+- `comparison.json`
+- `comparison.md`
+- `without_solution.prom`
+- `with_solution.prom`
+
+See `docs/API_SIMULATION_COMPARISON.md` for details.

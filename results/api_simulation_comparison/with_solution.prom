@@ -1,0 +1,456 @@
+# HELP markov_rl_cache_hits_total Total cache hits
+# TYPE markov_rl_cache_hits_total counter
+markov_rl_cache_hits_total{endpoint="/api/orders/create",service="api-sim-with_solution"} 5.0
+markov_rl_cache_hits_total{endpoint="/api/cart/view",service="api-sim-with_solution"} 1.0
+markov_rl_cache_hits_total{endpoint="/api/products/{id}",service="api-sim-with_solution"} 8.0
+markov_rl_cache_hits_total{endpoint="/api/products/list",service="api-sim-with_solution"} 2.0
+markov_rl_cache_hits_total{endpoint="/api/cart/add",service="api-sim-with_solution"} 1.0
+markov_rl_cache_hits_total{endpoint="/api/user/profile",service="api-sim-with_solution"} 1.0
+markov_rl_cache_hits_total{endpoint="/api/categories",service="api-sim-with_solution"} 7.0
+markov_rl_cache_hits_total{endpoint="/api/products/search",service="api-sim-with_solution"} 2.0
+markov_rl_cache_hits_total{endpoint="/api/search/autocomplete",service="api-sim-with_solution"} 1.0
+# HELP markov_rl_cache_hits_created Total cache hits
+# TYPE markov_rl_cache_hits_created gauge
+markov_rl_cache_hits_created{endpoint="/api/orders/create",service="api-sim-with_solution"} 1.7735502167381074e+09
+markov_rl_cache_hits_created{endpoint="/api/cart/view",service="api-sim-with_solution"} 1.7735502167400968e+09
+markov_rl_cache_hits_created{endpoint="/api/products/{id}",service="api-sim-with_solution"} 1.7735502167411041e+09
+markov_rl_cache_hits_created{endpoint="/api/products/list",service="api-sim-with_solution"} 1.7735502167420943e+09
+markov_rl_cache_hits_created{endpoint="/api/cart/add",service="api-sim-with_solution"} 1.7735502167430923e+09
+markov_rl_cache_hits_created{endpoint="/api/user/profile",service="api-sim-with_solution"} 1.7735502167440937e+09
+markov_rl_cache_hits_created{endpoint="/api/categories",service="api-sim-with_solution"} 1.7735502167490969e+09
+markov_rl_cache_hits_created{endpoint="/api/products/search",service="api-sim-with_solution"} 1.7735502167500596e+09
+markov_rl_cache_hits_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution"} 1.7735502167520943e+09
+# HELP markov_rl_cache_misses_total Total cache misses
+# TYPE markov_rl_cache_misses_total counter
+markov_rl_cache_misses_total{endpoint="/api/products/{id}",service="api-sim-with_solution"} 1.0
+markov_rl_cache_misses_total{endpoint="/api/cart/view",service="api-sim-with_solution"} 1.0
+markov_rl_cache_misses_total{endpoint="/api/orders/list",service="api-sim-with_solution"} 1.0
+markov_rl_cache_misses_total{endpoint="/api/products/list",service="api-sim-with_solution"} 2.0
+markov_rl_cache_misses_total{endpoint="/api/recommendations",service="api-sim-with_solution"} 1.0
+markov_rl_cache_misses_total{endpoint="/api/cart/add",service="api-sim-with_solution"} 1.0
+markov_rl_cache_misses_total{endpoint="/api/user/profile",service="api-sim-with_solution"} 1.0
+markov_rl_cache_misses_total{endpoint="/api/auth/login",service="api-sim-with_solution"} 1.0
+markov_rl_cache_misses_total{endpoint="/api/categories",service="api-sim-with_solution"} 1.0
+markov_rl_cache_misses_total{endpoint="/api/products/search",service="api-sim-with_solution"} 1.0
+markov_rl_cache_misses_total{endpoint="/api/search/autocomplete",service="api-sim-with_solution"} 1.0
+# HELP markov_rl_cache_misses_created Total cache misses
+# TYPE markov_rl_cache_misses_created gauge
+markov_rl_cache_misses_created{endpoint="/api/products/{id}",service="api-sim-with_solution"} 1.773550216739096e+09
+markov_rl_cache_misses_created{endpoint="/api/cart/view",service="api-sim-with_solution"} 1.773550216739096e+09
+markov_rl_cache_misses_created{endpoint="/api/orders/list",service="api-sim-with_solution"} 1.773550216739096e+09
+markov_rl_cache_misses_created{endpoint="/api/products/list",service="api-sim-with_solution"} 1.7735502167400968e+09
+markov_rl_cache_misses_created{endpoint="/api/recommendations",service="api-sim-with_solution"} 1.7735502167411041e+09
+markov_rl_cache_misses_created{endpoint="/api/cart/add",service="api-sim-with_solution"} 1.7735502167420943e+09
+markov_rl_cache_misses_created{endpoint="/api/user/profile",service="api-sim-with_solution"} 1.7735502167430923e+09
+markov_rl_cache_misses_created{endpoint="/api/auth/login",service="api-sim-with_solution"} 1.7735502167440937e+09
+markov_rl_cache_misses_created{endpoint="/api/categories",service="api-sim-with_solution"} 1.7735502167480955e+09
+markov_rl_cache_misses_created{endpoint="/api/products/search",service="api-sim-with_solution"} 1.7735502167480955e+09
+markov_rl_cache_misses_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution"} 1.7735502167520943e+09
+# HELP markov_rl_cache_hit_rate Rolling cache hit rate [0,1]
+# TYPE markov_rl_cache_hit_rate gauge
+markov_rl_cache_hit_rate{service="api-sim-with_solution"} 0.7
+# HELP markov_rl_cache_entries Current number of entries in cache
+# TYPE markov_rl_cache_entries gauge
+# HELP markov_rl_cache_utilization Cache capacity utilisation fraction [0,1]
+# TYPE markov_rl_cache_utilization gauge
+# HELP markov_rl_cache_evictions_total Cache eviction events
+# TYPE markov_rl_cache_evictions_total counter
+# HELP markov_rl_cache_sets_total Cache set (write) operations
+# TYPE markov_rl_cache_sets_total counter
+# HELP markov_rl_cache_deletes_total Cache delete operations
+# TYPE markov_rl_cache_deletes_total counter
+# HELP markov_rl_cache_entry_size_bytes Size of individual cache entries in bytes
+# TYPE markov_rl_cache_entry_size_bytes histogram
+# HELP markov_rl_cache_operation_latency_seconds Latency of cache backend get/set operations
+# TYPE markov_rl_cache_operation_latency_seconds histogram
+# HELP markov_rl_prefetch_requests_total Total prefetch attempts
+# TYPE markov_rl_prefetch_requests_total counter
+# HELP markov_rl_prefetch_hits_total Prefetched entries that were actually used
+# TYPE markov_rl_prefetch_hits_total counter
+# HELP markov_rl_prefetch_wasted_total Prefetched entries that expired unused
+# TYPE markov_rl_prefetch_wasted_total counter
+# HELP markov_rl_prefetch_efficiency Fraction of prefetches that were used (hits/requests) [0,1]
+# TYPE markov_rl_prefetch_efficiency gauge
+# HELP markov_rl_prefetch_bandwidth_bytes_total Bytes transferred to populate prefetch entries
+# TYPE markov_rl_prefetch_bandwidth_bytes_total counter
+# HELP markov_rl_markov_predictions_total Total Markov chain predictions made
+# TYPE markov_rl_markov_predictions_total counter
+# HELP markov_rl_markov_correct_total Correct Markov predictions (top-k)
+# TYPE markov_rl_markov_correct_total counter
+# HELP markov_rl_markov_accuracy_topk Rolling top-k accuracy of the Markov predictor
+# TYPE markov_rl_markov_accuracy_topk gauge
+# HELP markov_rl_markov_confidence Confidence score (probability) of the top-1 prediction
+# TYPE markov_rl_markov_confidence histogram
+# HELP markov_rl_markov_vocab_size Number of distinct API endpoints known to the Markov chain
+# TYPE markov_rl_markov_vocab_size gauge
+# HELP markov_rl_markov_transition_entropy Shannon entropy of the outgoing transition distribution from current state
+# TYPE markov_rl_markov_transition_entropy gauge
+# HELP markov_rl_rl_episodes_total Total completed training episodes
+# TYPE markov_rl_rl_episodes_total counter
+markov_rl_rl_episodes_total{service="api-sim-with_solution"} 2.0
+# HELP markov_rl_rl_episodes_created Total completed training episodes
+# TYPE markov_rl_rl_episodes_created gauge
+markov_rl_rl_episodes_created{service="api-sim-with_solution"} 1.7735502167440937e+09
+# HELP markov_rl_rl_steps_total Total environment interaction steps
+# TYPE markov_rl_rl_steps_total counter
+markov_rl_rl_steps_total{service="api-sim-with_solution"} 40.0
+# HELP markov_rl_rl_steps_created Total environment interaction steps
+# TYPE markov_rl_rl_steps_created gauge
+markov_rl_rl_steps_created{service="api-sim-with_solution"} 1.7735502167381074e+09
+# HELP markov_rl_rl_episode_reward Cumulative reward per training episode
+# TYPE markov_rl_rl_episode_reward histogram
+markov_rl_rl_episode_reward_bucket{le="-100.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="-50.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="-20.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="-10.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="-5.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="0.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="5.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="10.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="20.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="50.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="100.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_reward_bucket{le="200.0",service="api-sim-with_solution"} 1.0
+markov_rl_rl_episode_reward_bucket{le="400.0",service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_reward_bucket{le="600.0",service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_reward_bucket{le="+Inf",service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_reward_count{service="api-sim-with_solution"} 2.0
+# HELP markov_rl_rl_episode_reward_created Cumulative reward per training episode
+# TYPE markov_rl_rl_episode_reward_created gauge
+markov_rl_rl_episode_reward_created{service="api-sim-with_solution"} 1.7735502167440937e+09
+# HELP markov_rl_rl_episode_reward_mean Rolling mean episode reward (last 100 episodes)
+# TYPE markov_rl_rl_episode_reward_mean gauge
+markov_rl_rl_episode_reward_mean{service="api-sim-with_solution"} 198.99999999999994
+# HELP markov_rl_rl_episode_length Number of steps per training episode
+# TYPE markov_rl_rl_episode_length histogram
+markov_rl_rl_episode_length_bucket{le="10.0",service="api-sim-with_solution"} 0.0
+markov_rl_rl_episode_length_bucket{le="25.0",service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_length_bucket{le="50.0",service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_length_bucket{le="100.0",service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_length_bucket{le="200.0",service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_length_bucket{le="500.0",service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_length_bucket{le="1000.0",service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_length_bucket{le="+Inf",service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_length_count{service="api-sim-with_solution"} 2.0
+markov_rl_rl_episode_length_sum{service="api-sim-with_solution"} 40.0
+# HELP markov_rl_rl_episode_length_created Number of steps per training episode
+# TYPE markov_rl_rl_episode_length_created gauge
+markov_rl_rl_episode_length_created{service="api-sim-with_solution"} 1.7735502167451038e+09
+# HELP markov_rl_rl_epsilon Current epsilon for ε-greedy exploration
+# TYPE markov_rl_rl_epsilon gauge
+# HELP markov_rl_rl_loss Latest TD-error / training loss value
+# TYPE markov_rl_rl_loss gauge
+# HELP markov_rl_rl_q_value_mean Mean Q-value across sampled states (diagnostic)
+# TYPE markov_rl_rl_q_value_mean gauge
+# HELP markov_rl_rl_replay_buffer_size Number of transitions stored in the replay buffer
+# TYPE markov_rl_rl_replay_buffer_size gauge
+# HELP markov_rl_rl_target_updates_total Number of hard target-network synchronisations
+# TYPE markov_rl_rl_target_updates_total counter
+# HELP markov_rl_rl_action_counts_total Actions selected by the agent
+# TYPE markov_rl_rl_action_counts_total counter
+markov_rl_rl_action_counts_total{action="CACHE_CURRENT",service="api-sim-with_solution"} 11.0
+markov_rl_rl_action_counts_total{action="DO_NOTHING",service="api-sim-with_solution"} 29.0
+# HELP markov_rl_rl_action_counts_created Actions selected by the agent
+# TYPE markov_rl_rl_action_counts_created gauge
+markov_rl_rl_action_counts_created{action="CACHE_CURRENT",service="api-sim-with_solution"} 1.7735502167381074e+09
+markov_rl_rl_action_counts_created{action="DO_NOTHING",service="api-sim-with_solution"} 1.7735502167381074e+09
+# HELP markov_rl_rl_training_steps_total Gradient update (mini-batch) steps performed
+# TYPE markov_rl_rl_training_steps_total counter
+# HELP markov_rl_cascade_risk_score Current cascade failure risk score [0,1]
+# TYPE markov_rl_cascade_risk_score gauge
+markov_rl_cascade_risk_score{service="api-sim-with_solution"} 0.0
+# HELP markov_rl_cascade_events_total Total cascade failure events detected
+# TYPE markov_rl_cascade_events_total counter
+# HELP markov_rl_cascade_prevented_total Total cascade failures prevented by the RL agent
+# TYPE markov_rl_cascade_prevented_total counter
+# HELP markov_rl_cascade_prevention_rate Fraction of cascade threats that were prevented [0,1]
+# TYPE markov_rl_cascade_prevention_rate gauge
+# HELP markov_rl_reward_component Mean reward contribution from each component (last episode)
+# TYPE markov_rl_reward_component gauge
+# HELP markov_rl_request_latency_seconds End-to-end API request latency
+# TYPE markov_rl_request_latency_seconds histogram
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.025",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.05",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.075",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.1",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.15",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.2",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.3",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.5",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="0.75",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="1.0",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="2.5",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="5.0",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="10.0",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/create",le="+Inf",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_count{endpoint="/api/orders/create",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/orders/create",service="api-sim-with_solution",status="200"} 0.37631434397647795
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.025",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.05",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.075",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.1",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.15",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.2",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.3",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.5",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="0.75",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="1.0",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="2.5",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="5.0",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="10.0",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/{id}",le="+Inf",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_count{endpoint="/api/products/{id}",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/products/{id}",service="api-sim-with_solution",status="200"} 0.5521748774519091
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.025",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.05",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.075",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.1",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.15",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.2",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.3",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.5",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="0.75",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="1.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="2.5",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="5.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="10.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/view",le="+Inf",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_count{endpoint="/api/cart/view",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/cart/view",service="api-sim-with_solution",status="200"} 0.19768100625000004
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.025",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.05",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.075",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.1",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.15",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.2",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.3",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.5",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="0.75",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="1.0",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="2.5",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="5.0",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="10.0",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/orders/list",le="+Inf",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_count{endpoint="/api/orders/list",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/orders/list",service="api-sim-with_solution",status="200"} 0.10418625000000002
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.025",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.05",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.075",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.1",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.15",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.2",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.3",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.5",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="0.75",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="1.0",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="2.5",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="5.0",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="10.0",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/list",le="+Inf",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_count{endpoint="/api/products/list",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/products/list",service="api-sim-with_solution",status="200"} 0.3332963126120907
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.025",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.05",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.075",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.1",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.15",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.2",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.3",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.5",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="0.75",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="1.0",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="2.5",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="5.0",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="10.0",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/recommendations",le="+Inf",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_count{endpoint="/api/recommendations",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/recommendations",service="api-sim-with_solution",status="200"} 0.08373683331562504
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.025",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.05",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.075",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.1",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.15",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.2",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.3",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.5",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="0.75",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="1.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="2.5",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="5.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="10.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/cart/add",le="+Inf",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_count{endpoint="/api/cart/add",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/cart/add",service="api-sim-with_solution",status="200"} 0.11315891710502841
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.025",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.05",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.075",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.1",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.15",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.2",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.3",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.5",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="0.75",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="1.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="2.5",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="5.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="10.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/user/profile",le="+Inf",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_count{endpoint="/api/user/profile",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/user/profile",service="api-sim-with_solution",status="200"} 0.1047273615522906
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.001",service="api-sim-with_solution",status="500"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.005",service="api-sim-with_solution",status="500"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.01",service="api-sim-with_solution",status="500"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.025",service="api-sim-with_solution",status="500"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.05",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.075",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.1",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.15",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.2",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.3",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.5",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="0.75",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="1.0",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="2.5",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="5.0",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="10.0",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/auth/login",le="+Inf",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_count{endpoint="/api/auth/login",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/auth/login",service="api-sim-with_solution",status="500"} 0.041727705616067534
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.025",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.05",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.075",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.1",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.15",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.2",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.3",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.5",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="0.75",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="1.0",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="2.5",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="5.0",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="10.0",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/categories",le="+Inf",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_count{endpoint="/api/categories",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/categories",service="api-sim-with_solution",status="200"} 0.486844897492288
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.025",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.05",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.075",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.1",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.15",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.2",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.3",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.5",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="0.75",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="1.0",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="2.5",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="5.0",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="10.0",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/products/search",le="+Inf",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_count{endpoint="/api/products/search",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/products/search",service="api-sim-with_solution",status="200"} 0.1808776370519449
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.001",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.005",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.01",service="api-sim-with_solution",status="200"} 0.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.025",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.05",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.075",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.1",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.15",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.2",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.3",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.5",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="0.75",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="1.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="2.5",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="5.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="10.0",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_bucket{endpoint="/api/search/autocomplete",le="+Inf",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_count{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_latency_seconds_sum{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="200"} 0.04754977199731811
+# HELP markov_rl_request_latency_seconds_created End-to-end API request latency
+# TYPE markov_rl_request_latency_seconds_created gauge
+markov_rl_request_latency_seconds_created{endpoint="/api/orders/create",service="api-sim-with_solution",status="200"} 1.7735502167381074e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/products/{id}",service="api-sim-with_solution",status="200"} 1.7735502167381074e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/cart/view",service="api-sim-with_solution",status="200"} 1.773550216739096e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/orders/list",service="api-sim-with_solution",status="200"} 1.773550216739096e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/products/list",service="api-sim-with_solution",status="200"} 1.7735502167400968e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/recommendations",service="api-sim-with_solution",status="200"} 1.7735502167411041e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/cart/add",service="api-sim-with_solution",status="200"} 1.7735502167420943e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/user/profile",service="api-sim-with_solution",status="200"} 1.7735502167430923e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/auth/login",service="api-sim-with_solution",status="500"} 1.7735502167440937e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/categories",service="api-sim-with_solution",status="200"} 1.7735502167480955e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/products/search",service="api-sim-with_solution",status="200"} 1.7735502167480955e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="200"} 1.7735502167520943e+09
+# HELP markov_rl_request_count_total Total API requests handled
+# TYPE markov_rl_request_count_total counter
+markov_rl_request_count_total{endpoint="/api/orders/create",service="api-sim-with_solution",status="200"} 5.0
+markov_rl_request_count_total{endpoint="/api/products/{id}",service="api-sim-with_solution",status="200"} 9.0
+markov_rl_request_count_total{endpoint="/api/cart/view",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_count_total{endpoint="/api/orders/list",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_count_total{endpoint="/api/products/list",service="api-sim-with_solution",status="200"} 4.0
+markov_rl_request_count_total{endpoint="/api/recommendations",service="api-sim-with_solution",status="200"} 1.0
+markov_rl_request_count_total{endpoint="/api/cart/add",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_count_total{endpoint="/api/user/profile",service="api-sim-with_solution",status="200"} 2.0
+markov_rl_request_count_total{endpoint="/api/auth/login",service="api-sim-with_solution",status="500"} 1.0
+markov_rl_request_count_total{endpoint="/api/categories",service="api-sim-with_solution",status="200"} 8.0
+markov_rl_request_count_total{endpoint="/api/products/search",service="api-sim-with_solution",status="200"} 3.0
+markov_rl_request_count_total{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="200"} 2.0
+# HELP markov_rl_request_count_created Total API requests handled
+# TYPE markov_rl_request_count_created gauge
+markov_rl_request_count_created{endpoint="/api/orders/create",service="api-sim-with_solution",status="200"} 1.7735502167381074e+09
+markov_rl_request_count_created{endpoint="/api/products/{id}",service="api-sim-with_solution",status="200"} 1.7735502167381074e+09
+markov_rl_request_count_created{endpoint="/api/cart/view",service="api-sim-with_solution",status="200"} 1.773550216739096e+09
+markov_rl_request_count_created{endpoint="/api/orders/list",service="api-sim-with_solution",status="200"} 1.773550216739096e+09
+markov_rl_request_count_created{endpoint="/api/products/list",service="api-sim-with_solution",status="200"} 1.7735502167400968e+09
+markov_rl_request_count_created{endpoint="/api/recommendations",service="api-sim-with_solution",status="200"} 1.7735502167411041e+09
+markov_rl_request_count_created{endpoint="/api/cart/add",service="api-sim-with_solution",status="200"} 1.7735502167420943e+09
+markov_rl_request_count_created{endpoint="/api/user/profile",service="api-sim-with_solution",status="200"} 1.7735502167430923e+09
+markov_rl_request_count_created{endpoint="/api/auth/login",service="api-sim-with_solution",status="500"} 1.7735502167440937e+09
+markov_rl_request_count_created{endpoint="/api/categories",service="api-sim-with_solution",status="200"} 1.7735502167480955e+09
+markov_rl_request_count_created{endpoint="/api/products/search",service="api-sim-with_solution",status="200"} 1.7735502167480955e+09
+markov_rl_request_count_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="200"} 1.7735502167520943e+09
+# HELP markov_rl_backend_call_latency_seconds Downstream (cache-miss) backend call latency
+# TYPE markov_rl_backend_call_latency_seconds histogram
+# HELP markov_rl_system_cpu_usage System CPU utilisation fraction [0,1]
+# TYPE markov_rl_system_cpu_usage gauge
+markov_rl_system_cpu_usage{service="api-sim-with_solution"} 0.13358214688174053
+# HELP markov_rl_system_memory_usage System memory utilisation fraction [0,1]
+# TYPE markov_rl_system_memory_usage gauge
+markov_rl_system_memory_usage{service="api-sim-with_solution"} 0.3789807051653795
+# HELP markov_rl_active_sessions Number of concurrent user sessions being served
+# TYPE markov_rl_active_sessions gauge
+# HELP markov_rl_session_length Number of API calls per user session
+# TYPE markov_rl_session_length histogram
+# HELP markov_rl_requests_per_second Current rolling requests-per-second rate
+# TYPE markov_rl_requests_per_second gauge
+markov_rl_requests_per_second{service="api-sim-with_solution"} 80.0
