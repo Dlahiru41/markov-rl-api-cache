@@ -1,4 +1,4 @@
 """API gateway components and request routing helpers."""
 
-__all__ = ["server", "middlewares"]
+__all__ = ["server", "middlewares", "proxy", "cache_keys"]
 

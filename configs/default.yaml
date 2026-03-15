@@ -61,6 +61,14 @@ agent_config:
   gamma: 0.99  # Discount factor
   gradient_clip: 10.0
 
+# Gateway / Reverse Proxy configuration
+gateway:
+  upstream_url: "http://localhost:9000"
+  cache_default_ttl: 300
+  gateway_port: 8000
+  cache_enabled: true
+  upstream_timeout_ms: 5000
+
 # Training configuration
 training_config:
   num_episodes: 1000

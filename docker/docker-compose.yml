@@ -153,6 +153,48 @@ services:
           cpus: '1.0'
           memory: 1G
 
+  # Markov-RL Cache Gateway — transparent reverse-proxy that
+  # intercepts traffic, caches GET responses, and uses the Markov/RL
+  # intelligence to prefetch upcoming requests.
+  markov-cache-gateway:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: markov-cache-gateway
+    command: >
+      python -m uvicorn src.gateway.proxy:create_gateway_app
+      --factory --host 0.0.0.0 --port 8000
+    environment:
+      - UPSTREAM_URL=http://user-service:8001
+      - CACHE_DEFAULT_TTL=300
+      - GATEWAY_PORT=8000
+      - CACHE_ENABLED=true
+      - UPSTREAM_TIMEOUT_MS=5000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - "8000:8000"
+    networks:
+      - simulator-network
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8000/admin/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
   # Grafana - Visualization dashboards
   grafana:
     image: grafana/grafana:latest
