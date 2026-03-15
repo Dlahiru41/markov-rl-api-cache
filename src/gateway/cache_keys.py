@@ -122,7 +122,7 @@ def _extract_sub_from_jwt(token: str) -> Optional[str]:
         return None
     try:
         payload_b64 = parts[1]
-        # Add padding
+        # Pad base64 string to a multiple of 4 characters for proper decoding
         padding = 4 - len(payload_b64) % 4
         if padding != 4:
             payload_b64 += "=" * padding
@@ -166,5 +166,5 @@ def get_invalidation_pattern(path: str) -> str:
 
     For example ``POST /api/users`` → ``"GET:/api/users*"``.
     """
-    # Strip trailing slash and trailing resource id for pattern
+    # Strip trailing slash to create a prefix pattern for cache invalidation
     return f"GET:{path.rstrip('/')}*"

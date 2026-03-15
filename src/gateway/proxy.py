@@ -314,10 +314,7 @@ def create_gateway_app(
     async def admin_cache_invalidate(request: Request):
         body = await request.json()
         pattern = body.get("pattern", "*")
-        # Convert user-facing glob to internal pattern
         internal_pattern = f"GET:{pattern}"
-        # replace user * with redis SCAN * pattern
-        internal_pattern = internal_pattern.replace("*", "*")
         rc = app.state.redis or _get_redis_client()
         count = 0
         if rc:
@@ -474,12 +471,9 @@ def create_gateway_app(
         session_id = req_headers.get("x-session-id") or req_headers.get(
             "authorization", ""
         )
-        cache_hit = (
-            method == "GET"
-            and cache_enabled
-            and is_cacheable(full_path, cache_rules)
-            and False  # We already returned above if it was a hit
-        )
+        # If we reach this point for a GET the request was a cache MISS
+        # (cache HITs return early above), so cache_hit is always False here.
+        cache_hit = False
 
         import threading
 
