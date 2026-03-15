@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2340" math="0" shadow="1">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- TITLE                                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="title" value="Markov-RL Intelligent API Cache — Full System Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
+      <mxGeometry x="400" y="20" width="2500" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="subtitle" value="Markov Chain Prediction  +  Deep Reinforcement Learning (DQN)  +  Intelligent Cache  +  Prometheus Observability" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontStyle=2;fontColor=#555555;" vertex="1" parent="1">
+      <mxGeometry x="400" y="62" width="2500" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LAYER 0 — CLIENT / TRAFFIC                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="layer0_bg" value="LAYER 0 — TRAFFIC SOURCES" style="swimlane;startSize=28;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontStyle=1;fontSize=11;horizontal=1;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="110" width="3200" height="130" as="geometry" />
+    </mxCell>
+
+    <mxCell id="traffic_gen" value="&lt;b&gt;Traffic Generator&lt;/b&gt;&lt;br/&gt;simulator/traffic/generator.py&lt;br/&gt;&lt;font color='#666666'&gt;Profiles: normal | burst | spike&lt;br/&gt;Session simulation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="90" y="160" width="200" height="65" as="geometry" />
+    </mxCell>
+
+    <mxCell id="user_guest" value="Guest User" style="shape=mxgraph.cisco.servers.standard_server;fillColor=#f9f9f9;strokeColor=#666;fontSize=9;labelPosition=bottom;verticalLabelPosition=top;align=center;" vertex="1" parent="1">
+      <mxGeometry x="330" y="158" width="55" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="user_free" value="Free User" style="shape=mxgraph.cisco.servers.standard_server;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;labelPosition=bottom;verticalLabelPosition=top;align=center;" vertex="1" parent="1">
+      <mxGeometry x="400" y="158" width="55" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="user_premium" value="Premium User" style="shape=mxgraph.cisco.servers.standard_server;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;labelPosition=bottom;verticalLabelPosition=top;align=center;" vertex="1" parent="1">
+      <mxGeometry x="470" y="158" width="55" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="failure_inj" value="&lt;b&gt;Failure Injector&lt;/b&gt;&lt;br/&gt;simulator/failures/injector.py&lt;br/&gt;&lt;font color='#666666'&gt;latency | cascade | timeout&lt;br/&gt;scenarios.yaml&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=10;arcSize=10;" vertex="1" parent="1">
+      <mxGeometry x="560" y="160" width="200" height="65" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LAYER 1 — INTEGRATION LAYER                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="layer1_bg" value="LAYER 1 — INTEGRATION &amp; CONTROL" style="swimlane;startSize=28;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#333333;fontStyle=1;fontSize=11;horizontal=1;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="270" width="3200" height="200" as="geometry" />
+    </mxCell>
+
+    <!-- IntegrationController -->
+    <mxCell id="controller_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e8ff;strokeColor=#9673a6;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="90" y="300" width="560" height="155" as="geometry" />
+    </mxCell>
+    <mxCell id="controller_title" value="&lt;b&gt;IntegrationController&lt;/b&gt; · src/integration/controller.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="100" y="305" width="540" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="mode_train" value="training" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="100" y="330" width="90" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="mode_eval" value="evaluation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="200" y="330" width="90" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="mode_deploy" value="deployment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="300" y="330" width="90" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="mode_demo" value="demo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="400" y="330" width="90" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="controller_info" value="setup() · start() · stop() · train() · evaluate() · get_metrics()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=9;fontColor=#555;" vertex="1" parent="1">
+      <mxGeometry x="100" y="368" width="540" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="controller_info2" value="ControllerConfig: env_config · agent_config · training_config · enable_monitoring · enable_api" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=9;fontColor=#555;" vertex="1" parent="1">
+      <mxGeometry x="100" y="386" width="540" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="controller_info3" value="MetricsCollector (metrics_collector) · API server (api_server) · Trainer · DQNAgent · CacheManager · MarkovPredictor" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=9;fontColor=#555;" vertex="1" parent="1">
+      <mxGeometry x="100" y="404" width="540" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="controller_info4" value="episode_count · total_steps · best_eval_reward · metrics_collector" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=9;fontColor=#555;" vertex="1" parent="1">
+      <mxGeometry x="100" y="422" width="540" height="18" as="geometry" />
+    </mxCell>
+
+    <!-- FastAPI -->
+    <mxCell id="fastapi" value="&lt;b&gt;FastAPI Control API&lt;/b&gt;&lt;br/&gt;src/integration/api.py · :8080&lt;br/&gt;&lt;font color='#555'&gt;GET /health · /status · /metrics&lt;br/&gt;POST /train/start · /evaluate&lt;br/&gt;GET /metrics (Prometheus)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="680" y="300" width="220" height="110" as="geometry" />
+    </mxCell>
+
+    <!-- CachingEnv (Gym) -->
+    <mxCell id="gym_env" value="&lt;b&gt;CachingEnv&lt;/b&gt; (Gymnasium)&lt;br/&gt;src/integration/gym_environment.py&lt;br/&gt;&lt;font color='#555'&gt;obs: Box(60,) · action: Discrete(7)&lt;br/&gt;reset() · step() · get_episode_metrics()&lt;br/&gt;CacheEnvConfig · SimulatorConfig&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="930" y="300" width="260" height="110" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LAYER 2 — ML INTELLIGENCE                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="layer2_bg" value="LAYER 2 — ML INTELLIGENCE" style="swimlane;startSize=28;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#333333;fontStyle=1;fontSize=11;horizontal=1;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="500" width="3200" height="420" as="geometry" />
+    </mxCell>
+
+    <!-- ── Markov Subsystem ── -->
+    <mxCell id="markov_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffde7;strokeColor=#d6b656;arcSize=6;" vertex="1" parent="1">
+      <mxGeometry x="90" y="530" width="700" height="375" as="geometry" />
+    </mxCell>
+    <mxCell id="markov_header" value="🔗  MARKOV CHAIN SUBSYSTEM  ·  src/markov/" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=11;fontStyle=1;fontColor=#7B5E00;" vertex="1" parent="1">
+      <mxGeometry x="90" y="532" width="700" height="22" as="geometry" />
+    </mxCell>
+
+    <mxCell id="predictor" value="&lt;b&gt;MarkovPredictor&lt;/b&gt;&lt;br/&gt;predictor.py&lt;br/&gt;&lt;font color='#555'&gt;Unified interface for all Markov variants&lt;br/&gt;order=1|2 · context_aware · smoothing&lt;br/&gt;fit() · observe() · predict(k) · get_state_vector()&lt;br/&gt;history: deque(maxlen=10)&lt;br/&gt;vocab_size · prediction_count · correct_predictions&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="100" y="560" width="270" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="first_order" value="&lt;b&gt;FirstOrderMarkovChain&lt;/b&gt;&lt;br/&gt;first_order.py&lt;br/&gt;&lt;font color='#555'&gt;P(next | current)&lt;br/&gt;Laplace smoothing&lt;br/&gt;fit() · predict()&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="100" y="700" width="195" height="90" as="geometry" />
+    </mxCell>
+
+    <mxCell id="second_order" value="&lt;b&gt;SecondOrderMarkovChain&lt;/b&gt;&lt;br/&gt;second_order.py&lt;br/&gt;&lt;font color='#555'&gt;P(next | prev, current)&lt;br/&gt;2-gram history&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="305" y="700" width="195" height="90" as="geometry" />
+    </mxCell>
+
+    <mxCell id="ctx_aware" value="&lt;b&gt;ContextAwareMarkovChain&lt;/b&gt;&lt;br/&gt;context_aware.py&lt;br/&gt;&lt;font color='#555'&gt;Per-context chains: user_type · hour&lt;br/&gt;guest|free|premium&lt;br/&gt;morning|afternoon|evening|night&lt;br/&gt;fallback: global | similar | none&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="100" y="808" width="400" height="85" as="geometry" />
+    </mxCell>
+
+    <mxCell id="transition_matrix" value="&lt;b&gt;TransitionMatrix&lt;/b&gt;&lt;br/&gt;transition_matrix.py&lt;br/&gt;&lt;font color='#555'&gt;Sparse count matrix&lt;br/&gt;Probability normalisation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="516" y="700" width="260" height="75" as="geometry" />
+    </mxCell>
+
+    <mxCell id="markov_eval" value="&lt;b&gt;MarkovEvaluator&lt;/b&gt;&lt;br/&gt;evaluation.py&lt;br/&gt;&lt;font color='#555'&gt;top-k accuracy · calibration&lt;br/&gt;per-endpoint breakdown · KFold CV&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="516" y="785" width="260" height="75" as="geometry" />
+    </mxCell>
+
+    <!-- ── RL Subsystem ── -->
+    <mxCell id="rl_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#FF8F00;arcSize=6;" vertex="1" parent="1">
+      <mxGeometry x="820" y="530" width="920" height="375" as="geometry" />
+    </mxCell>
+    <mxCell id="rl_header" value="🤖  RL SUBSYSTEM  ·  src/rl/" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=11;fontStyle=1;fontColor=#7B3900;" vertex="1" parent="1">
+      <mxGeometry x="820" y="532" width="920" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- DQN Agent -->
+    <mxCell id="dqn_agent" value="&lt;b&gt;DQNAgent&lt;/b&gt;&lt;br/&gt;agents/dqn_agent.py&lt;br/&gt;&lt;font color='#555'&gt;select_action() · store_transition()&lt;br/&gt;train_step() · decay_epsilon()&lt;br/&gt;update() · save() · load()&lt;br/&gt;epsilon: 1.0→0.05  gamma: 0.99&lt;br/&gt;target_update_freq: 1000&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#FF8F00;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="830" y="558" width="260" height="120" as="geometry" />
+    </mxCell>
+
+    <!-- DQNConfig -->
+    <mxCell id="dqn_config" value="&lt;b&gt;DQNConfig&lt;/b&gt;&lt;br/&gt;&lt;font color='#555'&gt;state_dim · action_dim&lt;br/&gt;hidden_dims: [128,64]&lt;br/&gt;lr=0.001 · batch=64&lt;br/&gt;buffer_size=100K&lt;br/&gt;dueling=True&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#FF8F00;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="830" y="690" width="175" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- Q-Networks -->
+    <mxCell id="qnet_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#FF8F00;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1105" y="558" width="290" height="160" as="geometry" />
+    </mxCell>
+    <mxCell id="qnet_title" value="&lt;b&gt;Q-Networks&lt;/b&gt; · networks/q_network.py" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="1105" y="560" width="290" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="online_net" value="&lt;b&gt;Online Net&lt;/b&gt; (QNetwork)&lt;br/&gt;&lt;font color='#555'&gt;60→128→64→7&lt;br/&gt;ReLU · Dropout · LayerNorm&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#FF8F00;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1115" y="582" width="125" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="target_net" value="&lt;b&gt;Target Net&lt;/b&gt; (QNetwork)&lt;br/&gt;&lt;font color='#555'&gt;Hard sync every 1000 steps&lt;br/&gt;eval mode always&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#FF8F00;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1258" y="582" width="125" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="dueling_net" value="&lt;b&gt;DuelingQNetwork&lt;/b&gt; (optional)&lt;br/&gt;&lt;font color='#555'&gt;Value stream V(s)&lt;br/&gt;Advantage stream A(s,a)&lt;br/&gt;Q = V + A - mean(A)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#FF8F00;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1115" y="650" width="268" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Replay Buffer -->
+    <mxCell id="replay_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#FF8F00;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1410" y="558" width="310" height="160" as="geometry" />
+    </mxCell>
+    <mxCell id="replay_title" value="&lt;b&gt;Replay Buffers&lt;/b&gt; · replay_buffer.py" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="1410" y="560" width="310" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="replay_uniform" value="&lt;b&gt;ReplayBuffer&lt;/b&gt;&lt;br/&gt;&lt;font color='#555'&gt;Uniform random sampling&lt;br/&gt;FIFO eviction · O(1) push&lt;br/&gt;capacity=100K&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#FF8F00;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1420" y="582" width="135" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="replay_prio" value="&lt;b&gt;PrioritizedReplayBuffer&lt;/b&gt;&lt;br/&gt;&lt;font color='#555'&gt;TD-error prioritised sampling&lt;br/&gt;Sum-tree · IS weights&lt;br/&gt;beta annealing&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#FF8F00;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1566" y="582" width="145" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="experience_tuple" value="Experience(state, action, reward, next_state, done)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#FF8F00;fontSize=8;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="1420" y="660" width="291" height="25" as="geometry" />
+    </mxCell>
+
+    <!-- Trainer -->
+    <mxCell id="trainer" value="&lt;b&gt;Trainer&lt;/b&gt;&lt;br/&gt;training/trainer.py&lt;br/&gt;&lt;font color='#555'&gt;train(episodes) · _run_episode()&lt;br/&gt;eval_frequency=100 · checkpoint_frequency=500&lt;br/&gt;early_stopping · patience=50&lt;br/&gt;Learning curve plots · WandB optional&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#FF8F00;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1105" y="730" width="615" height="90" as="geometry" />
+    </mxCell>
+
+    <!-- State / Action / Reward -->
+    <mxCell id="sar_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#FF8F00;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1740" y="530" width="280" height="375" as="geometry" />
+    </mxCell>
+    <mxCell id="sar_header" value="STATE / ACTION / REWARD" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#7B3900;" vertex="1" parent="1">
+      <mxGeometry x="1740" y="532" width="280" height="20" as="geometry" />
+    </mxCell>
+
+    <mxCell id="state_builder" value="&lt;b&gt;StateBuilder&lt;/b&gt; · state.py&lt;br/&gt;&lt;font color='#555'&gt;60-dim normalised vector:&lt;br/&gt;• Markov top-5 indices (5)&lt;br/&gt;• Markov probabilities (5)&lt;br/&gt;• Confidence (1)&lt;br/&gt;• Cache metrics (4): util, hit_rate,&lt;br/&gt;  entries, eviction_rate&lt;br/&gt;• System metrics (9): cpu, mem,&lt;br/&gt;  req_rate, p50/p95/p99, err, conn, q&lt;br/&gt;• User context (3): guest/free/premium&lt;br/&gt;• Temporal (6): hour_sin/cos,&lt;br/&gt;  day_sin/cos, is_weekend, peak_hour&lt;br/&gt;• Session (3): position, duration, calls&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#FF8F00;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1750" y="555" width="260" height="185" as="geometry" />
+    </mxCell>
+
+    <mxCell id="action_space" value="&lt;b&gt;ActionSpace&lt;/b&gt; · actions.py  Discrete(7)&lt;br/&gt;&lt;font color='#555'&gt;0 DO_NOTHING&lt;br/&gt;1 CACHE_CURRENT&lt;br/&gt;2 PREFETCH_CONSERVATIVE (top-1, p&gt;70%)&lt;br/&gt;3 PREFETCH_MODERATE (top-3, p&gt;50%)&lt;br/&gt;4 PREFETCH_AGGRESSIVE (top-5, p&gt;30%)&lt;br/&gt;5 EVICT_LRU&lt;br/&gt;6 EVICT_LOW_PROB&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#FF8F00;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1750" y="748" width="260" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="reward_calc" value="&lt;b&gt;RewardCalculator&lt;/b&gt; · reward.py&lt;br/&gt;&lt;font color='#555'&gt;Multi-objective · clipped [-100,+100]&lt;br/&gt;cache_hit +10 · miss -1&lt;br/&gt;cascade_prevented +50 · occurred -100&lt;br/&gt;prefetch_used +5 · wasted -3&lt;br/&gt;latency_weight ±0.1/0.2 per ms&lt;br/&gt;bandwidth -0.01/KB&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#FF8F00;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1750" y="875" width="260" height="120" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LAYER 3 — CACHE LAYER                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="layer3_bg" value="LAYER 3 — CACHE LAYER" style="swimlane;startSize=28;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#333333;fontStyle=1;fontSize=11;horizontal=1;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="950" width="3200" height="320" as="geometry" />
+    </mxCell>
+
+    <!-- CacheManager -->
+    <mxCell id="cache_mgr" value="&lt;b&gt;CacheManager&lt;/b&gt;&lt;br/&gt;src/cache/cache_manager.py&lt;br/&gt;&lt;font color='#555'&gt;start() · stop() · get() · set() · delete()&lt;br/&gt;Serialisation: pickle | json&lt;br/&gt;Compression: zlib (level 6, threshold 1KB)&lt;br/&gt;Max entry size: 1MB · Default TTL: 300s&lt;br/&gt;Prefetch queue coordination&lt;br/&gt;Metrics: hit/miss/set/delete/eviction/compression&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="90" y="985" width="360" height="140" as="geometry" />
+    </mxCell>
+
+    <!-- CacheBackend interface -->
+    <mxCell id="backend_iface" value="&lt;b&gt;CacheBackend (ABC)&lt;/b&gt;&lt;br/&gt;backend.py&lt;br/&gt;&lt;font color='#555'&gt;get() · set() · delete()&lt;br/&gt;exists() · clear() · get_stats()&lt;br/&gt;CacheStats: hits · misses · sets&lt;br/&gt;evictions · hit_rate · utilisation&lt;br/&gt;CacheEntry: key · value · created_at&lt;br/&gt;  expires_at · size_bytes · metadata&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="480" y="985" width="260" height="140" as="geometry" />
+    </mxCell>
+
+    <!-- InMemoryBackend -->
+    <mxCell id="memory_backend" value="&lt;b&gt;InMemoryBackend&lt;/b&gt;&lt;br/&gt;&lt;font color='#555'&gt;OrderedDict LRU&lt;br/&gt;max_size configurable&lt;br/&gt;TTL expiry scan&lt;br/&gt;thread-safe Lock&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#388E3C;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="480" y="1155" width="195" height="90" as="geometry" />
+    </mxCell>
+
+    <!-- RedisBackend -->
+    <mxCell id="redis_backend" value="&lt;b&gt;RedisBackend&lt;/b&gt;&lt;br/&gt;redis_backend.py&lt;br/&gt;&lt;font color='#555'&gt;connect() · disconnect()&lt;br/&gt;RedisConfig: host · port · db · ssl&lt;br/&gt;Connection pool · health check&lt;br/&gt;SETEX · GET · DEL · SCAN&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#388E3C;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="690" y="1155" width="230" height="90" as="geometry" />
+    </mxCell>
+
+    <!-- PrefetchQueue -->
+    <mxCell id="prefetch" value="&lt;b&gt;PrefetchQueue&lt;/b&gt;&lt;br/&gt;cache/prefetch.py&lt;br/&gt;&lt;font color='#555'&gt;Priority queue (min-heap)&lt;br/&gt;PrefetchRequest: endpoint · priority&lt;br/&gt;  created_at · source_prediction&lt;br/&gt;Background worker threads&lt;br/&gt;max_age=30s · dedup set&lt;br/&gt;submit() · process_next()&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="960" y="985" width="290" height="145" as="geometry" />
+    </mxCell>
+
+    <!-- CacheManagerConfig -->
+    <mxCell id="cache_config" value="&lt;b&gt;CacheManagerConfig&lt;/b&gt;&lt;br/&gt;&lt;font color='#555'&gt;backend_type: memory|redis&lt;br/&gt;default_ttl: 300s&lt;br/&gt;compression_enabled: true&lt;br/&gt;compression_level: 6&lt;br/&gt;serialisation: pickle|json&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="90" y="1155" width="370" height="90" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LAYER 4 — MICROSERVICES SIMULATOR                              -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="layer4_bg" value="LAYER 4 — E-COMMERCE MICROSERVICES SIMULATOR" style="swimlane;startSize=28;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#333333;fontStyle=1;fontSize=11;horizontal=1;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="1300" width="3200" height="230" as="geometry" />
+    </mxCell>
+
+    <mxCell id="base_svc" value="&lt;b&gt;BaseService&lt;/b&gt;&lt;br/&gt;services/base_service.py&lt;br/&gt;&lt;font color='#555'&gt;FastAPI app · /health · /metrics&lt;br/&gt;Redis client · Prometheus counters&lt;br/&gt;request_count · error_rate · latency&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="90" y="1340" width="260" height="95" as="geometry" />
+    </mxCell>
+
+    <mxCell id="auth_svc" value="&lt;b&gt;AuthService&lt;/b&gt;&lt;br/&gt;:8002&lt;br/&gt;JWT tokens" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="370" y="1340" width="130" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="user_svc" value="&lt;b&gt;UserService&lt;/b&gt;&lt;br/&gt;:8001&lt;br/&gt;Profiles" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="510" y="1340" width="130" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="product_svc" value="&lt;b&gt;ProductService&lt;/b&gt;&lt;br/&gt;:8003&lt;br/&gt;Catalog" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="650" y="1340" width="130" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="cart_svc" value="&lt;b&gt;CartService&lt;/b&gt;&lt;br/&gt;:8004&lt;br/&gt;Shopping cart" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="790" y="1340" width="130" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="order_svc" value="&lt;b&gt;OrderService&lt;/b&gt;&lt;br/&gt;:8005&lt;br/&gt;Orders" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="930" y="1340" width="130" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="payment_svc" value="&lt;b&gt;PaymentService&lt;/b&gt;&lt;br/&gt;:8006&lt;br/&gt;Payments" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1070" y="1340" width="130" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="inventory_svc" value="&lt;b&gt;InventoryService&lt;/b&gt;&lt;br/&gt;:8007&lt;br/&gt;Stock" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1210" y="1340" width="130" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="orchestrator" value="&lt;b&gt;ServiceOrchestrator&lt;/b&gt;&lt;br/&gt;services/ecommerce/orchestrator.py&lt;br/&gt;&lt;font color='#555'&gt;Service registry · health checks&lt;br/&gt;Cross-service dependency wiring&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bdd7ee;strokeColor=#6c8ebf;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="370" y="1420" width="970" height="75" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LAYER 5 — INFRASTRUCTURE                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="layer5_bg" value="LAYER 5 — INFRASTRUCTURE" style="swimlane;startSize=28;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#333333;fontStyle=1;fontSize=11;horizontal=1;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="1560" width="3200" height="180" as="geometry" />
+    </mxCell>
+
+    <mxCell id="redis_node" value="&lt;b&gt;Redis 7&lt;/b&gt;&lt;br/&gt;:6379&lt;br/&gt;&lt;font color='#555'&gt;maxmemory 512MB&lt;br/&gt;policy: allkeys-lru&lt;br/&gt;AOF + RDB snapshots&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="90" y="1595" width="150" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="docker_compose" value="&lt;b&gt;Docker Compose&lt;/b&gt;&lt;br/&gt;docker/docker-compose.yml&lt;br/&gt;&lt;font color='#555'&gt;Network: simulator-network (172.20/16)&lt;br/&gt;Volumes: redis-data · prometheus-data · grafana-data&lt;br/&gt;Health checks on all services&lt;br/&gt;Resource limits: cpu/memory&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="270" y="1595" width="360" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="docker_file" value="&lt;b&gt;Dockerfile&lt;/b&gt;&lt;br/&gt;docker/Dockerfile&lt;br/&gt;&lt;font color='#555'&gt;Multi-stage build&lt;br/&gt;python:3.11-slim&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="650" y="1595" width="160" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="setup_py" value="&lt;b&gt;setup.py / requirements.txt&lt;/b&gt;&lt;br/&gt;&lt;font color='#555'&gt;torch · gymnasium · fastapi&lt;br/&gt;redis · prometheus-client&lt;br/&gt;numpy · pandas · scipy · sklearn&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="650" y="1685" width="260" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="configs" value="&lt;b&gt;configs/default.yaml&lt;/b&gt;&lt;br/&gt;&lt;font color='#555'&gt;mode · env_config · agent_config&lt;br/&gt;training_config · api_host:8080&lt;br/&gt;enable_monitoring: true&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="930" y="1595" width="220" height="80" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LAYER 6 — OBSERVABILITY                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="layer6_bg" value="LAYER 6 — OBSERVABILITY (Prometheus + Grafana)" style="swimlane;startSize=28;fillColor=#e8f5e9;strokeColor=#4CAF50;fontColor=#1B5E20;fontStyle=1;fontSize=11;horizontal=1;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="1770" width="3200" height="380" as="geometry" />
+    </mxCell>
+
+    <!-- MetricsCollector -->
+    <mxCell id="metrics_col" value="&lt;b&gt;MetricsCollector&lt;/b&gt;&lt;br/&gt;src/monitoring/metrics.py&lt;br/&gt;&lt;font color='#555'&gt;namespace=markov_rl · service=api-cache&lt;br/&gt;&lt;b&gt;Cache:&lt;/b&gt; hit_rate · hits/misses_total · entries&lt;br/&gt;  utilisation · evictions · op_latency&lt;br/&gt;&lt;b&gt;Prefetch:&lt;/b&gt; requests · hits · wasted · efficiency&lt;br/&gt;  bandwidth_bytes&lt;br/&gt;&lt;b&gt;Markov:&lt;/b&gt; predictions · accuracy_topk{k=1,3,5}&lt;br/&gt;  confidence · vocab_size · entropy&lt;br/&gt;&lt;b&gt;RL:&lt;/b&gt; episodes · steps · reward · epsilon · loss&lt;br/&gt;  q_value · buffer_size · action_counts&lt;br/&gt;&lt;b&gt;Cascade:&lt;/b&gt; risk_score · events · prevented · rate&lt;br/&gt;&lt;b&gt;Reward:&lt;/b&gt; component{cache|cascade|prefetch|…}&lt;br/&gt;&lt;b&gt;System:&lt;/b&gt; cpu · memory · rps · sessions · latency&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4CAF50;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="90" y="1805" width="360" height="310" as="geometry" />
+    </mxCell>
+
+    <!-- Exporter -->
+    <mxCell id="exporter" value="&lt;b&gt;Metrics Exporter&lt;/b&gt;&lt;br/&gt;src/monitoring/exporter.py&lt;br/&gt;&lt;font color='#555'&gt;python -m src.monitoring.exporter&lt;br/&gt;setup_metrics(controller)&lt;br/&gt;_patch_trainer() · _patch_env()&lt;br/&gt;_start_poll_thread() (every 10s)&lt;br/&gt;_add_metrics_endpoint(FastAPI)&lt;br/&gt;HTTP server :9200/metrics&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4CAF50;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="470" y="1820" width="280" height="160" as="geometry" />
+    </mxCell>
+
+    <!-- Prometheus -->
+    <mxCell id="prometheus" value="&lt;b&gt;Prometheus&lt;/b&gt; :9090&lt;br/&gt;docker/monitoring/prometheus.yml&lt;br/&gt;&lt;font color='#555'&gt;scrape: markov-rl-cache :9200 (10s)&lt;br/&gt;scrape: FastAPI :8080 (15s)&lt;br/&gt;scrape: redis-exporter :9121 (15s)&lt;br/&gt;scrape: 7 microservices (15s)&lt;br/&gt;retention: 7 days&lt;br/&gt;alert_rules.yml loaded&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4CAF50;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="770" y="1820" width="280" height="160" as="geometry" />
+    </mxCell>
+
+    <!-- Alert Rules -->
+    <mxCell id="alert_rules" value="&lt;b&gt;Alert Rules&lt;/b&gt;&lt;br/&gt;docker/monitoring/alert_rules.yml&lt;br/&gt;&lt;font color='#555'&gt;cache_performance (4 alerts)&lt;br/&gt;  CacheHitRateLow/Critical&lt;br/&gt;  CacheUtilisationHigh&lt;br/&gt;cascade_prevention (4 alerts)&lt;br/&gt;  CascadeRiskElevated/Critical&lt;br/&gt;  CascadeEventDetected&lt;br/&gt;rl_agent (5 alerts)&lt;br/&gt;  LossSpike · RewardDeclining&lt;br/&gt;  ExplorationStuck · BufferLow&lt;br/&gt;markov_predictor (2 alerts)&lt;br/&gt;infrastructure (5 alerts)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4CAF50;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1070" y="1820" width="280" height="235" as="geometry" />
+    </mxCell>
+
+    <!-- Grafana -->
+    <mxCell id="grafana" value="&lt;b&gt;Grafana&lt;/b&gt; :3000&lt;br/&gt;&lt;font color='#555'&gt;Auto-provisioned dashboards&lt;br/&gt;UID: markov-rl-cache-v1&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4CAF50;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="1820" width="200" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Dashboard sections -->
+    <mxCell id="dash_exec" value="🎯 Executive Summary&lt;br/&gt;&lt;font color='#555'&gt;6 stat cards: hit rate · cascade risk&lt;br/&gt;mean reward · Markov accuracy&lt;br/&gt;prevention rate · utilisation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4CAF50;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="1905" width="195" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="dash_cache" value="📦 Cache Performance&lt;br/&gt;&lt;font color='#555'&gt;hit/miss rates · entries&lt;br/&gt;evictions · op latency&lt;br/&gt;entry size distribution&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4CAF50;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1575" y="1905" width="160" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="dash_prefetch" value="⚡ Prefetch Engine&lt;br/&gt;&lt;font color='#555'&gt;efficiency · rate by strategy&lt;br/&gt;bandwidth · gauge&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4CAF50;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1745" y="1905" width="155" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="dash_markov" value="🔗 Markov Predictor&lt;br/&gt;&lt;font color='#555'&gt;top-k accuracy · vocab&lt;br/&gt;entropy · confidence heatmap&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4CAF50;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="1910" y="1905" width="155" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="dash_rl" value="🤖 RL Agent&lt;br/&gt;&lt;font color='#555'&gt;reward · ε decay · loss · Q&lt;br/&gt;buffer · action dist.&lt;br/&gt;reward decomposition&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4CAF50;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="2075" y="1905" width="155" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="dash_cascade" value="🛡️ Cascade Prevention&lt;br/&gt;&lt;font color='#555'&gt;risk score · events&lt;br/&gt;prevented vs occurred&lt;br/&gt;prevention gauge&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4CAF50;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="2240" y="1905" width="155" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="dash_api" value="🌐 API Latency&lt;br/&gt;&lt;font color='#555'&gt;p50/p95/p99 · RPS&lt;br/&gt;backend latency&lt;br/&gt;status codes&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4CAF50;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="2405" y="1905" width="145" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="dash_sys" value="🖥️ System&lt;br/&gt;&lt;font color='#555'&gt;CPU · memory&lt;br/&gt;object counts&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4CAF50;fontSize=9;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="2560" y="1905" width="130" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="redis_exp" value="&lt;b&gt;Redis Exporter&lt;/b&gt;&lt;br/&gt;oliver006/redis_exporter&lt;br/&gt;:9121/metrics" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4CAF50;fontSize=10;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="470" y="1998" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- DATA FLOWS — KEY ARROWS                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+
+    <!-- Traffic → API -->
+    <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#6c8ebf;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="traffic_gen" target="fastapi">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e1_lbl" value="API calls" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;fontColor=#6c8ebf;" vertex="1" connectable="0" parent="e1">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- Users → Controller -->
+    <mxCell id="e_users" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#9673a6;strokeWidth=1.5;" edge="1" parent="1" source="user_free" target="controller_bg">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Failure Injector → CachingEnv -->
+    <mxCell id="e_fail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=1.5;dashed=1;" edge="1" parent="1" source="failure_inj" target="gym_env">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e_fail_lbl" value="inject failure" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e_fail">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- Controller → FastAPI -->
+    <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#9673a6;strokeWidth=2;" edge="1" parent="1" source="controller_bg" target="fastapi">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e2_lbl" value="creates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e2">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- Controller → CachingEnv -->
+    <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#9673a6;strokeWidth=2;" edge="1" parent="1" source="controller_bg" target="gym_env">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e3_lbl" value="owns" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e3">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- CachingEnv ↔ DQNAgent (RL loop) -->
+    <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#FF8F00;strokeWidth=2.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="gym_env" target="dqn_agent">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1060" y="490"/><mxPoint x="960" y="490"/></Array></mxGeometry>
+    </mxCell>
+    <mxCell id="e4_lbl" value="obs/reward/done → action" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=9;fontColor=#FF8F00;fontStyle=1;" vertex="1" connectable="0" parent="e4">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- DQNAgent → Q-Networks -->
+    <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#FF8F00;strokeWidth=1.5;" edge="1" parent="1" source="dqn_agent" target="qnet_bg">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e5_lbl" value="forward pass" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e5">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- DQNAgent → Replay Buffer -->
+    <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#FF8F00;strokeWidth=1.5;" edge="1" parent="1" source="dqn_agent" target="replay_bg">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e6_lbl" value="store / sample" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e6">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- Trainer → DQNAgent -->
+    <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#FF8F00;strokeWidth=2;" edge="1" parent="1" source="trainer" target="dqn_agent">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e7_lbl" value="train_step()" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e7">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- CachingEnv → MarkovPredictor -->
+    <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=2;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gym_env" target="predictor">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="860" y="355"/><mxPoint x="430" y="355"/><mxPoint x="430" y="620"/></Array></mxGeometry>
+    </mxCell>
+    <mxCell id="e8_lbl" value="observe(api) → predict(k=5)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=9;fontColor=#d6b656;fontStyle=1;" vertex="1" connectable="0" parent="e8">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- MarkovPredictor → StateBuilder -->
+    <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=1.5;" edge="1" parent="1" source="predictor" target="state_builder">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e9_lbl" value="top-5 predictions" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e9">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- MarkovPredictor → First/Second/ContextAware -->
+    <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=1;dashed=1;" edge="1" parent="1" source="predictor" target="first_order">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=1;dashed=1;" edge="1" parent="1" source="predictor" target="second_order">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=1;dashed=1;" edge="1" parent="1" source="predictor" target="ctx_aware">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- FirstOrder/Second → TransitionMatrix -->
+    <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1" source="first_order" target="transition_matrix">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1" source="second_order" target="transition_matrix">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- StateBuilder → DQNAgent -->
+    <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#FF8F00;strokeWidth=2;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="state_builder" target="dqn_agent">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1880" y="760"/><mxPoint x="960" y="760"/></Array></mxGeometry>
+    </mxCell>
+    <mxCell id="e15_lbl" value="60-dim state vector" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=9;fontColor=#FF8F00;fontStyle=1;" vertex="1" connectable="0" parent="e15">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- ActionSpace → CachingEnv -->
+    <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#FF8F00;strokeWidth=1.5;dashed=1;" edge="1" parent="1" source="action_space" target="gym_env">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1880" y="808"/><mxPoint x="1880" y="355"/><mxPoint x="1060" y="355"/></Array></mxGeometry>
+    </mxCell>
+    <mxCell id="e16_lbl" value="Discrete(7) action" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e16">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- RewardCalculator → CachingEnv -->
+    <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#FF8F00;strokeWidth=1.5;" edge="1" parent="1" source="reward_calc" target="gym_env">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1880" y="935"/><mxPoint x="1880" y="455"/><mxPoint x="1060" y="455"/><mxPoint x="1060" y="410"/></Array></mxGeometry>
+    </mxCell>
+    <mxCell id="e17_lbl" value="reward signal" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e17">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- CachingEnv → CacheManager -->
+    <mxCell id="e18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#82b366;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="gym_env" target="cache_mgr">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1060" y="480"/><mxPoint x="270" y="480"/><mxPoint x="270" y="985"/></Array></mxGeometry>
+    </mxCell>
+    <mxCell id="e18_lbl" value="get()/set()/evict()" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=9;fontColor=#82b366;fontStyle=1;" vertex="1" connectable="0" parent="e18">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- CacheManager → PrefetchQueue -->
+    <mxCell id="e19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#82b366;strokeWidth=1.5;" edge="1" parent="1" source="cache_mgr" target="prefetch">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e19_lbl" value="submit prefetch" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e19">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- CacheManager → CacheBackend -->
+    <mxCell id="e20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#82b366;strokeWidth=2;" edge="1" parent="1" source="cache_mgr" target="backend_iface">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- CacheBackend → InMemory / Redis -->
+    <mxCell id="e21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#388E3C;strokeWidth=1.5;" edge="1" parent="1" source="backend_iface" target="memory_backend">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#388E3C;strokeWidth=1.5;" edge="1" parent="1" source="backend_iface" target="redis_backend">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- RedisBackend → Redis node -->
+    <mxCell id="e23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#b85450;strokeWidth=2;" edge="1" parent="1" source="redis_backend" target="redis_node">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="805" y="1250"/><mxPoint x="805" y="1590"/><mxPoint x="165" y="1590"/></Array></mxGeometry>
+    </mxCell>
+    <mxCell id="e23_lbl" value="SETEX/GET/DEL" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e23">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- CachingEnv → Microservices (cache miss) -->
+    <mxCell id="e24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#6c8ebf;strokeWidth=2;dashed=1;" edge="1" parent="1" source="gym_env" target="orchestrator">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1060" y="1295"/><mxPoint x="855" y="1295"/><mxPoint x="855" y="1460"/></Array></mxGeometry>
+    </mxCell>
+    <mxCell id="e24_lbl" value="backend call (cache miss)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=9;fontColor=#6c8ebf;fontStyle=1;" vertex="1" connectable="0" parent="e24">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- MarkovPredictor → PrefetchQueue -->
+    <mxCell id="e25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=1.5;dashed=1;" edge="1" parent="1" source="predictor" target="prefetch">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="235" y="620"/><mxPoint x="235" y="945"/><mxPoint x="1105" y="945"/><mxPoint x="1105" y="985"/></Array></mxGeometry>
+    </mxCell>
+    <mxCell id="e25_lbl" value="top-k predictions → priority" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e25">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- Controller → Monitoring -->
+    <mxCell id="e26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4CAF50;strokeWidth=2;" edge="1" parent="1" source="controller_bg" target="metrics_col">
+      <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="270" y="455"/><mxPoint x="270" y="1805"/></Array></mxGeometry>
+    </mxCell>
+    <mxCell id="e26_lbl" value="record_*()" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=9;fontColor=#4CAF50;fontStyle=1;" vertex="1" connectable="0" parent="e26">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- MetricsCollector → Exporter -->
+    <mxCell id="e27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4CAF50;strokeWidth=2;" edge="1" parent="1" source="metrics_col" target="exporter">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e27_lbl" value="registry" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e27">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- Exporter → Prometheus -->
+    <mxCell id="e28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4CAF50;strokeWidth=2;" edge="1" parent="1" source="exporter" target="prometheus">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e28_lbl" value=":9200/metrics (scrape)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e28">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- Prometheus → Grafana -->
+    <mxCell id="e29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4CAF50;strokeWidth=2;" edge="1" parent="1" source="prometheus" target="grafana">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e29_lbl" value="datasource" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e29">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- Prometheus → AlertRules -->
+    <mxCell id="e30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4CAF50;strokeWidth=1.5;dashed=1;" edge="1" parent="1" source="prometheus" target="alert_rules">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Grafana → dashboard panels -->
+    <mxCell id="e31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4CAF50;strokeWidth=1;dashed=1;" edge="1" parent="1" source="grafana" target="dash_exec">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Redis Exporter → Prometheus -->
+    <mxCell id="e32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4CAF50;strokeWidth=1.5;" edge="1" parent="1" source="redis_exp" target="prometheus">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e32_lbl" value=":9121" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=8;" vertex="1" connectable="0" parent="e32">
+      <mxGeometry relative="0.5" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- RL TRAINING LOOP ANNOTATION (right side)                        -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="rl_loop_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#FF8F00;arcSize=6;dashed=1;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="2060" y="270" width="400" height="680" as="geometry" />
+    </mxCell>
+    <mxCell id="rl_loop_title" value="🔄  RL TRAINING LOOP" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=13;fontStyle=1;fontColor=#7B3900;" vertex="1" parent="1">
+      <mxGeometry x="2060" y="278" width="400" height="25" as="geometry" />
+    </mxCell>
+    <mxCell id="step1" value="1  obs, _ = env.reset()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#FF8F00;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="315" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step2" value="2  action = agent.select_action(obs)  [ε-greedy]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#FF8F00;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="360" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step3" value="3  MarkovPredictor.observe(api)  →  predict(k=5)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="405" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step4" value="4  StateBuilder.build_state()  → 60-dim obs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="450" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step5" value="5  CacheManager.execute(action)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="495" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step6" value="6  RewardCalculator.calculate(outcome)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#FF8F00;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="540" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step7" value="7  agent.store_transition(s,a,r,s',done)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#FF8F00;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="585" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step8" value="8  if buffer.is_ready: agent.train_step()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#FF8F00;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="630" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step9" value="9  agent.decay_epsilon()  [1.0 → 0.05]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#FF8F00;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="675" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step10" value="10  MetricsCollector.record_*()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4CAF50;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="720" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step11" value="11  if done: Trainer.checkpoint()  [every 500 ep]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="765" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step12" value="12  if eval_freq: Trainer.evaluate()  [every 100 ep]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="810" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step13" value="13  if no improvement for 50 ep → early stop" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="855" width="360" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="step14" value="→  repeat for 1000+ episodes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF8F00;strokeColor=#E65100;fontSize=11;fontStyle=1;fontColor=white;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2080" y="900" width="360" height="35" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- REWARD DESIGN CALLOUT                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="reward_callout" value="&lt;b&gt;🎯  REWARD DESIGN RATIONALE&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;b&gt;cascade_occurred = -100&lt;/b&gt;  (10× worse than miss)&lt;br/&gt;&lt;b&gt;cascade_prevented = +50&lt;/b&gt;  (5× better than hit)&lt;br/&gt;&lt;b&gt;cache_hit = +10&lt;/b&gt;  (baseline &amp;apos;good&amp;apos; signal)&lt;br/&gt;&lt;b&gt;cache_miss = -1&lt;/b&gt;  (small — misses are normal)&lt;br/&gt;&lt;b&gt;prefetch_used = +5&lt;/b&gt;  (half a hit)&lt;br/&gt;&lt;b&gt;prefetch_wasted = -3&lt;/b&gt;  (not catastrophic)&lt;br/&gt;&lt;br/&gt;Clipped to [-100, +100] for training stability" style="callout;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;arcSize=4;" vertex="1" parent="1">
+      <mxGeometry x="2500" y="830" width="340" height="185" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- STATE VECTOR CALLOUT                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="state_callout" value="&lt;b&gt;📐  60-DIM STATE VECTOR BREAKDOWN&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;[0-4]   Markov top-5 API indices (normalised)&lt;br/&gt;[5-9]   Markov top-5 probabilities&lt;br/&gt;[10]    Prediction confidence&lt;br/&gt;[11-14] Cache: util · hit_rate · entries · evict_rate&lt;br/&gt;[15-23] System: cpu · mem · rps · p50/p95/p99&lt;br/&gt;          err_rate · connections · queue_depth&lt;br/&gt;[24-26] User: is_guest · is_free · is_premium&lt;br/&gt;[27-32] Temporal: hour_sin · hour_cos · day_sin&lt;br/&gt;          day_cos · is_weekend · is_peak_hour&lt;br/&gt;[33-35] Session: position · duration · call_count" style="callout;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#FF8F00;fontSize=9;align=left;arcSize=4;" vertex="1" parent="1">
+      <mxGeometry x="2500" y="500" width="360" height="240" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LEGEND                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="legend_bg" value="LEGEND" style="swimlane;startSize=24;fillColor=#f5f5f5;strokeColor=#999;fontStyle=1;fontSize=10;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="2500" y="110" width="680" height="370" as="geometry" />
+    </mxCell>
+
+    <mxCell id="leg1" value="Traffic &amp; User Sources" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2520" y="145" width="200" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg2" value="Integration / Control" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2520" y="183" width="200" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg3" value="Markov Chain" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#d6b656;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2520" y="221" width="200" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg4" value="RL / DQN Agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#FF8F00;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2520" y="259" width="200" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg5" value="Cache Layer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2520" y="297" width="200" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg6" value="Microservices" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2520" y="335" width="200" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg7" value="Infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2520" y="373" width="200" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg8" value="Observability (Prometheus)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4CAF50;fontSize=10;arcSize=20;" vertex="1" parent="1">
+      <mxGeometry x="2520" y="411" width="200" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- Arrow legend -->
+    <mxCell id="arr1" value="RL interaction (obs/action/reward)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#FF8F00;strokeWidth=2.5;exitX=0;exitY=0.5;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry"><mxPoint x="2740" y="159" as="sourcePoint"/><mxPoint x="2940" y="159" as="targetPoint"/></mxGeometry>
+    </mxCell>
+    <mxCell id="arr2" value="Data / control flow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555;strokeWidth=2;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry"><mxPoint x="2740" y="196" as="sourcePoint"/><mxPoint x="2940" y="196" as="targetPoint"/></mxGeometry>
+    </mxCell>
+    <mxCell id="arr3" value="Optional / config link" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999;strokeWidth=1;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry"><mxPoint x="2740" y="233" as="sourcePoint"/><mxPoint x="2940" y="233" as="targetPoint"/></mxGeometry>
+    </mxCell>
+    <mxCell id="arr4" value="Metrics recording" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4CAF50;strokeWidth=2;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry"><mxPoint x="2740" y="270" as="sourcePoint"/><mxPoint x="2940" y="270" as="targetPoint"/></mxGeometry>
+    </mxCell>
+    <mxCell id="arr5" value="Markov prediction" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=2;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry"><mxPoint x="2740" y="307" as="sourcePoint"/><mxPoint x="2940" y="307" as="targetPoint"/></mxGeometry>
+    </mxCell>
+    <mxCell id="arr6" value="Backend / DB call" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#b85450;strokeWidth=2;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry"><mxPoint x="2740" y="344" as="sourcePoint"/><mxPoint x="2940" y="344" as="targetPoint"/></mxGeometry>
+    </mxCell>
+    <mxCell id="arr7" value="Cache operation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#82b366;strokeWidth=2;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry"><mxPoint x="2740" y="381" as="sourcePoint"/><mxPoint x="2940" y="381" as="targetPoint"/></mxGeometry>
+    </mxCell>
+
+  </root>
+</mxGraphModel>
+

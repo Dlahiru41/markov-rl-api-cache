@@ -1,4 +1,3 @@
-version: '3.8'
 
 # Development overrides for docker-compose.yml
 # Enables hot reload, debugging, and relaxed resource limits

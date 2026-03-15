@@ -1,4 +1,3 @@
-version: '3.8'
 
 # Docker Compose configuration for markov-rl-api-cache simulation environment
 # Includes: microservices, cache, monitoring, and traffic generation
