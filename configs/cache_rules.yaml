@@ -1,0 +1,25 @@
+# Cache rules for the API Gateway reverse proxy.
+# Each rule matches requests by path prefix/glob and controls caching behaviour.
+#
+# Fields:
+#   path          – glob-style path pattern (matched with fnmatch)
+#   ttl           – time-to-live in seconds (0 = do not cache)
+#   cache         – explicit on/off; defaults to true when ttl > 0
+#   vary_by_user  – if true the cache key includes user identity
+
+cache_rules:
+  - path: "/api/products*"
+    ttl: 600
+    vary_by_user: false
+
+  - path: "/api/users/*"
+    ttl: 120
+    vary_by_user: true
+
+  - path: "/api/orders/*"
+    ttl: 60
+    vary_by_user: true
+
+  - path: "/api/auth/*"
+    ttl: 0
+    cache: false
