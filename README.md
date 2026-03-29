@@ -314,6 +314,9 @@ python -m pytest
 # Run only the gateway tests
 python -m pytest tests/unit/test_gateway.py -v
 
+# Run scheduler + training + latency-comparison integration suite (single command)
+python run_scheduler_training_performance_integration_tests.py
+
 # Run with verbose output
 python -m pytest -xvs
 ```
