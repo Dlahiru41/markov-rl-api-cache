@@ -29,7 +29,7 @@ class _DummyCollector:
     pass
 
 
-def _make_agent(seed: int = 7) -> DQNAgent:
+def _make_dqn_agent(seed: int = 7) -> DQNAgent:
     config = DQNConfig(
         state_dim=8,
         action_dim=2,  # 0=NO_PREFETCH, 1=PREFETCH_NEXT
@@ -72,6 +72,8 @@ def _build_training_data(samples: int = 300) -> List[np.ndarray]:
 
 def _train_prefetch_policy(agent: DQNAgent, states: List[np.ndarray], iterations: int = 250) -> None:
     for state in states:
+        # Synthetic supervised-style shaping: keep dynamics stationary so reward signal
+        # isolates the action preference (prefetch vs no-prefetch) for this suite.
         next_state = state
         agent.store_transition(state, 1, 2.0, next_state, False)
         agent.store_transition(state, 0, -1.0, next_state, False)
@@ -113,7 +115,7 @@ def _simulate_request_latency(agent: DQNAgent, requests: List[int]) -> Dict[str,
 def test_scheduler_runs_training_cycle_and_writes_checkpoint(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
 
-    agent = _make_agent(seed=11)
+    agent = _make_dqn_agent(seed=11)
     train_states = _build_training_data(samples=150)
     _train_prefetch_policy(agent, train_states, iterations=120)
 
@@ -144,7 +146,7 @@ def test_scheduler_runs_training_cycle_and_writes_checkpoint(tmp_path, monkeypat
 
 
 def test_training_data_changes_policy_preference():
-    agent = _make_agent(seed=21)
+    agent = _make_dqn_agent(seed=21)
     probe = _state_for_key(8, 100)
 
     q_before = agent.get_q_values(probe)
@@ -162,7 +164,7 @@ def test_training_data_changes_policy_preference():
 
 
 def test_latency_reduces_after_training_data():
-    base_agent = _make_agent(seed=33)
+    base_agent = _make_dqn_agent(seed=33)
     trained_agent = copy.deepcopy(base_agent)
 
     workload = list(range(180))
