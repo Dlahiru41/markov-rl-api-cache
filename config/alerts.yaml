@@ -1,0 +1,38 @@
+alerts:
+  - name: high_cache_miss_rate
+    condition: cache_hit_rate < 0.5
+    window: 5m
+    severity: warning
+    message: "Cache hit rate dropped below 50%: {value}"
+
+  - name: training_stalled
+    condition: time_since_last_training > 3600
+    severity: warning
+    message: "DQN training hasn't run in {value}s"
+
+  - name: redis_disconnected
+    condition: redis_connected == false
+    severity: critical
+    message: "Redis connection lost"
+
+  - name: high_error_rate
+    condition: error_rate > 0.05
+    window: 5m
+    severity: critical
+    message: "Gateway error rate above 5%: {value}"
+
+  - name: buffer_overflow_risk
+    condition: collector_buffer_usage > 0.9
+    severity: warning
+    message: "Collector buffer at {value}%, risk of data loss"
+
+  - name: model_performance_drop
+    condition: avg_reward_change < -0.2
+    window: 1h
+    severity: warning
+    message: "Model average reward dropped by {value}"
+
+  - name: scheduler_job_failing
+    condition: consecutive_failures > 3
+    severity: error
+    message: "Job {job_name} failed {value} times consecutively"
