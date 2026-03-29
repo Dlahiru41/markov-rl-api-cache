@@ -47,7 +47,8 @@ class JobRegistry:
                 self.status[name]["last_duration"] = time.perf_counter() - start
 
         job = self.scheduler.add_job(wrapped, trigger, id=name, replace_existing=True, **trigger_kwargs)
-        self.status[name]["next_run"] = job.next_run_time.isoformat() if job.next_run_time else None
+        next_run = getattr(job, "next_run_time", None)
+        self.status[name]["next_run"] = next_run.isoformat() if next_run else None
 
     def start(self) -> None:
         """Start underlying APScheduler instance."""
@@ -75,6 +76,6 @@ class JobRegistry:
         """Return status map with updated next_run values."""
         for name in list(self.status.keys()):
             job = self.scheduler.get_job(name)
-            self.status[name]["next_run"] = job.next_run_time.isoformat() if job and job.next_run_time else None
+            next_run = getattr(job, "next_run_time", None) if job else None
+            self.status[name]["next_run"] = next_run.isoformat() if next_run else None
         return self.status
-
