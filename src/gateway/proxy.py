@@ -13,6 +13,8 @@ import json
 import logging
 import os
 import time
+import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence
 
@@ -28,6 +30,14 @@ from .cache_keys import (
     get_ttl_for_path,
     is_cacheable,
 )
+from ..monitoring.logger import setup_logging
+from ..monitoring.health import HealthMonitor
+from ..monitoring.alerts import AlertManager
+from ..monitoring.dashboard_data import DashboardDataProvider
+from ..pipeline.collector import APICallCollector, APICallRecord
+from ..pipeline.session_tracker import SessionTracker
+from ..pipeline.experience_builder import ExperienceBuilder
+from ..scheduler.training_scheduler import TrainingScheduler
 
 logger = logging.getLogger(__name__)
 
@@ -89,6 +99,7 @@ def _get_redis_client():
 
 
 _GATEWAY_CACHE_PREFIX = "gw_cache:"
+_DEFAULT_RL_STATE_DIM = 60
 
 
 def _redis_get(client, key: str) -> Optional[bytes]:
@@ -133,6 +144,46 @@ def _redis_invalidate(client, pattern: str) -> int:
 def _redis_flush(client) -> int:
     """Flush all gateway cache keys."""
     return _redis_invalidate(client, "*")
+
+
+def _build_collection_record(
+    *,
+    request_id: str,
+    session_tracker,
+    request: Request,
+    req_headers: Dict[str, str],
+    method: str,
+    full_path: str,
+    query_params: Dict[str, Any],
+    status_code: int,
+    latency_ms: float,
+    cache_hit: bool,
+    cache_key: str,
+    state_dim: int,
+) -> APICallRecord:
+    """Build APICallRecord with session resolution and canonical defaults."""
+    session_id = session_tracker.extract_session_id(
+        headers={k.lower(): v for k, v in req_headers.items()},
+        client_ip=request.client.host if request.client else "",
+        user_agent=req_headers.get("user-agent", ""),
+    )
+    return APICallRecord(
+        request_id=request_id,
+        session_id=session_id,
+        timestamp=datetime.now(timezone.utc),
+        method=method,
+        path=full_path,
+        query_params=str(query_params),
+        upstream_status=status_code,
+        response_time_ms=latency_ms,
+        cache_hit=cache_hit,
+        cache_key=cache_key,
+        markov_prediction=[],
+        rl_action_taken=0,
+        rl_state_vector=[0.0] * state_dim,
+        rl_reward=0.0,
+        context={},
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -258,6 +309,7 @@ def create_gateway_app(
     cache_rules = _load_cache_rules() or _DEFAULT_CACHE_RULES
     stats = _GatewayStats()
 
+    setup_logging()
     app = FastAPI(title="Markov RL API Cache Gateway", version="1.0.0")
 
     # Try to connect to Redis at startup; we'll retry on each request if
@@ -269,6 +321,98 @@ def create_gateway_app(
     app.state.cache_default_ttl = cache_default_ttl
     app.state.cache_enabled = cache_enabled
     app.state.upstream_timeout_ms = upstream_timeout_ms
+    app.state.start_time = time.time()
+
+    try:
+        from ..markov.first_order import FirstOrderMarkovChain
+
+        markov_chain = FirstOrderMarkovChain(smoothing=0.001)
+    except Exception:
+        class _NoOpMarkovChain:
+            def update(self, *_args, **_kwargs):
+                return self
+
+            def predict(self, *_args, **_kwargs):
+                return []
+
+            def get_metrics(self):
+                return {"prediction_count": 0, "top_1_accuracy": 0.0}
+
+        markov_chain = _NoOpMarkovChain()
+
+    try:
+        from ..rl.agents.dqn_agent import DQNAgent, DQNConfig
+
+        dqn_agent = DQNAgent(DQNConfig(state_dim=60, action_dim=7))
+    except Exception:
+        class _NoOpBuffer:
+            def __len__(self):
+                return 0
+
+        class _NoOpDQNAgent:
+            epsilon = 0.0
+            last_loss = 0.0
+            buffer = _NoOpBuffer()
+
+            def train_step(self):
+                return None
+
+            def save(self, _path: str):
+                return None
+
+            def load(self, _path: str):
+                return None
+
+            def store_transition(self, *_args, **_kwargs):
+                return None
+
+            def get_metrics(self):
+                return {"epsilon": self.epsilon, "buffer_size": len(self.buffer), "last_loss": self.last_loss}
+
+        dqn_agent = _NoOpDQNAgent()
+
+    collector = APICallCollector(redis_client=app.state.redis)
+    collector.start()
+    session_tracker = SessionTracker(markov_chain=markov_chain)
+    experience_builder = ExperienceBuilder(dqn_agent=dqn_agent)
+    scheduler = TrainingScheduler(
+        markov_chain=markov_chain,
+        dqn_agent=dqn_agent,
+        collector=collector,
+        redis_client=app.state.redis,
+    )
+    scheduler.start()
+
+    health_monitor = HealthMonitor(
+        components={
+            "collector": collector,
+            "scheduler": scheduler,
+            "cache_manager": None,
+            "markov_chain": markov_chain,
+            "dqn_agent": dqn_agent,
+            "resource_guard": scheduler.resource_guard,
+            "session_tracker": session_tracker,
+            "gateway": {"status": "healthy"},
+        },
+        version="1.0.0",
+    )
+    alert_manager = AlertManager(redis_client=app.state.redis)
+    dashboard_provider = DashboardDataProvider(
+        components={
+            "cache_manager": None,
+            "scheduler": scheduler,
+            "dqn_agent": dqn_agent,
+        }
+    )
+
+    app.state.collector = collector
+    app.state.session_tracker = session_tracker
+    app.state.experience_builder = experience_builder
+    app.state.training_scheduler = scheduler
+    app.state.health_monitor = health_monitor
+    app.state.alert_manager = alert_manager
+    app.state.dashboard_provider = dashboard_provider
+    app.state.rl_state_dim = getattr(getattr(dqn_agent, "config", None), "state_dim", _DEFAULT_RL_STATE_DIM)
 
     # ------------------------------------------------------------------
     # Admin endpoints (not proxied)
@@ -331,6 +475,34 @@ def create_gateway_app(
             "cache_rules": cache_rules,
         }
 
+    @app.get("/health")
+    async def health():
+        return health_monitor.health_check()
+
+    @app.get("/health/detailed")
+    async def detailed_health():
+        return health_monitor.detailed_health()
+
+    @app.get("/metrics")
+    async def prometheus_metrics():
+        return health_monitor.prometheus_metrics()
+
+    @app.get("/dashboard/stats")
+    async def dashboard_stats(hours: int = 6):
+        return dashboard_provider.get_stats(hours=hours)
+
+    @app.get("/alerts/active")
+    async def active_alerts():
+        return alert_manager.get_active()
+
+    @app.get("/scheduler/status")
+    async def scheduler_status():
+        return scheduler.get_status()
+
+    @app.post("/scheduler/trigger/{job_name}")
+    async def scheduler_trigger(job_name: str):
+        return scheduler.manual_trigger(job_name)
+
     # ------------------------------------------------------------------
     # Catch-all proxy
     # ------------------------------------------------------------------
@@ -341,6 +513,8 @@ def create_gateway_app(
     )
     async def proxy(request: Request, path: str):
         stats.total_requests += 1
+        request_start = time.perf_counter()
+        request_id = request.headers.get("x-request-id", str(uuid.uuid4()))
 
         full_path = f"/{path}"
         method = request.method.upper()
@@ -384,6 +558,26 @@ def create_gateway_app(
                     resp_headers["X-Cache"] = "HIT"
                     if data.get("prefetched"):
                         stats.prefetch_used += 1
+                    try:
+                        latency_ms = (time.perf_counter() - request_start) * 1000.0
+                        rec = _build_collection_record(
+                            request_id=request_id,
+                            session_tracker=session_tracker,
+                            request=request,
+                            req_headers=req_headers,
+                            method=method,
+                            full_path=full_path,
+                            query_params=query_params,
+                            status_code=data.get("status_code", 200),
+                            latency_ms=latency_ms,
+                            cache_hit=True,
+                            cache_key=cache_key,
+                            state_dim=app.state.rl_state_dim,
+                        )
+                        collector.record(rec)
+                        session_tracker.track(rec.session_id, full_path, {})
+                    except Exception:
+                        pass
                     return Response(
                         content=data.get("body", ""),
                         status_code=data.get("status_code", 200),
@@ -493,10 +687,46 @@ def create_gateway_app(
             daemon=True,
         ).start()
 
+        try:
+            latency_ms = (time.perf_counter() - request_start) * 1000.0
+            rec = _build_collection_record(
+                request_id=request_id,
+                session_tracker=session_tracker,
+                request=request,
+                req_headers=req_headers,
+                method=method,
+                full_path=full_path,
+                query_params=query_params,
+                status_code=upstream_resp.status_code,
+                latency_ms=latency_ms,
+                cache_hit=False,
+                cache_key=build_cache_key_raw(method, full_path, query_params, req_headers, cache_rules) if method == "GET" else "",
+                state_dim=app.state.rl_state_dim,
+            )
+            collector.record(rec)
+            session_tracker.track(rec.session_id, full_path, {})
+        except Exception:
+            pass
+
         return Response(
             content=upstream_resp.content,
             status_code=upstream_resp.status_code,
             headers=resp_headers,
         )
+
+    @app.on_event("shutdown")
+    async def _shutdown():
+        try:
+            collector.stop()
+        except Exception:
+            pass
+        try:
+            session_tracker.force_finalize_all()
+        except Exception:
+            pass
+        try:
+            scheduler.stop()
+        except Exception:
+            pass
 
     return app
