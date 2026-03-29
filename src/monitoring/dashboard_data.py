@@ -27,12 +27,24 @@ class DashboardDataProvider:
         hit = float(cache_stats.get("hit_rate", 0.0))
         eps = float(getattr(agent, "epsilon", 0.0)) if agent else 0.0
         loss = float(getattr(agent, "last_loss", 0.0)) if agent else 0.0
+        p50 = float(self.components.get("latency_p50_ms", 5.0))
+        p95 = float(self.components.get("latency_p95_ms", 25.0))
+        p99 = float(self.components.get("latency_p99_ms", 80.0))
+        # Fallback placeholder can be overridden by passing `top_api_sequences` in components.
+        top_api_sequences = self.components.get("top_api_sequences") or [
+            {
+                "sequence": ["GET:/api/auth", "GET:/api/users/me", "GET:/api/dashboard"],
+                "count": 1,
+                "cache_hit_rate": hit,
+                "placeholder": True,
+            }
+        ]
 
         return {
             "time_range": f"last_{hours}_hours",
             "cache_performance": {
                 "hit_rate_over_time": [{"timestamp": p.isoformat(), "rate": hit} for p in points],
-                "latency_over_time": [{"timestamp": p.isoformat(), "p50": 5, "p95": 25, "p99": 80} for p in points],
+                "latency_over_time": [{"timestamp": p.isoformat(), "p50": p50, "p95": p95, "p99": p99} for p in points],
             },
             "training_history": {
                 "loss_over_time": [{"timestamp": p.isoformat(), "loss": loss} for p in points],
@@ -49,13 +61,6 @@ class DashboardDataProvider:
                     for p in points
                 ]
             },
-            "top_api_sequences": [
-                {
-                    "sequence": ["GET:/api/auth", "GET:/api/users/me", "GET:/api/dashboard"],
-                    "count": 1,
-                    "cache_hit_rate": hit,
-                }
-            ],
+            "top_api_sequences": top_api_sequences,
             "scheduler_jobs": job_status,
         }
-

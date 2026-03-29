@@ -70,7 +70,10 @@ class JobRegistry:
 
     def trigger_job(self, name: str) -> None:
         """Trigger a one-off immediate run for a job."""
-        self.scheduler.add_job(self.scheduler.get_job(name).func)
+        job = self.scheduler.get_job(name)
+        if job is None:
+            raise ValueError(f"Unknown job: {name}")
+        job.modify(next_run_time=datetime.now(timezone.utc))
 
     def get_status(self) -> Dict[str, Dict[str, Any]]:
         """Return status map with updated next_run values."""

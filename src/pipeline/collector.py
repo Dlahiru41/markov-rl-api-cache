@@ -116,8 +116,9 @@ class APICallCollector:
         except Exception as exc:
             self._flush_errors += 1
             with self._lock:
-                for rec in reversed(records):
-                    self._buffer.appendleft(rec)
+                dropped_retry = self._requeue_failed_flush(existing=list(self._buffer), failed_records=records)
+                if dropped_retry > 0:
+                    self._dropped += dropped_retry
             logger.error("collector_flush_failed", data={"error": str(exc), "retry": True}, exc_info=True)
 
     def get_status(self) -> Dict[str, Any]:
@@ -151,6 +152,21 @@ class APICallCollector:
             self._buffer.clear()
             return items
 
+    def _requeue_failed_flush(self, existing: List[APICallRecord], failed_records: List[APICallRecord]) -> int:
+        """Requeue failed records while preserving recent in-flight entries."""
+        self._buffer.clear()
+        kept_existing = existing[-self.buffer_size :]
+        remaining = self.buffer_size - len(kept_existing)
+        retry_records = failed_records[-remaining:] if remaining > 0 else []
+        self._buffer.extend(kept_existing + retry_records)
+        dropped_retry = max(0, len(failed_records) - len(retry_records))
+        if dropped_retry > 0:
+            logger.warning(
+                "collector_retry_requeue_dropped_old_records",
+                data={"dropped_retry_records": dropped_retry},
+            )
+        return dropped_retry
+
     def _flush_to_jsonl(self, records: List[APICallRecord]) -> None:
         """Append full records to daily JSONL audit file."""
         date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -181,4 +197,3 @@ class APICallCollector:
             }
             pipe.rpush("rl:experiences", json.dumps(exp))
         pipe.execute()
-

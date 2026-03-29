@@ -94,8 +94,8 @@ class HealthMonitor:
 
         lines = [
             "# Cache metrics",
-            f"markov_cache_cache_hits_total {int(cache.get('hit_rate', 0.0) * max(1, cache.get('total_keys', 0)))}",
-            f"markov_cache_cache_misses_total {max(0, cache.get('total_keys', 0) - int(cache.get('hit_rate', 0.0) * max(1, cache.get('total_keys', 0))))}",
+            f"markov_cache_hits_total {int(cache.get('hit_rate', 0.0) * max(1, cache.get('total_keys', 0)))}",
+            f"markov_cache_misses_total {max(0, cache.get('total_keys', 0) - int(cache.get('hit_rate', 0.0) * max(1, cache.get('total_keys', 0))))}",
             "# RL metrics",
             f"rl_agent_epsilon {rl.get('epsilon', 0.0)}",
             f"rl_agent_replay_buffer_size {rl.get('replay_buffer_size', 0)}",
@@ -124,4 +124,3 @@ class HealthMonitor:
         )
 
         return PlainTextResponse("\n".join(lines) + "\n", media_type="text/plain; version=0.0.4")
-

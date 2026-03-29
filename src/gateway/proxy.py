@@ -99,6 +99,7 @@ def _get_redis_client():
 
 
 _GATEWAY_CACHE_PREFIX = "gw_cache:"
+_DEFAULT_RL_STATE_DIM = 60
 
 
 def _redis_get(client, key: str) -> Optional[bytes]:
@@ -143,6 +144,46 @@ def _redis_invalidate(client, pattern: str) -> int:
 def _redis_flush(client) -> int:
     """Flush all gateway cache keys."""
     return _redis_invalidate(client, "*")
+
+
+def _build_collection_record(
+    *,
+    request_id: str,
+    session_tracker,
+    request: Request,
+    req_headers: Dict[str, str],
+    method: str,
+    full_path: str,
+    query_params: Dict[str, Any],
+    status_code: int,
+    latency_ms: float,
+    cache_hit: bool,
+    cache_key: str,
+    state_dim: int,
+) -> APICallRecord:
+    """Build APICallRecord with session resolution and canonical defaults."""
+    session_id = session_tracker.extract_session_id(
+        headers={k.lower(): v for k, v in req_headers.items()},
+        client_ip=request.client.host if request.client else "",
+        user_agent=req_headers.get("user-agent", ""),
+    )
+    return APICallRecord(
+        request_id=request_id,
+        session_id=session_id,
+        timestamp=datetime.now(timezone.utc),
+        method=method,
+        path=full_path,
+        query_params=str(query_params),
+        upstream_status=status_code,
+        response_time_ms=latency_ms,
+        cache_hit=cache_hit,
+        cache_key=cache_key,
+        markov_prediction=[],
+        rl_action_taken=0,
+        rl_state_vector=[0.0] * state_dim,
+        rl_reward=0.0,
+        context={},
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -371,6 +412,7 @@ def create_gateway_app(
     app.state.health_monitor = health_monitor
     app.state.alert_manager = alert_manager
     app.state.dashboard_provider = dashboard_provider
+    app.state.rl_state_dim = getattr(getattr(dqn_agent, "config", None), "state_dim", _DEFAULT_RL_STATE_DIM)
 
     # ------------------------------------------------------------------
     # Admin endpoints (not proxied)
@@ -517,32 +559,23 @@ def create_gateway_app(
                     if data.get("prefetched"):
                         stats.prefetch_used += 1
                     try:
-                        session_id = session_tracker.extract_session_id(
-                            headers={k.lower(): v for k, v in req_headers.items()},
-                            client_ip=request.client.host if request.client else "",
-                            user_agent=req_headers.get("user-agent", ""),
-                        )
                         latency_ms = (time.perf_counter() - request_start) * 1000.0
-                        rec = APICallRecord(
+                        rec = _build_collection_record(
                             request_id=request_id,
-                            session_id=session_id,
-                            timestamp=datetime.now(timezone.utc),
+                            session_tracker=session_tracker,
+                            request=request,
+                            req_headers=req_headers,
                             method=method,
-                            path=full_path,
-                            query_params=str(request.query_params),
-                            upstream_status=data.get("status_code", 200),
-                            response_time_ms=latency_ms,
+                            full_path=full_path,
+                            query_params=query_params,
+                            status_code=data.get("status_code", 200),
+                            latency_ms=latency_ms,
                             cache_hit=True,
                             cache_key=cache_key,
-                            markov_prediction=[],
-                            rl_action_taken=0,
-                            rl_state_vector=[0.0] * 60,
-                            rl_reward=0.0,
-                            context={},
+                            state_dim=app.state.rl_state_dim,
                         )
-                        import threading
-                        threading.Thread(target=collector.record, args=(rec,), daemon=True).start()
-                        threading.Thread(target=session_tracker.track, args=(session_id, full_path, {}), daemon=True).start()
+                        collector.record(rec)
+                        session_tracker.track(rec.session_id, full_path, {})
                     except Exception:
                         pass
                     return Response(
@@ -655,31 +688,23 @@ def create_gateway_app(
         ).start()
 
         try:
-            session_id = session_tracker.extract_session_id(
-                headers={k.lower(): v for k, v in req_headers.items()},
-                client_ip=request.client.host if request.client else "",
-                user_agent=req_headers.get("user-agent", ""),
-            )
             latency_ms = (time.perf_counter() - request_start) * 1000.0
-            rec = APICallRecord(
+            rec = _build_collection_record(
                 request_id=request_id,
-                session_id=session_id,
-                timestamp=datetime.now(timezone.utc),
+                session_tracker=session_tracker,
+                request=request,
+                req_headers=req_headers,
                 method=method,
-                path=full_path,
-                query_params=str(request.query_params),
-                upstream_status=upstream_resp.status_code,
-                response_time_ms=latency_ms,
+                full_path=full_path,
+                query_params=query_params,
+                status_code=upstream_resp.status_code,
+                latency_ms=latency_ms,
                 cache_hit=False,
                 cache_key=build_cache_key_raw(method, full_path, query_params, req_headers, cache_rules) if method == "GET" else "",
-                markov_prediction=[],
-                rl_action_taken=0,
-                rl_state_vector=[0.0] * 60,
-                rl_reward=0.0,
-                context={},
+                state_dim=app.state.rl_state_dim,
             )
-            threading.Thread(target=collector.record, args=(rec,), daemon=True).start()
-            threading.Thread(target=session_tracker.track, args=(session_id, full_path, {}), daemon=True).start()
+            collector.record(rec)
+            session_tracker.track(rec.session_id, full_path, {})
         except Exception:
             pass
 

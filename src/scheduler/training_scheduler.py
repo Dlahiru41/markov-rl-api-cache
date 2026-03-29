@@ -214,6 +214,7 @@ class TrainingScheduler:
 
         try:
             self.dqn_agent.load(str(ckpt))
+            # Placeholder metrics until full offline evaluation over replay samples is integrated.
             avg_reward = 0.0
             hit_rate = 0.0
             prediction_accuracy = 0.0
@@ -329,4 +330,3 @@ class TrainingScheduler:
             self.redis.incr(key)
         except Exception:
             return
-
