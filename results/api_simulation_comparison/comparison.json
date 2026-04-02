@@ -1,68 +1,68 @@
 {
   "metadata": {
-    "generated_at": "2026-03-15T10:20:16.757091",
+    "generated_at": "2026-04-02T06:05:52.737888",
     "seed": 42,
-    "episodes": 2,
-    "max_steps": 20,
-    "session_length": 20,
+    "episodes": 12,
+    "max_steps": 60,
+    "session_length": 60,
     "num_apis": 20,
     "solution_policy_mode": "heuristic",
     "agent_model": null
   },
   "without_solution": {
     "name": "without_solution",
-    "episodes": 2,
-    "total_requests": 40,
-    "mean_reward": 183.49999999999994,
-    "mean_cache_hit_rate": 0.6000000000000001,
+    "episodes": 12,
+    "total_requests": 720,
+    "mean_reward": 758.4583333333339,
+    "mean_cache_hit_rate": 0.87160734327401,
     "mean_prediction_accuracy": 0.0,
     "mean_prefetch_efficiency": 0.0,
     "cascade_rate": 0.0,
-    "mean_p95_latency_ms": 37.47991439810536,
-    "success_rate": 0.975,
+    "mean_p95_latency_ms": 0.6114236086699717,
+    "success_rate": 0.9805555555555555,
     "action_distribution": {
-      "DO_NOTHING": 40
+      "DO_NOTHING": 720
     },
     "prometheus_snapshot": {
-      "request_count_total": 40.0,
-      "cache_hits_total": 26.0,
-      "cache_misses_total": 14.0,
-      "cache_hit_rate": 0.65,
+      "request_count_total": 720.0,
+      "cache_hits_total": 629.0,
+      "cache_misses_total": 91.0,
+      "cache_hit_rate": 0.8736111111111111,
       "prefetch_efficiency": 0.0,
       "cascade_events_total": 0.0,
-      "request_latency_avg_ms": 76.48304750394699
+      "request_latency_avg_ms": 32.13789111919525
     }
   },
   "with_solution": {
     "name": "with_solution",
-    "episodes": 2,
-    "total_requests": 40,
-    "mean_reward": 198.99999999999994,
-    "mean_cache_hit_rate": 0.6499999999999999,
+    "episodes": 12,
+    "total_requests": 720,
+    "mean_reward": 773.9583333333339,
+    "mean_cache_hit_rate": 0.8882740099406764,
     "mean_prediction_accuracy": 0.0,
     "mean_prefetch_efficiency": 0.0,
     "cascade_rate": 0.0,
-    "mean_p95_latency_ms": 32.12564091266174,
-    "success_rate": 0.975,
+    "mean_p95_latency_ms": 0.5240773788599756,
+    "success_rate": 0.9805555555555555,
     "action_distribution": {
-      "CACHE_CURRENT": 11,
-      "DO_NOTHING": 29
+      "CACHE_CURRENT": 63,
+      "DO_NOTHING": 657
     },
     "prometheus_snapshot": {
-      "request_count_total": 40.0,
-      "cache_hits_total": 28.0,
-      "cache_misses_total": 12.0,
-      "cache_hit_rate": 0.7,
+      "request_count_total": 720.0,
+      "cache_hits_total": 641.0,
+      "cache_misses_total": 79.0,
+      "cache_hit_rate": 0.8902777777777777,
       "prefetch_efficiency": 0.0,
       "cascade_events_total": 0.0,
-      "request_latency_avg_ms": 65.55689786052602
+      "request_latency_avg_ms": 27.546763816453076
     }
   },
   "comparison": {
-    "reward_improvement_pct": 8.446866485013626,
-    "cache_hit_rate_improvement_pct": 8.333333333333302,
+    "reward_improvement_pct": 2.043619183651045,
+    "cache_hit_rate_improvement_pct": 1.9121760268863215,
     "success_rate_improvement_pct": 0.0,
     "cascade_rate_reduction_pct": 0.0,
-    "latency_reduction_pct": 14.28571428571428
+    "latency_reduction_pct": 14.285714285714304
   }
 }

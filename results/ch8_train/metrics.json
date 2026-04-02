@@ -1,0 +1,9 @@
+{
+  "train_rewards": [],
+  "train_lengths": [],
+  "eval_rewards": [],
+  "eval_episodes": [],
+  "losses": [],
+  "epsilons": [],
+  "q_values": []
+}

@@ -318,6 +318,35 @@ python -m pytest tests/unit/test_gateway.py -v
 python -m pytest -xvs
 ```
 
+### One-command Chapter 8 evidence run
+
+To reproduce the same command set used for Chapter 8 reporting and get
+structured outputs (logs + summary JSON) in one run:
+
+```bash
+python scripts/run_chapter8_results.py
+```
+
+This writes a timestamped directory under `results/` containing:
+- per-command `*.log` files
+- `summary.json` with command status, timings, parsed pytest summaries, and
+  key artifact paths/parsed JSON where available
+
+The script auto-installs required dependencies if `pytest` is missing.
+
+Optional:
+
+```bash
+# Run only selected groups
+python scripts/run_chapter8_results.py --only functional nonfunctional model
+
+# Preview without executing commands
+python scripts/run_chapter8_results.py --dry-run
+
+# Skip auto dependency install
+python scripts/run_chapter8_results.py --skip-install-deps
+```
+
 ---
 
 ## Architecture Overview
