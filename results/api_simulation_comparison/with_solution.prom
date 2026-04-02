@@ -17,21 +17,21 @@ markov_rl_cache_hits_total{endpoint="/api/reviews/list",service="api-sim-with_so
 markov_rl_cache_hits_total{endpoint="/api/wishlist/view",service="api-sim-with_solution"} 20.0
 # HELP markov_rl_cache_hits_created Total cache hits
 # TYPE markov_rl_cache_hits_created gauge
-markov_rl_cache_hits_created{endpoint="/api/orders/create",service="api-sim-with_solution"} 1.775114281084451e+09
-markov_rl_cache_hits_created{endpoint="/api/cart/view",service="api-sim-with_solution"} 1.7751142810861225e+09
-markov_rl_cache_hits_created{endpoint="/api/products/{id}",service="api-sim-with_solution"} 1.7751142810861225e+09
-markov_rl_cache_hits_created{endpoint="/api/products/list",service="api-sim-with_solution"} 1.7751142810861225e+09
-markov_rl_cache_hits_created{endpoint="/api/cart/add",service="api-sim-with_solution"} 1.775114281087122e+09
-markov_rl_cache_hits_created{endpoint="/api/user/profile",service="api-sim-with_solution"} 1.775114281087122e+09
-markov_rl_cache_hits_created{endpoint="/api/orders/list",service="api-sim-with_solution"} 1.7751142810881217e+09
-markov_rl_cache_hits_created{endpoint="/api/auth/login",service="api-sim-with_solution"} 1.7751142810881217e+09
-markov_rl_cache_hits_created{endpoint="/api/recommendations",service="api-sim-with_solution"} 1.7751142810881217e+09
-markov_rl_cache_hits_created{endpoint="/api/payment/process",service="api-sim-with_solution"} 1.7751142810891213e+09
-markov_rl_cache_hits_created{endpoint="/api/categories",service="api-sim-with_solution"} 1.7751142810932713e+09
-markov_rl_cache_hits_created{endpoint="/api/products/search",service="api-sim-with_solution"} 1.7751142810942712e+09
-markov_rl_cache_hits_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution"} 1.7751142810952697e+09
-markov_rl_cache_hits_created{endpoint="/api/reviews/list",service="api-sim-with_solution"} 1.7751142811164033e+09
-markov_rl_cache_hits_created{endpoint="/api/wishlist/view",service="api-sim-with_solution"} 1.7751142811184018e+09
+markov_rl_cache_hits_created{endpoint="/api/orders/create",service="api-sim-with_solution"} 1.7751378769287536e+09
+markov_rl_cache_hits_created{endpoint="/api/cart/view",service="api-sim-with_solution"} 1.7751378769297304e+09
+markov_rl_cache_hits_created{endpoint="/api/products/{id}",service="api-sim-with_solution"} 1.7751378769300005e+09
+markov_rl_cache_hits_created{endpoint="/api/products/list",service="api-sim-with_solution"} 1.7751378769305744e+09
+markov_rl_cache_hits_created{endpoint="/api/cart/add",service="api-sim-with_solution"} 1.775137876931381e+09
+markov_rl_cache_hits_created{endpoint="/api/user/profile",service="api-sim-with_solution"} 1.775137876931504e+09
+markov_rl_cache_hits_created{endpoint="/api/orders/list",service="api-sim-with_solution"} 1.7751378769319043e+09
+markov_rl_cache_hits_created{endpoint="/api/auth/login",service="api-sim-with_solution"} 1.7751378769323397e+09
+markov_rl_cache_hits_created{endpoint="/api/recommendations",service="api-sim-with_solution"} 1.7751378769327865e+09
+markov_rl_cache_hits_created{endpoint="/api/payment/process",service="api-sim-with_solution"} 1.7751378769329028e+09
+markov_rl_cache_hits_created{endpoint="/api/categories",service="api-sim-with_solution"} 1.775137876938214e+09
+markov_rl_cache_hits_created{endpoint="/api/products/search",service="api-sim-with_solution"} 1.7751378769392018e+09
+markov_rl_cache_hits_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution"} 1.7751378769400475e+09
+markov_rl_cache_hits_created{endpoint="/api/reviews/list",service="api-sim-with_solution"} 1.7751378769632633e+09
+markov_rl_cache_hits_created{endpoint="/api/wishlist/view",service="api-sim-with_solution"} 1.7751378769659164e+09
 # HELP markov_rl_cache_misses_total Total cache misses
 # TYPE markov_rl_cache_misses_total counter
 markov_rl_cache_misses_total{endpoint="/api/products/{id}",service="api-sim-with_solution"} 11.0
@@ -51,21 +51,21 @@ markov_rl_cache_misses_total{endpoint="/api/wishlist/view",service="api-sim-with
 markov_rl_cache_misses_total{endpoint="/api/reviews/list",service="api-sim-with_solution"} 2.0
 # HELP markov_rl_cache_misses_created Total cache misses
 # TYPE markov_rl_cache_misses_created gauge
-markov_rl_cache_misses_created{endpoint="/api/products/{id}",service="api-sim-with_solution"} 1.7751142810851257e+09
-markov_rl_cache_misses_created{endpoint="/api/cart/view",service="api-sim-with_solution"} 1.7751142810851257e+09
-markov_rl_cache_misses_created{endpoint="/api/orders/list",service="api-sim-with_solution"} 1.7751142810851257e+09
-markov_rl_cache_misses_created{endpoint="/api/products/list",service="api-sim-with_solution"} 1.7751142810851257e+09
-markov_rl_cache_misses_created{endpoint="/api/recommendations",service="api-sim-with_solution"} 1.7751142810861225e+09
-markov_rl_cache_misses_created{endpoint="/api/cart/add",service="api-sim-with_solution"} 1.775114281087122e+09
-markov_rl_cache_misses_created{endpoint="/api/user/profile",service="api-sim-with_solution"} 1.775114281087122e+09
-markov_rl_cache_misses_created{endpoint="/api/auth/login",service="api-sim-with_solution"} 1.7751142810881217e+09
-markov_rl_cache_misses_created{endpoint="/api/payment/process",service="api-sim-with_solution"} 1.7751142810881217e+09
-markov_rl_cache_misses_created{endpoint="/api/categories",service="api-sim-with_solution"} 1.7751142810932713e+09
-markov_rl_cache_misses_created{endpoint="/api/products/search",service="api-sim-with_solution"} 1.7751142810932713e+09
-markov_rl_cache_misses_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution"} 1.7751142810952697e+09
-markov_rl_cache_misses_created{endpoint="/api/orders/create",service="api-sim-with_solution"} 1.7751142811088917e+09
-markov_rl_cache_misses_created{endpoint="/api/wishlist/view",service="api-sim-with_solution"} 1.775114281115403e+09
-markov_rl_cache_misses_created{endpoint="/api/reviews/list",service="api-sim-with_solution"} 1.7751142811164033e+09
+markov_rl_cache_misses_created{endpoint="/api/products/{id}",service="api-sim-with_solution"} 1.7751378769290016e+09
+markov_rl_cache_misses_created{endpoint="/api/cart/view",service="api-sim-with_solution"} 1.7751378769291945e+09
+markov_rl_cache_misses_created{endpoint="/api/orders/list",service="api-sim-with_solution"} 1.7751378769293952e+09
+markov_rl_cache_misses_created{endpoint="/api/products/list",service="api-sim-with_solution"} 1.7751378769295838e+09
+markov_rl_cache_misses_created{endpoint="/api/recommendations",service="api-sim-with_solution"} 1.7751378769301636e+09
+markov_rl_cache_misses_created{endpoint="/api/cart/add",service="api-sim-with_solution"} 1.7751378769308062e+09
+markov_rl_cache_misses_created{endpoint="/api/user/profile",service="api-sim-with_solution"} 1.7751378769311037e+09
+markov_rl_cache_misses_created{endpoint="/api/auth/login",service="api-sim-with_solution"} 1.77513787693178e+09
+markov_rl_cache_misses_created{endpoint="/api/payment/process",service="api-sim-with_solution"} 1.7751378769321787e+09
+markov_rl_cache_misses_created{endpoint="/api/categories",service="api-sim-with_solution"} 1.7751378769378786e+09
+markov_rl_cache_misses_created{endpoint="/api/products/search",service="api-sim-with_solution"} 1.7751378769380672e+09
+markov_rl_cache_misses_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution"} 1.775137876939929e+09
+markov_rl_cache_misses_created{endpoint="/api/orders/create",service="api-sim-with_solution"} 1.7751378769546313e+09
+markov_rl_cache_misses_created{endpoint="/api/wishlist/view",service="api-sim-with_solution"} 1.775137876961937e+09
+markov_rl_cache_misses_created{endpoint="/api/reviews/list",service="api-sim-with_solution"} 1.775137876962926e+09
 # HELP markov_rl_cache_hit_rate Rolling cache hit rate [0,1]
 # TYPE markov_rl_cache_hit_rate gauge
 markov_rl_cache_hit_rate{service="api-sim-with_solution"} 0.8902777777777777
@@ -110,13 +110,13 @@ markov_rl_cache_hit_rate{service="api-sim-with_solution"} 0.8902777777777777
 markov_rl_rl_episodes_total{service="api-sim-with_solution"} 12.0
 # HELP markov_rl_rl_episodes_created Total completed training episodes
 # TYPE markov_rl_rl_episodes_created gauge
-markov_rl_rl_episodes_created{service="api-sim-with_solution"} 1.7751142810922637e+09
+markov_rl_rl_episodes_created{service="api-sim-with_solution"} 1.7751378769364417e+09
 # HELP markov_rl_rl_steps_total Total environment interaction steps
 # TYPE markov_rl_rl_steps_total counter
 markov_rl_rl_steps_total{service="api-sim-with_solution"} 720.0
 # HELP markov_rl_rl_steps_created Total environment interaction steps
 # TYPE markov_rl_rl_steps_created gauge
-markov_rl_rl_steps_created{service="api-sim-with_solution"} 1.775114281084451e+09
+markov_rl_rl_steps_created{service="api-sim-with_solution"} 1.7751378769284327e+09
 # HELP markov_rl_rl_episode_reward Cumulative reward per training episode
 # TYPE markov_rl_rl_episode_reward histogram
 markov_rl_rl_episode_reward_bucket{le="-100.0",service="api-sim-with_solution"} 0.0
@@ -137,7 +137,7 @@ markov_rl_rl_episode_reward_bucket{le="+Inf",service="api-sim-with_solution"} 12
 markov_rl_rl_episode_reward_count{service="api-sim-with_solution"} 12.0
 # HELP markov_rl_rl_episode_reward_created Cumulative reward per training episode
 # TYPE markov_rl_rl_episode_reward_created gauge
-markov_rl_rl_episode_reward_created{service="api-sim-with_solution"} 1.7751142810922637e+09
+markov_rl_rl_episode_reward_created{service="api-sim-with_solution"} 1.7751378769364672e+09
 # HELP markov_rl_rl_episode_reward_mean Rolling mean episode reward (last 100 episodes)
 # TYPE markov_rl_rl_episode_reward_mean gauge
 markov_rl_rl_episode_reward_mean{service="api-sim-with_solution"} 773.958333333334
@@ -155,7 +155,7 @@ markov_rl_rl_episode_length_count{service="api-sim-with_solution"} 12.0
 markov_rl_rl_episode_length_sum{service="api-sim-with_solution"} 720.0
 # HELP markov_rl_rl_episode_length_created Number of steps per training episode
 # TYPE markov_rl_rl_episode_length_created gauge
-markov_rl_rl_episode_length_created{service="api-sim-with_solution"} 1.7751142810922637e+09
+markov_rl_rl_episode_length_created{service="api-sim-with_solution"} 1.7751378769364972e+09
 # HELP markov_rl_rl_epsilon Current epsilon for ε-greedy exploration
 # TYPE markov_rl_rl_epsilon gauge
 # HELP markov_rl_rl_loss Latest TD-error / training loss value
@@ -172,8 +172,8 @@ markov_rl_rl_action_counts_total{action="CACHE_CURRENT",service="api-sim-with_so
 markov_rl_rl_action_counts_total{action="DO_NOTHING",service="api-sim-with_solution"} 657.0
 # HELP markov_rl_rl_action_counts_created Actions selected by the agent
 # TYPE markov_rl_rl_action_counts_created gauge
-markov_rl_rl_action_counts_created{action="CACHE_CURRENT",service="api-sim-with_solution"} 1.775114281084451e+09
-markov_rl_rl_action_counts_created{action="DO_NOTHING",service="api-sim-with_solution"} 1.775114281084451e+09
+markov_rl_rl_action_counts_created{action="CACHE_CURRENT",service="api-sim-with_solution"} 1.775137876928445e+09
+markov_rl_rl_action_counts_created{action="DO_NOTHING",service="api-sim-with_solution"} 1.7751378769288166e+09
 # HELP markov_rl_rl_training_steps_total Gradient update (mini-batch) steps performed
 # TYPE markov_rl_rl_training_steps_total counter
 # HELP markov_rl_cascade_risk_score Current cascade failure risk score [0,1]
@@ -628,29 +628,29 @@ markov_rl_request_latency_seconds_count{endpoint="/api/reviews/list",service="ap
 markov_rl_request_latency_seconds_sum{endpoint="/api/reviews/list",service="api-sim-with_solution",status="500"} 0.01810270497984371
 # HELP markov_rl_request_latency_seconds_created End-to-end API request latency
 # TYPE markov_rl_request_latency_seconds_created gauge
-markov_rl_request_latency_seconds_created{endpoint="/api/orders/create",service="api-sim-with_solution",status="200"} 1.775114281084451e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/products/{id}",service="api-sim-with_solution",status="200"} 1.7751142810851257e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/cart/view",service="api-sim-with_solution",status="200"} 1.7751142810851257e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/orders/list",service="api-sim-with_solution",status="200"} 1.7751142810851257e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/products/list",service="api-sim-with_solution",status="200"} 1.7751142810851257e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/recommendations",service="api-sim-with_solution",status="200"} 1.7751142810861225e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/orders/create",service="api-sim-with_solution",status="500"} 1.7751142810861225e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/cart/add",service="api-sim-with_solution",status="500"} 1.775114281087122e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/user/profile",service="api-sim-with_solution",status="200"} 1.775114281087122e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/cart/add",service="api-sim-with_solution",status="200"} 1.775114281087122e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/auth/login",service="api-sim-with_solution",status="500"} 1.775114281087122e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/payment/process",service="api-sim-with_solution",status="200"} 1.7751142810881217e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/auth/login",service="api-sim-with_solution",status="200"} 1.7751142810881217e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/categories",service="api-sim-with_solution",status="200"} 1.7751142810932713e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/products/search",service="api-sim-with_solution",status="200"} 1.7751142810932713e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="200"} 1.7751142810952697e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/wishlist/view",service="api-sim-with_solution",status="200"} 1.775114281115403e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/reviews/list",service="api-sim-with_solution",status="200"} 1.7751142811164033e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/products/list",service="api-sim-with_solution",status="500"} 1.775114281124565e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="500"} 1.7751142811325676e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/products/{id}",service="api-sim-with_solution",status="500"} 1.7751142811483133e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/recommendations",service="api-sim-with_solution",status="500"} 1.7751142811595094e+09
-markov_rl_request_latency_seconds_created{endpoint="/api/reviews/list",service="api-sim-with_solution",status="500"} 1.775114281173647e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/orders/create",service="api-sim-with_solution",status="200"} 1.7751378769286947e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/products/{id}",service="api-sim-with_solution",status="200"} 1.7751378769289458e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/cart/view",service="api-sim-with_solution",status="200"} 1.775137876929159e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/orders/list",service="api-sim-with_solution",status="200"} 1.775137876929359e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/products/list",service="api-sim-with_solution",status="200"} 1.7751378769295483e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/recommendations",service="api-sim-with_solution",status="200"} 1.7751378769301276e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/orders/create",service="api-sim-with_solution",status="500"} 1.7751378769303038e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/cart/add",service="api-sim-with_solution",status="500"} 1.7751378769307668e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/user/profile",service="api-sim-with_solution",status="200"} 1.7751378769310658e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/cart/add",service="api-sim-with_solution",status="200"} 1.7751378769313455e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/auth/login",service="api-sim-with_solution",status="500"} 1.775137876931744e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/payment/process",service="api-sim-with_solution",status="200"} 1.7751378769321444e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/auth/login",service="api-sim-with_solution",status="200"} 1.7751378769322953e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/categories",service="api-sim-with_solution",status="200"} 1.7751378769378374e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/products/search",service="api-sim-with_solution",status="200"} 1.77513787693803e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="200"} 1.7751378769398909e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/wishlist/view",service="api-sim-with_solution",status="200"} 1.7751378769618933e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/reviews/list",service="api-sim-with_solution",status="200"} 1.7751378769628882e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/products/list",service="api-sim-with_solution",status="500"} 1.7751378769721138e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="500"} 1.775137876981104e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/products/{id}",service="api-sim-with_solution",status="500"} 1.7751378769986422e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/recommendations",service="api-sim-with_solution",status="500"} 1.7751378770078018e+09
+markov_rl_request_latency_seconds_created{endpoint="/api/reviews/list",service="api-sim-with_solution",status="500"} 1.7751378770199547e+09
 # HELP markov_rl_request_count_total Total API requests handled
 # TYPE markov_rl_request_count_total counter
 markov_rl_request_count_total{endpoint="/api/orders/create",service="api-sim-with_solution",status="200"} 27.0
@@ -678,29 +678,29 @@ markov_rl_request_count_total{endpoint="/api/recommendations",service="api-sim-w
 markov_rl_request_count_total{endpoint="/api/reviews/list",service="api-sim-with_solution",status="500"} 1.0
 # HELP markov_rl_request_count_created Total API requests handled
 # TYPE markov_rl_request_count_created gauge
-markov_rl_request_count_created{endpoint="/api/orders/create",service="api-sim-with_solution",status="200"} 1.775114281084451e+09
-markov_rl_request_count_created{endpoint="/api/products/{id}",service="api-sim-with_solution",status="200"} 1.7751142810851257e+09
-markov_rl_request_count_created{endpoint="/api/cart/view",service="api-sim-with_solution",status="200"} 1.7751142810851257e+09
-markov_rl_request_count_created{endpoint="/api/orders/list",service="api-sim-with_solution",status="200"} 1.7751142810851257e+09
-markov_rl_request_count_created{endpoint="/api/products/list",service="api-sim-with_solution",status="200"} 1.7751142810851257e+09
-markov_rl_request_count_created{endpoint="/api/recommendations",service="api-sim-with_solution",status="200"} 1.7751142810861225e+09
-markov_rl_request_count_created{endpoint="/api/orders/create",service="api-sim-with_solution",status="500"} 1.7751142810861225e+09
-markov_rl_request_count_created{endpoint="/api/cart/add",service="api-sim-with_solution",status="500"} 1.7751142810861225e+09
-markov_rl_request_count_created{endpoint="/api/user/profile",service="api-sim-with_solution",status="200"} 1.775114281087122e+09
-markov_rl_request_count_created{endpoint="/api/cart/add",service="api-sim-with_solution",status="200"} 1.775114281087122e+09
-markov_rl_request_count_created{endpoint="/api/auth/login",service="api-sim-with_solution",status="500"} 1.775114281087122e+09
-markov_rl_request_count_created{endpoint="/api/payment/process",service="api-sim-with_solution",status="200"} 1.7751142810881217e+09
-markov_rl_request_count_created{endpoint="/api/auth/login",service="api-sim-with_solution",status="200"} 1.7751142810881217e+09
-markov_rl_request_count_created{endpoint="/api/categories",service="api-sim-with_solution",status="200"} 1.7751142810932713e+09
-markov_rl_request_count_created{endpoint="/api/products/search",service="api-sim-with_solution",status="200"} 1.7751142810932713e+09
-markov_rl_request_count_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="200"} 1.7751142810952697e+09
-markov_rl_request_count_created{endpoint="/api/wishlist/view",service="api-sim-with_solution",status="200"} 1.775114281115403e+09
-markov_rl_request_count_created{endpoint="/api/reviews/list",service="api-sim-with_solution",status="200"} 1.7751142811164033e+09
-markov_rl_request_count_created{endpoint="/api/products/list",service="api-sim-with_solution",status="500"} 1.775114281124565e+09
-markov_rl_request_count_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="500"} 1.7751142811325676e+09
-markov_rl_request_count_created{endpoint="/api/products/{id}",service="api-sim-with_solution",status="500"} 1.7751142811483133e+09
-markov_rl_request_count_created{endpoint="/api/recommendations",service="api-sim-with_solution",status="500"} 1.7751142811595094e+09
-markov_rl_request_count_created{endpoint="/api/reviews/list",service="api-sim-with_solution",status="500"} 1.775114281173647e+09
+markov_rl_request_count_created{endpoint="/api/orders/create",service="api-sim-with_solution",status="200"} 1.7751378769286718e+09
+markov_rl_request_count_created{endpoint="/api/products/{id}",service="api-sim-with_solution",status="200"} 1.7751378769289339e+09
+markov_rl_request_count_created{endpoint="/api/cart/view",service="api-sim-with_solution",status="200"} 1.7751378769291418e+09
+markov_rl_request_count_created{endpoint="/api/orders/list",service="api-sim-with_solution",status="200"} 1.7751378769293473e+09
+markov_rl_request_count_created{endpoint="/api/products/list",service="api-sim-with_solution",status="200"} 1.775137876929537e+09
+markov_rl_request_count_created{endpoint="/api/recommendations",service="api-sim-with_solution",status="200"} 1.7751378769301162e+09
+markov_rl_request_count_created{endpoint="/api/orders/create",service="api-sim-with_solution",status="500"} 1.7751378769302921e+09
+markov_rl_request_count_created{endpoint="/api/cart/add",service="api-sim-with_solution",status="500"} 1.7751378769306893e+09
+markov_rl_request_count_created{endpoint="/api/user/profile",service="api-sim-with_solution",status="200"} 1.7751378769310544e+09
+markov_rl_request_count_created{endpoint="/api/cart/add",service="api-sim-with_solution",status="200"} 1.775137876931321e+09
+markov_rl_request_count_created{endpoint="/api/auth/login",service="api-sim-with_solution",status="500"} 1.7751378769317327e+09
+markov_rl_request_count_created{endpoint="/api/payment/process",service="api-sim-with_solution",status="200"} 1.7751378769321332e+09
+markov_rl_request_count_created{endpoint="/api/auth/login",service="api-sim-with_solution",status="200"} 1.775137876932285e+09
+markov_rl_request_count_created{endpoint="/api/categories",service="api-sim-with_solution",status="200"} 1.7751378769378216e+09
+markov_rl_request_count_created{endpoint="/api/products/search",service="api-sim-with_solution",status="200"} 1.7751378769380174e+09
+markov_rl_request_count_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="200"} 1.7751378769398773e+09
+markov_rl_request_count_created{endpoint="/api/wishlist/view",service="api-sim-with_solution",status="200"} 1.7751378769618738e+09
+markov_rl_request_count_created{endpoint="/api/reviews/list",service="api-sim-with_solution",status="200"} 1.775137876962875e+09
+markov_rl_request_count_created{endpoint="/api/products/list",service="api-sim-with_solution",status="500"} 1.7751378769720976e+09
+markov_rl_request_count_created{endpoint="/api/search/autocomplete",service="api-sim-with_solution",status="500"} 1.7751378769810865e+09
+markov_rl_request_count_created{endpoint="/api/products/{id}",service="api-sim-with_solution",status="500"} 1.775137876998623e+09
+markov_rl_request_count_created{endpoint="/api/recommendations",service="api-sim-with_solution",status="500"} 1.7751378770077827e+09
+markov_rl_request_count_created{endpoint="/api/reviews/list",service="api-sim-with_solution",status="500"} 1.7751378770199358e+09
 # HELP markov_rl_backend_call_latency_seconds Downstream (cache-miss) backend call latency
 # TYPE markov_rl_backend_call_latency_seconds histogram
 # HELP markov_rl_system_cpu_usage System CPU utilisation fraction [0,1]
