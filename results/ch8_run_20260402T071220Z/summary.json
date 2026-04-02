@@ -1,0 +1,330 @@
+{
+  "generated_at": "2026-04-02T07:12:20.729256+00:00",
+  "repo_root": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache",
+  "output_dir": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_run_20260402T071220Z",
+  "dry_run": false,
+  "selected_groups": [
+    "functional",
+    "nonfunctional",
+    "model",
+    "performance",
+    "simulation",
+    "baselines",
+    "training"
+  ],
+  "runs": [
+    {
+      "key": "dependency_setup",
+      "description": "Ensure runtime dependencies for Chapter 8 command set are available",
+      "command": "C:\\Program Files\\Python312\\python.exe -m pip install -r C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\requirements.txt -r C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\requirements_gym.txt -r C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\requirements_integration_tests.txt scikit-learn",
+      "log_file": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_run_20260402T071220Z\\dependency_setup.log",
+      "status": "already_satisfied",
+      "return_code": null,
+      "duration_seconds": 0.0,
+      "started_at": "2026-04-02T07:12:20.729256+00:00",
+      "finished_at": "2026-04-02T07:12:20.730271+00:00"
+    },
+    {
+      "key": "functional",
+      "description": "Functional requirements suite (FR-01..FR-20)",
+      "command": "C:\\Program Files\\Python312\\python.exe -m pytest tests/functional/test_functional_requirements.py -ra",
+      "log_file": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_run_20260402T071220Z\\functional.log",
+      "status": "success",
+      "return_code": 0,
+      "duration_seconds": 30.007,
+      "started_at": "2026-04-02T07:12:20.730271+00:00",
+      "finished_at": "2026-04-02T07:12:50.737164+00:00",
+      "pytest_summary": {
+        "passed": 76,
+        "failed": 0,
+        "skipped": 0,
+        "errors": 0
+      }
+    },
+    {
+      "key": "nonfunctional",
+      "description": "Non-functional requirements suite (NFR-01..NFR-08)",
+      "command": "C:\\Program Files\\Python312\\python.exe -m pytest tests/nonfunctional/test_nfr.py -s -ra",
+      "log_file": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_run_20260402T071220Z\\nonfunctional.log",
+      "status": "failed",
+      "return_code": 1,
+      "duration_seconds": 139.82,
+      "started_at": "2026-04-02T07:12:50.738053+00:00",
+      "finished_at": "2026-04-02T07:15:10.560468+00:00",
+      "pytest_summary": {
+        "passed": 19,
+        "failed": 4,
+        "skipped": 0,
+        "errors": 0
+      }
+    },
+    {
+      "key": "model",
+      "description": "Model evaluation suite (Markov + DQN checks)",
+      "command": "C:\\Program Files\\Python312\\python.exe -m pytest tests/model/test_model_evaluation.py -s -ra",
+      "log_file": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_run_20260402T071220Z\\model.log",
+      "status": "success",
+      "return_code": 0,
+      "duration_seconds": 9.706,
+      "started_at": "2026-04-02T07:15:10.561360+00:00",
+      "finished_at": "2026-04-02T07:15:20.269028+00:00",
+      "pytest_summary": {
+        "passed": 40,
+        "failed": 0,
+        "skipped": 0,
+        "errors": 0
+      }
+    },
+    {
+      "key": "performance",
+      "description": "Performance latency/throughput benchmark tests",
+      "command": "C:\\Program Files\\Python312\\python.exe -m pytest tests/performance/test_latency.py tests/performance/test_throughput.py -s -q",
+      "log_file": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_run_20260402T071220Z\\performance.log",
+      "status": "success",
+      "return_code": 0,
+      "duration_seconds": 155.685,
+      "started_at": "2026-04-02T07:15:20.269028+00:00",
+      "finished_at": "2026-04-02T07:17:55.954710+00:00",
+      "pytest_summary": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "errors": 0
+      }
+    },
+    {
+      "key": "simulation_compare",
+      "description": "A/B API simulation comparison",
+      "command": "C:\\Program Files\\Python312\\python.exe scripts/api_simulation_compare.py",
+      "log_file": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_run_20260402T071220Z\\simulation_compare.log",
+      "status": "success",
+      "return_code": 0,
+      "duration_seconds": 5.752,
+      "started_at": "2026-04-02T07:17:55.954710+00:00",
+      "finished_at": "2026-04-02T07:18:01.707875+00:00"
+    },
+    {
+      "key": "baseline_compare",
+      "description": "Baseline policy comparison for benchmark table support",
+      "command": "C:\\Program Files\\Python312\\python.exe scripts/compare_baselines.py --episodes 30 --output results/ch8_baselines --save-json",
+      "log_file": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_run_20260402T071220Z\\baseline_compare.log",
+      "status": "failed",
+      "return_code": 1,
+      "duration_seconds": 5.882,
+      "started_at": "2026-04-02T07:18:01.707875+00:00",
+      "finished_at": "2026-04-02T07:18:07.590613+00:00"
+    },
+    {
+      "key": "training_attempt",
+      "description": "DQN training run attempted for Chapter 8 artifact completeness",
+      "command": "C:\\Program Files\\Python312\\python.exe scripts/train.py --episodes 60 --output results/ch8_train",
+      "log_file": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_run_20260402T071220Z\\training_attempt.log",
+      "status": "failed",
+      "return_code": 1,
+      "duration_seconds": 4.893,
+      "started_at": "2026-04-02T07:18:07.590613+00:00",
+      "finished_at": "2026-04-02T07:18:12.484549+00:00"
+    }
+  ],
+  "artifacts": {
+    "paths": {
+      "chapter8_report": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\docs\\evaluation\\chapter_8_report.md",
+      "api_simulation_comparison_json": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\api_simulation_comparison\\comparison.json",
+      "api_simulation_comparison_md": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\api_simulation_comparison\\comparison.md",
+      "baseline_results_csv": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_baselines\\results.csv",
+      "baseline_detailed_json": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_baselines\\detailed_results.json",
+      "train_metrics_json": "C:\\Users\\dlahi\\OneDrive\\Desktop\\4th YEAR\\FYP\\code\\markov-rl-api-cache\\results\\ch8_train\\metrics.json"
+    },
+    "parsed": {
+      "api_simulation_comparison": {
+        "metadata": {
+          "generated_at": "2026-04-02T12:48:01.184786",
+          "seed": 42,
+          "episodes": 12,
+          "max_steps": 60,
+          "session_length": 60,
+          "num_apis": 20,
+          "solution_policy_mode": "heuristic",
+          "agent_model": null
+        },
+        "without_solution": {
+          "name": "without_solution",
+          "episodes": 12,
+          "total_requests": 720,
+          "mean_reward": 758.4583333333339,
+          "mean_cache_hit_rate": 0.87160734327401,
+          "mean_prediction_accuracy": 0.0,
+          "mean_prefetch_efficiency": 0.0,
+          "cascade_rate": 0.0,
+          "mean_p95_latency_ms": 0.6114236086699717,
+          "success_rate": 0.9805555555555555,
+          "action_distribution": {
+            "DO_NOTHING": 720
+          },
+          "prometheus_snapshot": {
+            "request_count_total": 720.0,
+            "cache_hits_total": 629.0,
+            "cache_misses_total": 91.0,
+            "cache_hit_rate": 0.8736111111111111,
+            "prefetch_efficiency": 0.0,
+            "cascade_events_total": 0.0,
+            "request_latency_avg_ms": 32.13789111919525
+          }
+        },
+        "with_solution": {
+          "name": "with_solution",
+          "episodes": 12,
+          "total_requests": 720,
+          "mean_reward": 773.9583333333339,
+          "mean_cache_hit_rate": 0.8882740099406764,
+          "mean_prediction_accuracy": 0.0,
+          "mean_prefetch_efficiency": 0.0,
+          "cascade_rate": 0.0,
+          "mean_p95_latency_ms": 0.5240773788599756,
+          "success_rate": 0.9805555555555555,
+          "action_distribution": {
+            "CACHE_CURRENT": 63,
+            "DO_NOTHING": 657
+          },
+          "prometheus_snapshot": {
+            "request_count_total": 720.0,
+            "cache_hits_total": 641.0,
+            "cache_misses_total": 79.0,
+            "cache_hit_rate": 0.8902777777777777,
+            "prefetch_efficiency": 0.0,
+            "cascade_events_total": 0.0,
+            "request_latency_avg_ms": 27.546763816453076
+          }
+        },
+        "comparison": {
+          "reward_improvement_pct": 2.043619183651045,
+          "cache_hit_rate_improvement_pct": 1.9121760268863215,
+          "success_rate_improvement_pct": 0.0,
+          "cascade_rate_reduction_pct": 0.0,
+          "latency_reduction_pct": 14.285714285714304
+        }
+      },
+      "baseline_results_rows": [
+        {
+          "policy_name": "Adaptive LRU",
+          "mean_reward": "424.86000000000024",
+          "std_reward": "179.85675151816446",
+          "mean_hit_rate": "0.9889243378867459",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        },
+        {
+          "policy_name": "LFU",
+          "mean_reward": "424.86000000000024",
+          "std_reward": "179.85675151816446",
+          "mean_hit_rate": "0.9935137149990011",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        },
+        {
+          "policy_name": "Windowed LFU (W=1000)",
+          "mean_reward": "424.86000000000024",
+          "std_reward": "179.85675151816446",
+          "mean_hit_rate": "0.9953952048594",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        },
+        {
+          "policy_name": "Multi-Objective Adaptive",
+          "mean_reward": "424.86000000000024",
+          "std_reward": "179.85675151816446",
+          "mean_hit_rate": "0.9329042355928835",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        },
+        {
+          "policy_name": "Static Markov",
+          "mean_reward": "424.86000000000024",
+          "std_reward": "179.85675151816446",
+          "mean_hit_rate": "0.996426949982213",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        },
+        {
+          "policy_name": "Inverse Static Markov",
+          "mean_reward": "424.86000000000024",
+          "std_reward": "179.85675151816446",
+          "mean_hit_rate": "0.997079888755572",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        },
+        {
+          "policy_name": "Balanced Static Markov",
+          "mean_reward": "424.86000000000024",
+          "std_reward": "179.85675151816446",
+          "mean_hit_rate": "0.9975306432986087",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        },
+        {
+          "policy_name": "Adaptive Heuristic",
+          "mean_reward": "423.31000000000023",
+          "std_reward": "180.89367844123268",
+          "mean_hit_rate": "0.9258510856927432",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        },
+        {
+          "policy_name": "LRU",
+          "mean_reward": "417.6266666666669",
+          "std_reward": "180.4724760793798",
+          "mean_hit_rate": "0.9428967206009499",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        },
+        {
+          "policy_name": "\u03b5-LRU (\u03b5=0.100)",
+          "mean_reward": "362.34333333333353",
+          "std_reward": "188.26702965616587",
+          "mean_hit_rate": "0.9252080374404308",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        },
+        {
+          "policy_name": "Random (Uniform)",
+          "mean_reward": "178.41",
+          "std_reward": "120.21299527643987",
+          "mean_hit_rate": "0.9609635022686033",
+          "cascade_rate": "0.0",
+          "mean_prefetch_efficiency": "0.0",
+          "mean_latency_improvement": "0.0",
+          "total_episodes": "30"
+        }
+      ],
+      "train_metrics": {
+        "train_rewards": [],
+        "train_lengths": [],
+        "eval_rewards": [],
+        "eval_episodes": [],
+        "losses": [],
+        "epsilons": [],
+        "q_values": []
+      }
+    }
+  }
+}
