@@ -531,8 +531,10 @@ def test_p13():
         cache = CacheManager(capacity=4, redis_fail=False)
         total_ms = 0.0
         for ep in workflow:
-            hit = cache.process_request(ep)
-            if not passive:
+            if passive:
+                hit = False  # passive baseline: no proactive or reactive caching
+            else:
+                hit = cache.process_request(ep)
                 cache.cache_key(ep, f"value:{ep}")  # heuristic
             total_ms += 20.0 if hit else 35.0
         return total_ms / len(workflow)
