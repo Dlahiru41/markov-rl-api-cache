@@ -709,15 +709,12 @@ def run_tests(selected_category: Optional[str], verbose: bool):
     passed = failed = skipped = 0
     start_all = time.perf_counter()
 
-    if selected_category is None:
-        print_banner("POSITIVE TESTS")
-        print_banner("NEGATIVE TESTS")
-    elif selected_category == "positive":
-        print_banner("POSITIVE TESTS")
-    elif selected_category == "negative":
-        print_banner("NEGATIVE TESTS")
+    current_category = None
 
     for t in tests:
+        if t.category != current_category:
+            current_category = t.category
+            print_banner("POSITIVE TESTS" if current_category == "positive" else "NEGATIVE TESTS")
         t0 = time.perf_counter()
         try:
             detail = t.fn()
