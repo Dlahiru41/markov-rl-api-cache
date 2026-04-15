@@ -245,7 +245,7 @@ class QNetwork(nn.Module):
         )
 
     def forward(self, x):
-        if torch.isnan(x).any():
+        if not torch.isfinite(x).all():
             x = torch.nan_to_num(x, nan=0.0, posinf=1.0, neginf=-1.0)
         return self.net(x)
 
@@ -590,7 +590,7 @@ def test_n03():
     rb = ReplayBuffer(capacity=10)
     rb.push((np.zeros(60), 0, 0.0, np.zeros(60), 0.0))
     out = rb.sample(8)
-    assert out is None or len(out) == 0, "Expected None/empty when insufficient samples"
+    assert out is None, "Expected None when insufficient samples"
     return "safe underfilled sampling"
 
 
@@ -709,13 +709,13 @@ def run_tests(selected_category: Optional[str], verbose: bool):
     passed = failed = skipped = 0
     start_all = time.perf_counter()
 
-    if selected_category in (None, "positive"):
+    if selected_category is None:
         print_banner("POSITIVE TESTS")
-    if selected_category in (None, "negative"):
-        if selected_category is None:
-            print_banner("NEGATIVE TESTS")
-        else:
-            print_banner("NEGATIVE TESTS")
+        print_banner("NEGATIVE TESTS")
+    elif selected_category == "positive":
+        print_banner("POSITIVE TESTS")
+    elif selected_category == "negative":
+        print_banner("NEGATIVE TESTS")
 
     for t in tests:
         t0 = time.perf_counter()
@@ -739,10 +739,10 @@ def run_tests(selected_category: Optional[str], verbose: bool):
             print(f"      {RED}{type(e).__name__}: {e}{RESET}")
 
     total_time = time.perf_counter() - start_all
-    passed_out_of = f"{passed}/{total}"
+    passed_total_str = f"{passed}/{total}"
 
     print("\n╔══════════════════════════════╗")
-    print(f"║  RESULTS: {passed_out_of:<17}║")
+    print(f"║  RESULTS: {passed_total_str:<17}║")
     print(f"║  Time: {total_time:<20.2f}s║")
     print("╚══════════════════════════════╝")
 
