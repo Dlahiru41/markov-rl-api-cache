@@ -1002,7 +1002,7 @@ def main():
     # ─────────────────────────────────────────────────────────────────────────
 
     markov_predictor = show_markov_predictions()
-    show_reward_calculation()
+    # show_reward_calculation()
 
     # ─────────────────────────────────────────────────────────────────────────
     # PHASE 5: Live DQN Decision Making
